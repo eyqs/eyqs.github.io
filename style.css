@@ -1,0 +1,9 @@
+section {
+    font-family: 'Droid Sans', sans-serif;
+    width: 666px;
+}
+
+footer {
+    bottom: 0;
+    position: fixed;
+}
