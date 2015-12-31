@@ -1,6 +1,13 @@
-section {
+* {
     font-family: 'Droid Sans', sans-serif;
-    width: 666px;
+}
+
+body {
+    padding: 25px;
+}
+
+section {
+    width: 960px;
 }
 
 footer {
@@ -28,4 +35,14 @@ nav li a {
 
 nav li a:hover {
     background-color: lightgray;
+}
+
+#leftcol {
+    float: left;
+    width: 480px;
+}
+
+#rightcol {
+    float: right;
+    width: 480px;
 }
