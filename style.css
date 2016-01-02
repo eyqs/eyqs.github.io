@@ -2,6 +2,10 @@
     font-family: 'Droid Sans', sans-serif;
 }
 
+time {
+    font-weight: bold;
+}
+
 body {
     padding: 25px;
 }
@@ -39,10 +43,12 @@ nav li a:hover {
 
 #leftcol {
     float: left;
-    width: 480px;
+    width: 448px;
+    padding: 16px;
 }
 
 #rightcol {
     float: right;
-    width: 480px;
+    width: 448px;
+    padding: 16px;
 }
