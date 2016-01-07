@@ -14,11 +14,6 @@ section {
     width: 960px;
 }
 
-footer {
-    bottom: 0;
-    position: fixed;
-}
-
 nav ul {
     list-style-type: none;
     margin: 0;
