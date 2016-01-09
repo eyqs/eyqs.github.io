@@ -2,13 +2,13 @@
 <html lang="en">
 <head> 
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="style.css">
     <title>Eugene Y. Q. Shen</title>
 </head>
 
 <body>
     <!--#include file="nav.shtml"-->
-    <section>
+    <header>
         <h1>Eugene Y. Q. Shen</h1>
         <p>Welcome to my home page! I'm a first year Engineering student at the University of British Columbia.</p>
         <p>Everything is under construction right now, but you can find me at one of the links below:</p>
@@ -18,11 +18,11 @@
             <li><a href='https://github.com/eyqs/'>GitHub</a></li>
             <li><a href='http://stackexchange.com/users/7130990/eyqs/'>StackExchange</a></li>
         </ul>
-    </section>
+    </header>
     
-    <section>
-        <section id="leftcol">
-            <h3>News</h3>
+    <div class="wrapper" role="main">
+        <section id="micronews" class="leftcol">
+            <h2>News</h2>
             <article>
                 <time>2016-01-08</time>
                 <p>Everybody that knows me knows that I don't have a Facebook account... until today, the day of the <a href="https://www.facebook.com/hackercup/">Facebook Hacker Cup</a> qualification round!</p>
@@ -35,17 +35,17 @@
             </article>
         </section>
 
-        <section id="rightcol">
-            <h3>Projects</h3>
+        <section id="microprojects" class="rightcol">
+            <h2>Projects</h2>
             <article>
                 <time>2016-01-01</time>
                 <p>I finally bought my own domain, at <a href="http://eyqs.ca/">http://eyqs.ca/</a>, although all it does is point to the GitHub Pages site at <a href="http://eyqs.github.io/">http://eyqs.github.io/</a>.</p>
                 <p>I bought the domain for a year from <a href="https://www.namecheap.com/">Namecheap</a> and transferred the DNS to <a href="https://www.cloudflare.com/">CloudFlare</a>, all for under $12.00 USD (but the exchange rate...)</p>
             </article>
         </section>
-    </section>
+    </div>
 
-    <section>
+    <section id="sitemap" role="complementary">
         <h2>Sitemap</h2>
         <ul>
             <li><a href="index.html">Index</a></li>

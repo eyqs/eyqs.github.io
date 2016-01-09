@@ -10,10 +10,6 @@ body {
     padding: 25px;
 }
 
-section {
-    width: 960px;
-}
-
 nav ul {
     list-style-type: none;
     margin: 0;
@@ -36,14 +32,23 @@ nav li a:hover {
     background-color: lightgray;
 }
 
-#leftcol {
+.wrapper {
+    width: 960px;
+    overflow: hidden;
+}
+
+.leftcol {
     float: left;
     width: 448px;
     padding: 16px;
 }
 
-#rightcol {
+.rightcol {
     float: right;
     width: 448px;
     padding: 16px;
+}
+
+#sitemap {
+    padding: 16px 0px;
 }
