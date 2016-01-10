@@ -1,18 +1,70 @@
 #!/usr/bin/env python
+import os
+import re
 folder = 'site/'
-files = ['about.html', 'blog.html', 'index.html']
+files = os.listdir(folder)
+pages = []
+subfolders = []
 
-for html in files:
-    with open(folder + html, 'r') as inFile:
-        with open(html, 'w') as outFile:
-            for line in inFile:
-                # Format of SSI is <!--#include file="foo.shtml"-->
-                if '<!--#include file=' in line:
-                    start = line.find('=')
-                    end = line.find('.shtml')
-                    shtml = line[start+2 : end+6]
-                    with open(folder + shtml, 'r') as includeFile:
-                        for line in includeFile:
-                            outFile.write(line)
-                else:
-                    outFile.write(line)
+def cleanup():
+    for page in pages:
+        try:
+            os.remove(page)
+        except:
+            pass
+    for sub in subfolders:
+        try:
+            os.rmdir(sub)
+        except:
+            pass
+
+print('Making site...')
+for item in files:
+    if 'html' not in item:
+        # Everything ends in .html except for subfolders
+        subfolders.append(item)
+    elif 'shtml' not in item:
+        pages.append(item)
+for sub in subfolders:
+    pages.extend([sub + '/' + post for post in os.listdir(folder + sub)])
+cleanup()                   # Deletes previously-created subfolders
+for sub in subfolders:
+    os.mkdir(sub)
+
+try:
+    for page in pages:
+        with open(folder + page, 'r') as inFile:
+            with open(page, 'w') as outFile:
+                for line in inFile:
+                    # Custom format is <!--#include type="foo.shtml"-->
+                    if '<!--#include' in line:
+                        start = line.find('<')
+                        end = line.find('>')
+                        include = re.split(' |"', line[start:end])
+                        # ['<--#include', 'type=', 'foo.shtml', '--']
+                        if include[1] == 'file=':
+                            with open(folder + include[2], 'r') as otherFile:
+                                for stuff in otherFile:
+                                    outFile.write(stuff)
+                        elif include[1] == 'head=':
+                            with open(folder + include[2], 'r') as otherFile:
+                                isHead = False
+                                for stuff in otherFile:
+                                    if '<!--#end head-->' in stuff:
+                                        isHead = False
+                                    elif isHead:
+                                        outFile.write(stuff)
+                                    elif '<!--#start head-->' in stuff:
+                                        isHead = True
+                        else:
+                            raise Exception(page + ' had an unknown ' +
+                                include[1] + ' include type.')
+                    else:
+                        outFile.write(line)
+
+except:
+    print('Site not made, aborting.')
+    cleanup()
+    raise
+
+print('Site successfully made.')
