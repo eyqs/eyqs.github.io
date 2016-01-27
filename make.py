@@ -1,11 +1,15 @@
 #!/usr/bin/env python
+# Make my web site!
 import os
 import re
+import sys
+
 folder = 'site/'
 files = os.listdir(folder)
 pages = []
 subfolders = []
 
+# Remove created webpages
 def cleanup():
     for page in pages:
         try:
@@ -19,6 +23,7 @@ def cleanup():
             pass
 
 print('Making site...')
+# Add all webpages to be created
 for item in files:
     if 'html' not in item:
         # Everything ends in .html except for subfolders
@@ -27,10 +32,15 @@ for item in files:
         pages.append(item)
 for sub in subfolders:
     pages.extend([sub + '/' + post for post in os.listdir(folder + sub)])
-cleanup()                   # Deletes previously-created subfolders
-for sub in subfolders:
+
+cleanup()                   # Delete previously-created subfolders
+if 'clean' in sys.argv:     # Exit if goal was to remove everything
+    print('All webpages successfully removed.')
+    sys.exit()
+for sub in subfolders:      # Otherwise, continue and make subfolders
     os.mkdir(sub)
 
+# Creat all webpages to be created
 try:
     for page in pages:
         with open(folder + page, 'r') as inFile:
