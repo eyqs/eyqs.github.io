@@ -1,2 +1,2 @@
-# eyqs.github.io
+# web
 personal website
