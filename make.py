@@ -7,6 +7,7 @@ import sys
 folder = 'site/'
 files = os.listdir(folder)
 pages = []
+posts = []
 subfolders = []
 
 # Remove created webpages
@@ -14,6 +15,12 @@ def cleanup():
     for page in pages:
         try:
             os.remove(page)
+        except:
+            pass
+    for post in posts:
+        try:
+            name = post.split('.')[0] + '.html'
+            os.remove(name)
         except:
             pass
     for sub in subfolders:
@@ -24,8 +31,9 @@ def cleanup():
 
 print('Making site...')
 # Add all webpages to be created
+# Ensure that there is only one level of subfolders
 for item in files:
-    if any([x in item for x in ['swp', 'txt', 'shtml']]):
+    if any([x in item for x in ['swp', 'shtml']]):
         continue    # Ignore all of these files
     elif 'html' in item:
         pages.append(item)
@@ -33,9 +41,11 @@ for item in files:
         subfolders.append(item)
 for sub in subfolders:
     for post in os.listdir(folder + sub):
-        if any([x in post for x in ['swp', 'txt', 'shtml']]):
+        if any([x in post for x in ['swp', 'png']]):
             continue    # Ignore all of these files
-        elif 'html' in post:
+        if 'txt' in post:
+            posts.append(sub + '/' + post)
+        else:
             pages.append(sub + '/' + post)
 
 cleanup()                   # Delete previously-created subfolders
@@ -45,8 +55,8 @@ if 'clean' in sys.argv:     # Exit if goal was to remove everything
 for sub in subfolders:      # Otherwise, continue and make subfolders
     os.mkdir(sub)
 
-# Create all webpages to be created
 try:
+    # Create all webpages to be created
     for page in pages:
         with open(folder + page, 'r') as inFile:
             with open(page, 'w') as outFile:
@@ -71,17 +81,22 @@ try:
                                         outFile.write(stuff)
                                     elif '<!--#start head-->' in stuff:
                                         isHead = True
-                        elif include[1] == 'post=':
-                            blog = folder + 'blog/'
-                            with open(blog + include[2], 'r') as otherFile:
-                                for stuff in otherFile: # Squeeze p before \n
-                                    outFile.write('<p>' + stuff.strip() +
-                                                  '</p>\n')
                         else:
                             raise Exception(page + ' had an unknown ' +
                                 include[1] + ' include type.')
                     else:
                         outFile.write(line)
+
+    # Create webpages for all .txt posts
+    # First line is title, second line is date
+    for post in posts:
+        with open(folder + post, 'r') as inFile:
+            name = post.split('.')[0] + '.html'
+            with open(name, 'w') as outFile:
+                outFile.write('<h2>' + inFile.readline().strip() + '</h1>\n')
+                outFile.write('<h3><date>' + inFile.readline().strip() + '</date></h3>\n')
+                for line in inFile:
+                    outFile.write('<p>' + line.strip() + '</p>\n')
 
 except:
     print('Site not made, aborting.')
