@@ -25,13 +25,18 @@ def cleanup():
 print('Making site...')
 # Add all webpages to be created
 for item in files:
-    if 'html' not in item:
-        # Everything ends in .html except for subfolders
-        subfolders.append(item)
-    elif 'shtml' not in item:
+    if any([x in item for x in ['swp', 'txt', 'shtml']]):
+        continue    # Ignore all of these files
+    elif 'html' in item:
         pages.append(item)
+    else:           # Must be a subfolder then
+        subfolders.append(item)
 for sub in subfolders:
-    pages.extend([sub + '/' + post for post in os.listdir(folder + sub)])
+    for post in os.listdir(folder + sub):
+        if any([x in post for x in ['swp', 'txt', 'shtml']]):
+            continue    # Ignore all of these files
+        elif 'html' in post:
+            pages.append(sub + '/' + post)
 
 cleanup()                   # Delete previously-created subfolders
 if 'clean' in sys.argv:     # Exit if goal was to remove everything
@@ -40,7 +45,7 @@ if 'clean' in sys.argv:     # Exit if goal was to remove everything
 for sub in subfolders:      # Otherwise, continue and make subfolders
     os.mkdir(sub)
 
-# Creat all webpages to be created
+# Create all webpages to be created
 try:
     for page in pages:
         with open(folder + page, 'r') as inFile:
@@ -66,6 +71,12 @@ try:
                                         outFile.write(stuff)
                                     elif '<!--#start head-->' in stuff:
                                         isHead = True
+                        elif include[1] == 'post=':
+                            blog = folder + 'blog/'
+                            with open(blog + include[2], 'r') as otherFile:
+                                for stuff in otherFile: # Squeeze p before \n
+                                    outFile.write('<p>' + stuff.strip() +
+                                                  '</p>\n')
                         else:
                             raise Exception(page + ' had an unknown ' +
                                 include[1] + ' include type.')
