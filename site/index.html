@@ -1,47 +1,47 @@
 <!--#include file="header.shtml"-->
-
 <body>
 <!--#include file="nav.shtml"-->
 <div class="container">
-<header>
+
+<header role="main" class="col-xs-12">
   <h1>Eugene Y. Q. Shen</h1>
   <p>Hi! Welcome to my home on the world wide web.</p>
   <p>I'm Eugene Y. Q. Shen, a first year engineering student at <a href='https://www.ubc.ca/'>the University of British Columbia</a>.</p>
   <p>You can also find me on <a href='https://github.com/eyqs'>GitHub</a>, <a href='https://www.linkedin.com/in/eugeneyqshen/'>LinkedIn</a>, <a href='http://stackexchange.com/users/7130990/eyqs/'>StackExchange</a>, and not Facebook, Twitter, Instagram, Snapchat, Tumblr, or any of that stuff.</p>
   <p>But you can email me at <a href="mailto:eugene@eyqs.ca">eugene@eyqs.ca</a>. Come at me, spambots; I'm not scared!</p>
   <p>The links on the top of the site will take you magical places.</p>
-  <table>
+  <table id="sitemap" class="table-condensed">
     <tr>
       <td><a href="index.html">Index</a>:</td>
-      <td>keeps you here, where I post a new microupdate every whenever I want;</td>
+      <td>keeps you here, where I post a new microupdate every whenever I want.</td>
     </tr>
     <tr>
       <td><a href="about.html">About</a>:</td>
-      <td>takes you to a longer description of me and my life;</td>
+      <td>takes you to a longer description of me and my life.</td>
     </tr>
     <tr>
       <td><a href="blog.html">Blog</a>:</td>
-      <td>takes you to a blog, where I post a new macroupdate every month;</td>
+      <td>takes you to a blog, where I post a new macroupdate every month.</td>
     </tr>
     <tr>
       <td><a href="cakes.html">Cakes</a>:</td>
-      <td>takes you to a picture of some cakes. Read the questions page for why;</td>
+      <td>takes you to a picture of some cakes. Read the questions page for why.</td>
     </tr>
     <tr>
       <td><a href="documents.html">Documents</a>:</td>
-      <td>takes you to a collection of schoolwork that I spent too much time on;</td>
+      <td>takes you to a collection of schoolwork that I spent too much time on.</td>
     </tr>
     <tr>
       <td><a href="projects.html">Projects</a>:</td>
-      <td>takes you to a listing of all my GitHub projects;</td>
+      <td>takes you to a listing of all my GitHub projects.</td>
     </tr>
     <tr>
       <td><a href="questions.html">Questions</a>:</td>
-      <td>takes you to a page of frequently (never) asked questions;</td>
+      <td>takes you to a page of frequently (never) asked questions.</td>
     </tr>
     <tr>
       <td><a href="resume.html">Resume</a>:</td>
-      <td>takes you to a very very short resume of me; and</td>
+      <td>takes you to a very very short resume of me.</td>
     </tr>
     <tr>
       <td><a href="sitemap.html">Sitemap</a>:</td>
@@ -50,8 +50,7 @@
   </table>
 </header>
 
-<div role="main">
-<section id="micronews">
+<section id="micronews" class="col-xs-12 col-md-6">
   <h2>News</h2>
   <article>
     <time>2016-02-11</time>
@@ -59,9 +58,9 @@
   </article>
   <article>
     <time>2016-02-05</time>
-    <p>8 a.m. classes:</p>
-    <p>They're the best, cause buses aren't</p>
-    <p>Packed like canned sardines.</p>
+    <p>8 a.m. classes: <br \>
+    They're the best, cause buses aren't <br \>
+    Packed like canned sardines.</p>
   </article>
   <article>
     <time>2016-01-31</time>
@@ -83,7 +82,7 @@
   </article>
 </section>
 
-<section id="microprojects">
+<section id="microprojects" class="col-xs-12 col-md-6">
   <h2>Projects</h2>
   <article>
     <time>2016-02-13</time>
@@ -104,20 +103,5 @@
     <p>I bought the domain for a year from <a href="https://www.namecheap.com/">Namecheap</a> and transferred the DNS to <a href="https://www.cloudflare.com/">CloudFlare</a>, all for under $12.00 USD (but the exchange rate...)</p>
   </article>
 </section>
-</div>
-
-<section id="sitemap" role="complementary">
-  <h2>Sitemap</h2>
-  <ul>
-    <li><a href="index.html">Index</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="blog.html">Blog</a></li>
-  </ul>
-</section>
 
 <!--#include file="footer.shtml"-->
-</div>
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-</body>
-</html>
