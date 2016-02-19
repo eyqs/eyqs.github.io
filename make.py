@@ -70,16 +70,6 @@ try:
                         if include[1] == 'file=':
                             with open(folder + include[2], 'r') as otherFile:
                                 outFile.write(otherFile.read())
-                        elif include[1] == 'head=':
-                            with open(folder + include[2], 'r') as otherFile:
-                                isHead = False
-                                for stuff in otherFile:
-                                    if '<!--#end head-->' in stuff:
-                                        isHead = False
-                                    elif isHead:
-                                        outFile.write(stuff)
-                                    elif '<!--#start head-->' in stuff:
-                                        isHead = True
                         else:
                             raise Exception(page + ' had an unknown ' +
                                 include[1] + ' include type.')
@@ -117,9 +107,31 @@ try:
                     '<h3><time>' + inFile.readline().strip() + '</time></h3>')
                 # Write the actual blog content, surrounded by p tags
                 for line in inFile:
-                    outFile.write('<p>' + line.strip() + '</p>')
+                    if '<!--#end head-->' not in line:
+                        outFile.write('<p>' + line.strip() + '</p>')
                 # Write the footer stuff
                 outFile.write('</section>')
+                with open(folder + 'footer.shtml') as otherFile:
+                    outFile.write(otherFile.read())
+
+            # Write the head to the main blog page
+            inFile.seek(0)
+            with open(folder + 'blog.html', 'w') as outFile:
+                with open(folder + 'header.shtml') as otherFile:
+                    outFile.write(otherFile.read())
+                outFile.write('<body>')
+                with open(folder + 'nav.shtml') as otherFile:
+                    outFile.write(otherFile.read())
+                outFile.write('<div class="container"><section role="main" \
+                               class="col-xs-12"><h1>Blog</h1>')
+                outFile.write('<h3>' + inFile.readline().strip() + '</h3>')
+                outFile.write('<time>' + inFile.readline().strip() + '</time>')
+                for line in inFile:
+                    if '<!--#end head-->' in line:
+                        break
+                    outFile.write('<p>' + line.strip() + '</p>')
+                outFile.write('<p><a href="' + name + '">Continue reading » \
+                               </a></p></section>')
                 with open(folder + 'footer.shtml') as otherFile:
                     outFile.write(otherFile.read())
 
