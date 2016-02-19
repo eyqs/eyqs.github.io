@@ -1528,6 +1528,9 @@ address {
   font-style: normal;
   line-height: 1.42857143;
 }
+time {
+  font-weight: bold;
+}
 code,
 kbd,
 pre,
