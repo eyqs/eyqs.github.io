@@ -2,6 +2,43 @@ A Beginner's Guide to Dwarf Fortress, by a Beginner
 2016 February
 
 Dwarf Fortress. Some say it's the most inscrutable video game ever. A few say it's the deepest. Most saw the ncurses ASCII interface and never bothered to try playing a game that looks like it predates Windows. A few downloaded it and quit in frustration from the steep learning curve and unintuitive user interface.
-I tried it. I downloaded it. I played for a while, built up a fort of over a hundred dwarves over a half dozen years. Then I quit, not from frustration, but from boredom. All I did was craft rock crafts all day long. No goblin wars, no necromancer raids, no forgotten beasts. No pump stacks, no magma, no caverns. I followed all the beginner's tutorials and then got stuck doing nothing, missing out on half the features of the game. But two months ago, on December 1, 2015, Toady One released the first major update since July 2014: Dwarf Fortress 0.42! Now, I thought, was the time to get back into the game, and really get into all its features. The goal of this post is simply to see every major feature, in a beginner's guide for people who understand the basics but want to see all the fun they could experience, through a playthrough―my first real one―of Dwarf Fortress.
+I tried it. I downloaded it. I played for a while, built up a fort of over a hundred dwarves over a half dozen years. Then I quit, not from frustration, but from boredom. All I did was craft rock crafts all day long. No goblin wars, no necromancer raids, no forgotten beasts. No pump stacks, no magma, no caverns. I followed all the beginner's tutorials and then got stuck doing nothing, missing out on half the features of the game. But two months ago, on December 1, 2015, Toady One released the first major update since July 2014: Dwarf Fortress 0.42! Now, I thought, was the time to get back into the game, and really get into all its features. The goal of this post is simply to see every major feature, in a picture-only beginner's guide for people who understand the basics but want to see all the fun they could experience, through a playthrough―my first real one―of Dwarf Fortress.
 <!--#end head-->
-Let's begin. Tomorrow. When I add all these images in.
+Let's begin.
+<img src="../imgs/001-titlescreen.png" height="528" width="959" />
+<img src="../imgs/002-alphawelcome.png" height="528" width="959" />
+<img src="../imgs/003-smallerworld.png" height="528" width="959" />
+<img src="../imgs/004-naturalworld.png" height="528" width="959" />
+<img src="../imgs/005-currentworld.png" height="528" width="959" />
+<img src="../imgs/006-embarksite.png" height="528" width="959" />
+<img src="../imgs/007-minimax.png" height="528" width="959" />
+<img src="../imgs/008-striketheearth.png" height="528" width="959" />
+<img src="../imgs/009-gamestart.png" height="528" width="959" />
+<img src="../imgs/010-forgedpicks.png" height="528" width="959" />
+<img src="../imgs/011-accidentalchannel.png" height="528" width="959" />
+<img src="../imgs/012-springplants.png" height="528" width="959" />
+<img src="../imgs/013-hungrydwarves.png" height="528" width="959" />
+<img src="../imgs/014-farmplots.png" height="528" width="959" />
+<img src="../imgs/015-honeybadger.png" height="528" width="959" />
+<img src="../imgs/016-migrantsarrived.png" height="528" width="959" />
+<img src="../imgs/017-firstmigrants.png" height="528" width="959" />
+<img src="../imgs/018-greatmigrant.png" height="528" width="959" />
+<img src="../imgs/019-hunterwithdraw.png" height="528" width="959" />
+<img src="../imgs/020-whycantmussels.png" height="528" width="959" />
+<img src="../imgs/021-farmharvest.png" height="528" width="959" />
+<img src="../imgs/022-buildingdepot.png" height="528" width="959" />
+<img src="../imgs/023-outputliaison.png" height="528" width="959" />
+<img src="../imgs/024-leatherimport.png" height="528" width="959" />
+<img src="../imgs/025-coalbarexport.png" height="528" width="959" />
+<img src="../imgs/026-dwarvencaravan.png" height="528" width="959" />
+<img src="../imgs/027-secondmigrants.png" height="528" width="959" />
+<img src="../imgs/028-dwarftherapist.png" height="528" width="959" />
+<img src="../imgs/029-dwarventrade.png" height="528" width="959" />
+<img src="../imgs/030-merchantsleave.png" height="528" width="959" />
+<img src="../imgs/031-coalburning.png" height="528" width="959" />
+<img src="../imgs/032-strangemood.png" height="528" width="959" />
+<img src="../imgs/033-emptytavern.png" height="528" width="959" />
+<img src="../imgs/034-socializing.png" height="528" width="959" />
+<img src="../imgs/035-claimedshop.png" height="528" width="959" />
+<img src="../imgs/036-needsthread.png" height="528" width="959" />
+<img src="../imgs/037-begunmysterious.png" height="528" width="959" />
