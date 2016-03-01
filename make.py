@@ -107,8 +107,12 @@ try:
                     '<h3><time>' + inFile.readline().strip() + '</time></h3>')
                 # Write the actual blog content, surrounded by p tags
                 for line in inFile:
-                    if '<!--#end head-->' not in line:
-                        outFile.write('<p>' + line.strip() + '</p>')
+                    lines = line.strip()
+                    if lines.startswith('[') and lines.endswith(']'):
+                        outFile.write('<img src="../imgs/' + lines[1:-1] +
+                                      '.png" height="528" width="959" />')
+                    elif '<!--#end head-->' not in lines:
+                        outFile.write('<p>' + lines + '</p>')
                 # Write the footer stuff
                 outFile.write('</section>')
                 with open(folder + 'footer.shtml') as otherFile:
