@@ -109,8 +109,9 @@ try:
                 for line in inFile:
                     lines = line.strip()
                     if lines.startswith('[') and lines.endswith(']'):
-                        outFile.write('<img src="../imgs/' + lines[1:-1] +
-                                      '.png" height="528" width="959" />')
+                        img = '"../imgs/' + lines[1:-1] + '.png"'
+                        outFile.write('<p><a href=' + img + '><img src=' + img
+                                      +' height="352" width="639" /></a></p>')
                     elif '<!--#end head-->' not in lines:
                         outFile.write('<p>' + lines + '</p>')
                 # Write the footer stuff
