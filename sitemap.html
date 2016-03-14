@@ -1,38 +1,19 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Eugene Y. Q. Shen</title>
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-  <script type="text/javascript" src="js/jquery.min.js"></script>
-  <script type="text/javascript" src="js/bootstrap.min.js"></script>
-</head>
-
-<body>
-<div id="navbar"></div>
-<script>$("#navbar").load("navbar.html");</script>
-<div class="container">
+---
+title: Sitemap
+---
 <section role="main" class="col-xs-12">
-  <h1>Sitemap</h1>
   <ul id="sitemaps">
-    <li><a href="index.html">Index</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="blog.html">Blog</a><ul>
-      <li><a href="blog/1601-first-post.html">First Post</a></li>
-      <li><a href="blog/1602-dwarf-fort.html">Dwarf Fort</a></li>
+    <li><a href="{{ site.baseurl }}">Index</a></li>
+    <li><a href="{{ site.baseurl }}/about.html">About</a></li>
+    <li><a href="{{ site.baseurl }}/blog.html">Blog</a><ul>
+      <li><a href="{{ site.baseurl }}/blog/1601-first-post.html">First Post</a></li>
+      <li><a href="{{ site.baseurl }}/blog/1602-dwarf-fort.html">Dwarf Fort</a></li>
       </ul></li>
-    <li><a href="cakes.html">Cakes</a></li>
-    <li><a href="documents.html">Documents</a></li>
-    <li><a href="projects.html">Projects</a></li>
-    <li><a href="questions.html">Questions</a></li>
-    <li><a href="resume.html">Resume</a></li>
-    <li><a href="sitemap.html">Sitemap</a></li>
+    <li><a href="{{ site.baseurl }}/cakes.html">Cakes</a></li>
+    <li><a href="{{ site.baseurl }}/documents.html">Documents</a></li>
+    <li><a href="{{ site.baseurl }}/projects.html">Projects</a></li>
+    <li><a href="{{ site.baseurl }}/questions.html">Questions</a></li>
+    <li><a href="{{ site.baseurl }}/resume.html">Resume</a></li>
+    <li><a href="{{ site.baseurl }}/sitemap.html">Sitemap</a></li>
   </ul>
 </section>
-<div id="footer"></div>
-<script>$("#footer").load("footer.html");</script>
-</div>
-</body>
-</html>

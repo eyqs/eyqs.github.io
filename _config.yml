@@ -2,6 +2,7 @@
 title: Eugene Y. Q. Shen
 email: eugene@eyqs.ca
 url:   "https://eyqs.ca"
+baseurl: ""
 description: >
   The home page of Eugene Y. Q. Shen, a wannabe software engineer,
   mediocre pianist, and first-year Applied Sciences student at the
@@ -23,3 +24,9 @@ defaults:
     values:
       layout: "default"
       author: "Eugene Y. Q. Shen"
+  -
+    scope:
+      path: "blog"
+    values:
+      layout: "post"
+      excerpt_seperator: <!--more-->
