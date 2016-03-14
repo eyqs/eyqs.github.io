@@ -5,36 +5,22 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Eugene Y. Q. Shen</title>
-  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
 </head>
+
 <body>
-<nav role="navigation">
-  <ul class="nav nav-tabs nav-justified">
-    <li role="presentation"><a href="index.html">Index</a></li>
-    <li role="presentation"><a href="about.html">About</a></li>
-    <li role="presentation"><a href="blog.html">Blog</a></li>
-    <li role="presentation"><a href="cakes.html">Cakes</a></li>
-    <li role="presentation"><a href="documents.html">Documents</a></li>
-    <li role="presentation"><a href="projects.html">Projects</a></li>
-    <li role="presentation"><a href="questions.html">Questions</a></li>
-    <li role="presentation"><a href="resume.html">Resume</a></li>
-    <li role="presentation"><a href="sitemap.html">Sitemap</a></li>
-  </ul>
-</nav>
+<div id="navbar"></div>
+<script>$("#navbar").load("navbar.html");</script>
 <div class="container">
 <section role="main" class="col-xs-12">
   <h1>404: Error Not Found</h1>
   <p>Sorry, we couldn't find the error you were looking for.</p>
   <p>Please check the <a href="sitemap.html">sitemap</a> to find a list of all the errors on this website. That's right, every single page is an error. I apologize for the convenience of giving you a link to all the errors on this website. I probably made your life so much easier.</p>
 </section>
-<footer role="contentinfo" class="col-xs-12">
-  <small>
-    <p>Copyright © 2016 Eugene Y. Q. Shen.</p>
-    <p>Content on this site is licensed under a <a href='http://creativecommons.org/licenses/by-sa/4.0/'>Creative Commons Attribution-ShareAlike 4.0 International license</a>.</p>
-  </small>
-</footer>
+<div id="footer"></div>
+<script>$("#footer").load("footer.html");</script>
 </div>
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
 </body>
 </html>
