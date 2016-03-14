@@ -29,4 +29,4 @@ defaults:
       path: "blog"
     values:
       layout: "post"
-      excerpt_seperator: <!--more-->
+      excerpt_separator: <!--more-->
