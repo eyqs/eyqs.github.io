@@ -1,0 +1,25 @@
+# Site settings
+title: Eugene Y. Q. Shen
+email: eugene@eyqs.ca
+url:   "https://eyqs.ca"
+description: >
+  The home page of Eugene Y. Q. Shen, a wannabe software engineer,
+  mediocre pianist, and first-year Applied Sciences student at the
+  University of British Columbia. Welcome to my site on the web!
+github_username: eyqs
+
+# Build settings
+safe:        true
+detach:      true
+show_drafts: false
+timezone:    America/Vancouver
+permalink:   /blog/:short_year:month-:title.html
+
+# Default settings
+defaults:
+  -
+    scope:
+      path: ""
+    values:
+      layout: "default"
+      author: "Eugene Y. Q. Shen"
