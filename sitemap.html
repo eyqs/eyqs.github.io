@@ -3,17 +3,17 @@ title: Sitemap
 ---
 <section role="main" class="col-xs-12">
   <ul id="sitemaps">
-    <li><a href="{{ site.baseurl }}">Index</a></li>
-    <li><a href="{{ site.baseurl }}/about.html">About</a></li>
-    <li><a href="{{ site.baseurl }}/blog.html">Blog</a><ul>
-      <li><a href="{{ site.baseurl }}/blog/1601-first-post.html">First Post</a></li>
-      <li><a href="{{ site.baseurl }}/blog/1602-dwarf-fort.html">Dwarf Fort</a></li>
+    <li><a href="{{ "/" | prepend: site.baseurl }}">Index</a></li>
+    <li><a href="{{ "/about/" | prepend: site.baseurl }}">About</a></li>
+    <li><a href="{{ "/blog/" | prepend: site.baseurl }}">Blog</a><ul>
+      <li><a href="{{ "/blog/1601-first-post/" | prepend: site.baseurl }}">First Post</a></li>
+      <li><a href="{{ "/blog/1602-dwarf-fort/" | prepend: site.baseurl }}">Dwarf Fort</a></li>
       </ul></li>
-    <li><a href="{{ site.baseurl }}/cakes.html">Cakes</a></li>
-    <li><a href="{{ site.baseurl }}/documents.html">Documents</a></li>
-    <li><a href="{{ site.baseurl }}/projects.html">Projects</a></li>
-    <li><a href="{{ site.baseurl }}/questions.html">Questions</a></li>
-    <li><a href="{{ site.baseurl }}/resume.html">Resume</a></li>
-    <li><a href="{{ site.baseurl }}/sitemap.html">Sitemap</a></li>
+    <li><a href="{{ "/cakes/" | prepend: site.baseurl }}">Cakes</a></li>
+    <li><a href="{{ "/documents/" | prepend: site.baseurl }}">Documents</a></li>
+    <li><a href="{{ "/projects/" | prepend: site.baseurl }}">Projects</a></li>
+    <li><a href="{{ "/questions/" | prepend: site.baseurl }}">Questions</a></li>
+    <li><a href="{{ "/resume/" | prepend: site.baseurl }}">Resume</a></li>
+    <li><a href="{{ "/sitemap/" | prepend: site.baseurl }}">Sitemap</a></li>
   </ul>
 </section>

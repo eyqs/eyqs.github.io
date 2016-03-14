@@ -2,7 +2,7 @@
 title: Blog
 ---
 <section role="main" class="col-xs-12">
-  <p class="rss-subscribe">(Subscribe <a href="{{ site.baseurl }}/feed.xml">by RSS!</a>)</p>
+  <p class="rss-subscribe">(Subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">by RSS!</a>)</p>
   {% for post in site.posts %}
     <h3>{{ post.title }}</h3>
     <h4 class="post-meta"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y %B" }}</time></h4>
