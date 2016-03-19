@@ -3,10 +3,7 @@ title: "Eugene Y. Q. Shen"
 email: "eugene@eyqs.ca"
 url:   "https://eyqs.ca"
 baseurl: ""
-description: >
-  "The home page of Eugene Y. Q. Shen, a wannabe software engineer,
-  mediocre pianist, and first-year Applied Sciences student at the
-  University of British Columbia. Welcome to my site on the web!"
+description: "The home page of Eugene Y. Q. Shen, a wannabe programmer, awful pianist, and first-year Engineering student. Welcome to my site on the web!"
 github_username: eyqs
 
 # Build settings
