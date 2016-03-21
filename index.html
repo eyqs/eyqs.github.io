@@ -5,7 +5,7 @@ description: The home page of Eugene Y. Q. Shen, a wannabe programmer, awful pia
 <header role="main" class="col-xs-12">
   <p>Hi! Welcome to my home on the world wide web.</p>
   <p>I'm Eugene Y. Q. Shen, a first year engineering student at <a href='https://www.ubc.ca/'>UBC</a>, the University of British Columbia.</p>
-  <p>You can also find me on <a href='https://github.com/eyqs'>GitHub</a>, <a href='https://www.linkedin.com/in/eugeneyqshen/'>LinkedIn</a>, <a href='http://stackexchange.com/users/7130990/eyqs/'>StackExchange</a>, and not Facebook, Twitter, Instagram, Snapchat, Tumblr, or any of that stuff.</p>
+  <p>You can also find me on <a href='https://github.com/eyqs/'>GitHub</a>, <a href='https://www.linkedin.com/in/eugeneyqshen/'>LinkedIn</a>, <a href='http://stackexchange.com/users/7130990/eyqs/'>StackExchange</a>, and not Facebook, Twitter, Instagram, Snapchat, Tumblr, or any of that stuff.</p>
   <p>But you can email me at <a href="mailto:eugene@eyqs.ca">eugene@eyqs.ca</a>. Come at me, spambots; I'm not scared!</p>
   <p>The links on the top of the site will take you magical places.</p>
   <table id="sitemap" class="table-condensed">
@@ -95,16 +95,21 @@ description: The home page of Eugene Y. Q. Shen, a wannabe programmer, awful pia
 <section id="microprojects" class="col-xs-12 col-md-6">
   <h2>Projects</h2>
   <article>
+    <time>2016-03-21</time>
+    <p>It took 3 months, but my site is finally constructed. None of the pages in IABCDPQRS are under construction anymore! I mean, they'll always be under construction, but not "under construction" under construction. Much thanks goes to my <a href="https://github.com/eyqs/cvx/releases/">ridiculously silly LaTeX-to-HTML translater</a>, which is honestly just a find-and-replace script written in Haskell.</p>
+    <p>But with that, I've the last unconstructed piece of my site, <a href="{{ "/resume/" | prepend: site.baseurl }}">my resume</a>, on as both a LaTeX PDF and a hideous HTML horror. You know what that means―it's time to find a job.</p>
+  </article>
+  <article>
     <time>2016-03-14</time>
     <p>First, I just copied my navbar and footer manually, to every single page. Then I got tired of changing them, so I used Apache's Server Side Includes. But GitHub Pages didn't support them, so I scripted a terrible abomination that literally copied the navbar code into every single file at build time. Recently, I realized what horror I had made, and used jQuery .load() instead. Finally, I remembered that GitHub Pages had native support for <a href="https://jekyllrb.com/">Jekyll</a>, which I had previously written off as "too complicated".</p>
     <p>Today, I'm glad to say that I've deleted my disgusting script because Jekyll is exactly what I wanted my script to be! The site still looks exactly the same, but don't be fooled―it's all served by Jekyll now.</p>
   <article>
     <time>2016-02-28</time>
-    <p>After almost 24 hours of non-stop <a href="https://www.nwhacks.io/">nwHacking</a>, I have finally realized that hardware hackathons have had hella heck hard hopeless horrible hardships. You'll read all about it in my March blog post, but I'll try to get <a href="https://github.com/eyqs/android-comms">Android NFC and Bluetooth communication</a> working on my own, and shall surely save some stress the subsequent season shaping software, not HARDware!</p>
+    <p>After almost 24 hours of non-stop <a href="https://www.nwhacks.io/">nwHacking</a>, I have finally realized that hardware hackathons have had hella heck hard hopeless horrible hardships. You'll read all about it in my March blog post, but I'll try to get Android NFC and Bluetooth communication working on my own, and shall surely save some stress the subsequent season shaping software, not HARDware!</p>
   </article>
   <article>
     <time>2016-02-25</time>
-    <p>One more, pushed: the first release of <a href="https://github.com/eyqs/tsukiyo">Tsukiyo</a>, formerly known as polytope!</p>
+    <p>One more, pushed: the first release of <a href="https://github.com/eyqs/tsukiyo/releases/">Tsukiyo</a>, formerly known as polytope!</p>
   </article>
   <article>
     <time>2016-02-13</time>
@@ -112,7 +117,7 @@ description: The home page of Eugene Y. Q. Shen, a wannabe programmer, awful pia
   </article>
   <article>
     <time>2016-01-26</time>
-    <p>After visiting my optometrist yesterday and discovering my eyesight had deteriorated by another 0.25 dioptres in spite of orthokeratology, I finally declared that I would take a break every 30 minutes from staring at computer screens. Hence comes forth <a href="https://github.com/eyqs/2do">2do</a>, in which I unleash the power of D-Bus notifications to notificationize me.</p>
+    <p>After visiting my optometrist yesterday and discovering my eyesight had deteriorated by another 0.25 dioptres in spite of orthokeratology, I finally declared that I would take a break every 30 minutes from staring at computer screens. Hence comes forth <a href="https://github.com/eyqs/2do/releases/">2do</a>, in which I unleash the power of D-Bus notifications to notificationize me.</p>
   </article>
   <article>
     <time>2016-01-22</time>
