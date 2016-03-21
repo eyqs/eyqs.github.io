@@ -1528,9 +1528,6 @@ address {
   font-style: normal;
   line-height: 1.42857143;
 }
-time {
-  font-weight: bold;
-}
 code,
 kbd,
 pre,
@@ -3469,6 +3466,29 @@ input[type="submit"].btn-block,
 input[type="reset"].btn-block,
 input[type="button"].btn-block {
   width: 100%;
+}
+time {
+  font-weight: bold;
+}
+.name {
+  font-size: 250%;
+  text-align: center;
+}
+.dotsep {
+  text-align: center;
+}
+.section {
+  padding: 32px 0 0 0;
+  margin-bottom: 16px;
+  font-size: 150%;
+  font-weight: bold;
+  font-variant: small-caps;
+  border-bottom: 1px solid black;
+}
+.subsection {
+  padding: 16px 0 0 0;
+  font-size: 125%;
+  font-variant: small-caps;
 }
 .fade {
   opacity: 0;
