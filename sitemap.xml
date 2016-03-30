@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+  xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  <url>
+    <loc>https://eyqs.ca/</loc>
+  </url>
+  <url>
+    <loc>https://eyqs.ca/about/</loc>
+  </url>
+  <url>
+    <loc>https://eyqs.ca/blog/</loc>
+  </url>
+  <url>
+    <loc>https://eyqs.ca/blogs/1601-first-post/</loc>
+  </url>
+  <url>
+    <loc>https://eyqs.ca/blogs/1602-dwarf-fort/</loc>
+  </url>
+  <url>
+    <loc>https://eyqs.ca/cakes/</loc>
+  </url>
+  <url>
+    <loc>https://eyqs.ca/documents/</loc>
+  </url>
+  <url>
+    <loc>https://eyqs.ca/projects/</loc>
+    <image:image>
+       <image:loc>https://eyqs.ca/assets/images/projects/tsukiyo.png</image:loc>
+       <image:caption>Screenshot of Tsukiyo displaying a truncated icosidodecahedron</image:caption>
+    </image:image>
+    <image:image>
+       <image:loc>https://eyqs.ca/assets/images/projects/cvx.png</image:loc>
+       <image:caption>Screenshot of a webpage made by cvx compared to the original LaTeX</image:caption>
+    </image:image>
+    <image:image>
+       <image:loc>https://eyqs.ca/assets/images/projects/grd.png</image:loc>
+       <image:caption>Screenshot of grd automatically writing input to a C script</image:caption>
+    </image:image>
+    <image:image>
+       <image:loc>https://eyqs.ca/assets/images/projects/kbr.png</image:loc>
+       <image:caption>Screenshot of my typing 'KBR IS THE BEST' in kbr</image:caption>
+    </image:image>
+    <image:image>
+       <image:loc>https://eyqs.ca/assets/images/projects/tax.png</image:loc>
+       <image:caption>Screenshot of Tax Avoider with enemies, explosions, and no taxes to avoid</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://eyqs.ca/questions/</loc>
+  </url>
+  <url>
+    <loc>https://eyqs.ca/resume/</loc>
+  </url>
+  <url>
+    <loc>https://eyqs.ca/sitemap/</loc>
+  </url>
+</urlset>
