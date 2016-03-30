@@ -1,5 +1,6 @@
 ---
 title: A Beginner's Guide to Dwarf Fortress, by a Beginner
+description: A playthrough of Dwarf Fortress by a Eugene Y. Q. Shen, who's never fought a goblin siege until this 2016 February blog post.
 ---
 <a href="http://bay12games.com/dwarves/">Dwarf Fortress</a>. Some say it's the most inscrutable video game ever. A few say it's the deepest. Most saw the ncurses ASCII interface and never bothered to try playing a game that looks like it predates Windows. A few downloaded it and quit in frustration from the steep learning curve and unintuitive user interface.
 

@@ -1,5 +1,6 @@
 ---
-title: "The First Post of Eugene Y. Q. Shen, First Posted by Eugene"
+title: The First Post of Eugene Y. Q. Shen, First Posted by Eugene
+description: A brief summary of Eugene Y. Q. Shen's brief life, up to the day he decided to publish this 2016 January blog post.
 ---
 
 I am Eugene Y. Q. Shen, and this is my first post.
