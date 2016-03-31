@@ -27,22 +27,27 @@
     <loc>https://eyqs.ca/projects/</loc>
     <image:image>
        <image:loc>https://eyqs.ca/assets/images/projects/tsukiyo.png</image:loc>
+       <image:title>Tsukiyo screenshot</image:title>
        <image:caption>Screenshot of Tsukiyo displaying a truncated icosidodecahedron</image:caption>
     </image:image>
     <image:image>
        <image:loc>https://eyqs.ca/assets/images/projects/cvx.png</image:loc>
+       <image:title>cvx screenshot</image:title>
        <image:caption>Screenshot of a webpage made by cvx compared to the original LaTeX</image:caption>
     </image:image>
     <image:image>
        <image:loc>https://eyqs.ca/assets/images/projects/grd.png</image:loc>
+       <image:title>grd screenshot</image:title>
        <image:caption>Screenshot of grd automatically writing input to a C script</image:caption>
     </image:image>
     <image:image>
        <image:loc>https://eyqs.ca/assets/images/projects/kbr.png</image:loc>
+       <image:title>kbr screenshot</image:title>
        <image:caption>Screenshot of my typing 'KBR IS THE BEST' in kbr</image:caption>
     </image:image>
     <image:image>
        <image:loc>https://eyqs.ca/assets/images/projects/tax.png</image:loc>
+       <image:title>Tax Avoider screenshot</image:title>
        <image:caption>Screenshot of Tax Avoider with enemies, explosions, and no taxes to avoid</image:caption>
     </image:image>
   </url>
