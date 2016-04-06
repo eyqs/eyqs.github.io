@@ -1,34 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-  xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-  <url>
-    <loc>https://eyqs.ca/</loc>
-  </url>
-  <url>
-    <loc>https://eyqs.ca/about/</loc>
-  </url>
-  <url>
-    <loc>https://eyqs.ca/blog/</loc>
-  </url>
-  <url>
-    <loc>https://eyqs.ca/blogs/1601-first-post/</loc>
-  </url>
-  <url>
-    <loc>https://eyqs.ca/blogs/1602-dwarf-fort/</loc>
-  </url>
-  <url>
-    <loc>https://eyqs.ca/cakes/</loc>
-  </url>
-  <url>
-    <loc>https://eyqs.ca/documents/</loc>
-  </url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url><loc>https://eyqs.ca/</loc></url>
+  <url><loc>https://eyqs.ca/about/</loc></url>
+  <url><loc>https://eyqs.ca/blog/</loc></url>
+  <url><loc>https://eyqs.ca/blogs/1601-first-post/</loc></url>
+  <url><loc>https://eyqs.ca/blogs/1602-dwarf-fort/</loc></url>
+  <url><loc>https://eyqs.ca/blogs/1603-teach-aide/</loc></url>
+  <url><loc>https://eyqs.ca/cakes/</loc></url>
+  <url><loc>https://eyqs.ca/documents/</loc></url>
   <url>
     <loc>https://eyqs.ca/projects/</loc>
     <image:image>
        <image:loc>https://eyqs.ca/assets/images/projects/tsukiyo.png</image:loc>
        <image:title>Tsukiyo screenshot</image:title>
        <image:caption>Screenshot of Tsukiyo displaying a truncated icosidodecahedron</image:caption>
+    </image:image>
+    <image:image>
+       <image:loc>https://eyqs.ca/assets/images/projects/2do.png</image:loc>
+       <image:title>2do screenshot</image:title>
+       <image:caption>Screenshot of 2do creating notifications in awesome</image:caption>
     </image:image>
     <image:image>
        <image:loc>https://eyqs.ca/assets/images/projects/cvx.png</image:loc>
@@ -51,13 +41,7 @@
        <image:caption>Screenshot of Tax Avoider with enemies, explosions, and no taxes to avoid</image:caption>
     </image:image>
   </url>
-  <url>
-    <loc>https://eyqs.ca/questions/</loc>
-  </url>
-  <url>
-    <loc>https://eyqs.ca/resume/</loc>
-  </url>
-  <url>
-    <loc>https://eyqs.ca/sitemap/</loc>
-  </url>
+  <url><loc>https://eyqs.ca/questions/</loc></url>
+  <url><loc>https://eyqs.ca/resume/</loc></url>
+  <url><loc>https://eyqs.ca/sitemap/</loc></url>
 </urlset>
