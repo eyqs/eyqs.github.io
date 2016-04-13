@@ -38,6 +38,7 @@
     <image:image>
        <image:loc>https://eyqs.ca/assets/images/projects/req.png</image:loc>
        <image:title>req screenshot</image:title>
+       <image:caption>Screenshot of req displaying all the APSC and CPSC courses at UBC</image:caption>
     </image:image>
     <image:image>
        <image:loc>https://eyqs.ca/assets/images/projects/tax.png</image:loc>
