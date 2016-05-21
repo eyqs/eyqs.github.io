@@ -1,5 +1,5 @@
-_site
-_drafts
+_site/
+_drafts/
 node_modules/
-.sass-cache
+.sass-cache/
 .jekyll-metadata
