@@ -7,7 +7,11 @@ description: "The home page of Eugene Y. Q. Shen, a wannabe programmer, awful pi
 github_username: eyqs
 
 # Build settings
+lsi:         false
 safe:        true
+incremental: false
+gist:
+  noscript:  false
 show_drafts: false
 timezone:    America/Vancouver
 permalink:   /blogs/:short_year:month-:title/

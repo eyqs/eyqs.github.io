@@ -122,6 +122,12 @@ description: The home page of Eugene Y. Q. Shen, a wannabe programmer, awful pia
 <section id="microprojects" class="col-xs-12 col-md-6">
   <h2>Projects</h2>
   <article>
+    <time>2016-06-03</time>
+    <p>Sokoban was a bad idea. Unlike sudoku or sokoban, there's no obvious beginner strategy (fill all cells that have only one valid choice; mine or flag all neighbouring cells if the numbers match) or even a guaranteed strategy (brute-force search through all valid boards; flag all the mines and mine everything else) since the search space is so big. All I could do was implement the game itself.</p>
+    <p>In other words, sol can't solve it. I'm quite disappointed in myself. After an entire month exploring Lisp &amp; friends, I didn't apply anything new except for useless GUI manipulations and superficial syntax differences. I didn't use any macros, any file I/O features, or any object-oriented aspects of (especially Common) Lisp. I still think Emacs is ridiculously awkward and too memory-intensive.</p>
+    <p>But I didn't completely waste my May. I've spent quite a while really trying to grok C pointers and I think I'm good enough to start working on <a href="https://github.com/eyqs/ftn/releases">FTN</a>, a Nethack clone right down to the language I'll code it in&mdash;not C++, not C#, not D, but good ol'-fashioned C.</p>
+  </article>
+  <article>
     <time>2016-05-27</time>
     <p>After successfully creating a dumb minesweeper solver in MIT Scheme without using <a href="http://www.gnu.org/software/mit-scheme/documentation/mit-scheme-user/Edwin.html">Edwin</a>, graphics (like in Racket), or the built-in debugger, I caved in and installed Emacs for its integration with <a href="https://common-lisp.net/project/slime/">SLIME</a> and thus basically every Common Lisp compiler there is. I'm gonna spend at least half a week getting used to all these stupid chords before I write a single line of Sokoban-specific code!</p>
   </article>
