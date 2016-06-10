@@ -4547,6 +4547,18 @@ time
 {
     font-weight: bold;
 }
+h1.page-title
+{
+    font-size: 36px;
+}
+h1.section-title
+{
+    font-size: 24px;
+}
+h2.post-meta
+{
+    font-size: 18px;
+}
 .name
 {
     font-size: 250%;

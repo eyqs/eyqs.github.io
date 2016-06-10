@@ -13,6 +13,7 @@ incremental: false
 gist:
   noscript:  false
 show_drafts: false
+exclude:     [node_modules]
 timezone:    America/Vancouver
 permalink:   /blogs/:short_year:month-:title/
 
@@ -26,7 +27,7 @@ defaults:
       author: "Eugene Y. Q. Shen"
   -
     scope:
-      path: "blogs"
+      type: "posts"
     values:
       layout: "post"
       excerpt_separator: <!--more-->

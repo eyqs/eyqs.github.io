@@ -2,11 +2,11 @@
 title: Eugene Y. Q. Shen
 description: The home page of Eugene Y. Q. Shen, a wannabe programmer, awful pianist, and first-year Engineering student. Welcome to my site on the web!
 ---
-<header role="main" class="col-xs-12">
+<section role="main" class="col-xs-12">
   <p>Hi! Welcome to my home on the world wide web.</p>
   <p>I'm Eugene Y. Q. Shen, a first year engineering student at <a href='https://www.ubc.ca/'>UBC</a>, the University of British Columbia.</p>
   <p>You can also find me on <a href='https://github.com/eyqs/'>GitHub</a> and <a href='https://www.linkedin.com/in/eugeneyqshen/'>LinkedIn</a>.</p>
-  <p>But you can email me at <a href="mailto:eugene@eyqs.ca">eugene@eyqs.ca</a>. Come at me, spambots; I'm not scared!</p>
+  <p>But you can email me at <a rel="author" href="mailto:eugene@eyqs.ca">eugene@eyqs.ca</a>. Come at me, spambots; I'm not scared!</p>
   <p>The links on the top of the site will take you magical places.</p>
   <table id="sitemap" class="table-condensed">
     <tr>
@@ -14,7 +14,7 @@ description: The home page of Eugene Y. Q. Shen, a wannabe programmer, awful pia
       <td>keeps you here, where I post a new microupdate every whenever I want.</td>
     </tr>
     <tr>
-      <td><a href="{{ "/about/" | prepend: site.baseurl }}">About</a>:</td>
+      <td><a rel="author" href="{{ "/about/" | prepend: site.baseurl }}">About</a>:</td>
       <td>takes you to a longer description of me and my life.</td>
     </tr>
     <tr>
@@ -46,139 +46,141 @@ description: The home page of Eugene Y. Q. Shen, a wannabe programmer, awful pia
       <td>takes you to a map of my site, with links to all my webpages.</td>
     </tr>
   </table>
-</header>
+</section>
 
 <section id="micronews" class="col-xs-12 col-md-6">
-  <h2>News</h2>
+  <h1 class="section-title">News</h1>
   <article>
-    <time>2016-05-22</time>
+    <time pubdate="pubdate">2016-05-22</time>
     <p>After a year of not doing anything music-related, I forgot why I chose <a href="http://www.rosegardenmusic.com">Rosegarden</a> to replace Finale, which doesn't run on Linux. Its distinguishing characteristic seems to be its MIDI sequencer, but I'm not a MIDI sequencer. Then I discovered that, since Rosegarden uses <a href="http://lilypond.org">LilyPond</a> to print its music anyway, I might as well work with that directly.</p>
     <p>It's the first day and it's amazing. The syntax feels so clean and pure, there's no danger of accidentally moving something that screws up the layout a hundred bars later, and I immediately took advantage of wrapping a 8-bar melody in a variable and simply referring to that variable instead of copying all eight bars over and over again! There's no way I'll ever go back to Rosegarden or even Finale, whose WYSIWYG editors often give me what I'd rather not get, and all the time wasted dragging and misclicking and reformatting might really be slower than directly typing in the notes. All you need is LilyPond, and a modern text editor, and a PDF reader, and a MIDI synthesizer, and maybe throw it into version control to boot.</p>
+  </article>
   <article>
-    <time>2016-05-10</time>
+    <time pubdate="pubdate">2016-05-10</time>
     <p>I took the challenge exam for CPSC 110 yesterday and didn't do so well. More specifically I almost puked and the invigilator had to leave the room to get me water from the special Water Club cooler, membership at $35/year. I think my coughing really got to the guy across me cause I couldn't ever see the clock without meeting his deadly glare of pure hatred after the almost-puking thing. At least now I've really got nothing left to do, and I'll never follow those recipes ever again! They said that we would apply what we learned in CPSC 110 to all sorts of problems in life, but nobody's given me a data-driven template about handling exam stress, so I'm stuck.</p>
     <p>I did make a <a href="https://github.com/eyqs/dot/blob/master/misc/install.txt">template for installing Arch Linux</a>, by which I mean I commented my own bash history after setting up my whole laptop, so theoretically all I have to do for a fresh install is copy all the commands in that file. Realistically I'll end up reading the <a href="https://wiki.archlinux.org/index.php/beginners'_guide">Beginners' Guide</a> anyway because I don't trust myself and I never remember this stuff anyway.</p>
   </article>
   <article>
-    <time>2016-04-27</time>
+    <time pubdate="pubdate">2016-04-27</time>
     <p>I'm free! I've posted my IB notes and the physics notes (that I finished writing after my final. why did i even bother.) to my <a href="{{ "/documents/" | prepend: site.baseurl }}">documents</a> page, because the May Assessments are near so my IB notes might help, and because I just finished writing my physics notes, after my final, why did i even bother, etc. I'll post a little thing about all my hackathon experiences soon, but I won't post here that I've posted the post, since honestly, I did that just because I never have any actual news to post here, and I've got a major site rehaul, with no more of these micronews posts, on my mind.</p>
   </article>
   <article>
-    <time>2016-04-21</time>
+    <time pubdate="pubdate">2016-04-21</time>
     <p>One more final tomorrow and the final final on Monday at 8:30 am. But the <a href="http://www.fishackathon.co/vancouver/">Fishackathon</a> goes from tomorrow to Sunday, and I already RSVP'd. Have I studied enough to go? Have I studied at all? Stay tuned to find out...</p>
   </article>
   <article>
-    <time>2016-04-15</time>
+    <time pubdate="pubdate">2016-04-15</time>
     <p>Today was the APSC 160 final exam, which I had the pleasure of invigilating. Walking around in boredom for 150 minutes was definitely not a pleasure, but it was an experience. Now I'm glad they never asked me to invigilate any of the midterms.</p>
     <p>The <a href="https://courses.students.ubc.ca/cs/main">UBC Course Schedule</a> also added the 2016 Winter courses today. That's a bit unfortunate I released <a href="https://github.com/eyqs/req/releases/tag/v1.1">req v1.1</a> yesterday, which made it automagically output a list of all terms each course in UBC is offered, and now I'll have to update that list right after releasing it...</p>
   </article>
   <article>
-    <time>2016-03-31</time>
+    <time pubdate="pubdate">2016-03-31</time>
     <p>I give up! I applied to a million jobs through <a href="https://angel.co/">AngelList</a>, UBC's <a href="http://students.ubc.ca/career/campus-experiences/work-learn/">Work Learn Program</a>, and websites of cool companies before realizing that I'm grossly underqualified for basically everything.</p>
     <p>So I'll probably spend my summer learning actual development technologies, taking summer courses, and hopefully getting a decent teaching assistantship. Instead of worrying about jobs I can't get, here's my <a href="{{ "/blogs/1603-teach-aide/" | prepend: site.baseurl }}">March web log</a> about the job I already have.</p>
   </article>
   <article>
-    <time>2016-03-05</time>
+    <time pubdate="pubdate">2016-03-05</time>
     <p>It's interesting how everybody seems to go to the UBC libraries for the library atmosphere, not the library books. Well, for the first time in literally half a decade, I went to the library today for non-school-related purposes, and got K&amp;R's <em>The C Programming Language</em>, a two-volume <em>Keyboard Harmony and Improvisation</em>, and <em>Cracking the Coding Interview</em>. Now you know what I'll be doing for the next month...</p>
   </article>
   <article>
-    <time>2016-02-29</time>
+    <time pubdate="pubdate">2016-02-29</time>
     <p>Happy leap-day! Temporary <a href="{{ "/blogs/1602-dwarf-fort/" | prepend: site.baseurl }}">blog-post for February</a> is up, half-written, and without images, because I'm still planning out what my web-site git-repository structure should be. Also I feel like I should let my copy-paste site-building script handle image-inserting, but a little part of me dies inside whenever I re-open that script and I've used up my hyphen-quota for the day.</p>
   </article>
   <article>
-    <time>2016-02-21</time>
+    <time pubdate="pubdate">2016-02-21</time>
     <p>Committing to my polytope project every day for 9 days, making it to version 0.98, and aiming for a first release on Tuesday, is good. Forgetting that midterms are still happening (why?!) is not good. First release will be on Thursday, be right back while I cram a spam jam tram</p>
   </article>
   <article>
-    <time>2016-02-11</time>
+    <time pubdate="pubdate">2016-02-11</time>
     <p>The worst thing is when you don't look sick enough for your doctor to write you a note. The second-worst thing is when you miraculously recover the day after having three midterms in a row. The third-worst thing is when you have to mark 349 APSC 160 midterms tomorrow...</p>
   </article>
   <article>
-    <time>2016-02-05</time>
+    <time pubdate="pubdate">2016-02-05</time>
     <p>8 a.m. classes: <br \>
     They're the best, cause buses aren't <br \>
     Packed like canned sardines.</p>
   </article>
   <article>
-    <time>2016-01-31</time>
+    <time pubdate="pubdate">2016-01-31</time>
     <p>Check out my blog―it's not under construction any more, it's <a href="{{ "/blogs/1601-first-post/" | prepend: site.baseurl }}">my first post</a>! Well, actually, it's still under construction, but...</p>
   </article>
   <article>
-    <time>2016-01-17</time>
+    <time pubdate="pubdate">2016-01-17</time>
     <p>I woke up past 10:00, today being a Sunday, despite mentally alarming (I don't believe in external alarm clocks) myself to wake up at 8:00, since I hadn't submitted my second solution yet!</p>
     <p>It took me 20 minutes to realize that I forgot to divide (a+b) by 2 when calculating an average, after which my solution passed all the tests, half an hour after contest close. Hopefully, I'll be less stupid in next year's Hacker Cup...</p>
   </article>
   <article>
-    <time>2016-01-08</time>
+    <time pubdate="pubdate">2016-01-08</time>
     <p>Everybody that knows me knows that I don't have a Facebook account... until today, the day of the <a href="https://www.facebook.com/hackercup/">Facebook Hacker Cup</a> qualification round!</p>
     <p>If you want to add me as a friend on Facebook, you'll have to be a friend of one of my friends. But I promise I'll never friend anyone, hehe.</p>
   </article>
   <article>
-    <time>2016-01-03</time>
+    <time pubdate="pubdate">2016-01-03</time>
     <p>Back to school! I got my TA assignment today for APSC160: no labs, no tutorials, no office hours... just marking. Last term, there were six markers handling 22 lab sections, but there's only four markers this term. On the bright side, most of our marking will be during the first eight weeks.</p>
   </article>
 </section>
 
 <section id="microprojects" class="col-xs-12 col-md-6">
-  <h2>Projects</h2>
+  <h1 class="section-title">Projects</h1>
   <article>
-    <time>2016-06-03</time>
+    <time pubdate="pubdate">2016-06-03</time>
     <p>Sokoban was a bad idea. Unlike sudoku or sokoban, there's no obvious beginner strategy (fill all cells that have only one valid choice; mine or flag all neighbouring cells if the numbers match) or even a guaranteed strategy (brute-force search through all valid boards; flag all the mines and mine everything else) since the search space is so big. All I could do was implement the game itself.</p>
     <p>In other words, sol can't solve it. I'm quite disappointed in myself. After an entire month exploring Lisp &amp; friends, I didn't apply anything new except for useless GUI manipulations and superficial syntax differences. I didn't use any macros, any file I/O features, or any object-oriented aspects of (especially Common) Lisp. I still think Emacs is ridiculously awkward and too memory-intensive.</p>
     <p>But I didn't completely waste my May. I've spent quite a while really trying to grok C pointers and I think I'm good enough to start working on <a href="https://github.com/eyqs/ftn/releases">FTN</a>, a Nethack clone right down to the language I'll code it in&mdash;not C++, not C#, not D, but good ol'-fashioned C.</p>
   </article>
   <article>
-    <time>2016-05-27</time>
+    <time pubdate="pubdate">2016-05-27</time>
     <p>After successfully creating a dumb minesweeper solver in MIT Scheme without using <a href="http://www.gnu.org/software/mit-scheme/documentation/mit-scheme-user/Edwin.html">Edwin</a>, graphics (like in Racket), or the built-in debugger, I caved in and installed Emacs for its integration with <a href="https://common-lisp.net/project/slime/">SLIME</a> and thus basically every Common Lisp compiler there is. I'm gonna spend at least half a week getting used to all these stupid chords before I write a single line of Sokoban-specific code!</p>
   </article>
   <article>
-    <time>2016-05-20</time>
+    <time pubdate="pubdate">2016-05-20</time>
     <p>Still struggling, sol. Sudoku's settled. Sweeper (mine)'s started, style: (MIT) Scheme. Screen simulacrum (image) support? Sorry, sadly scant. Sucks.</p>
   </article>
   <article>
-    <time>2016-05-14</time>
+    <time pubdate="pubdate">2016-05-14</time>
     <p>The hackathon for this week: <a href="https://github.com/eyqs/sol/releases/">sol</a>, a sudoku solver copied straight out of CPSC 110. I ported it to legit Racket (basically, I typed "#lang racket" at the top), made it render pictures of the sudoku board, and tried to make it use "human strategies" instead of backtracking search. The human strategies couldn't solve the easy puzzle and I spent half an hour trying to find a puzzle it could solve. Fun!</p>
   </article>
   <article>
-    <time>2016-05-08</time>
+    <time pubdate="pubdate">2016-05-08</time>
     <p>As mentioned in my <a href="{{ "/blogs/1604-hard-ware/" | prepend: site.baseurl }}">April blog post</a>, after nwHacks and Fishackathon, I realized that I'd have to hack a lot more thons before becoming a productive member of society, and so I started that a week ago by completely reinstalling my Arch Linux! It took way longer than a day, but I can finally call people in Skype and open the simulator in Android Studio now...</p>
   </article>
   <article>
-    <time>2016-04-11</time>
+    <time pubdate="pubdate">2016-04-11</time>
     <p>Finals are here! Maybe someone's trying to tell me something: my <a href="https://github.com/eyqs/req/releases/">prereq tree creator</a> ran into an infinite loop because I set APSC 101 as a prerequisite for itself, and my APSC 101 final is tomorrow! Instead of studying, I spent my time making this. Not bad for a weekend, not good for my grades...</p>
   </article>
   <article>
-    <time>2016-03-21</time>
+    <time pubdate="pubdate">2016-03-21</time>
     <p>It took 3 months, but my site is finally constructed. None of the pages in IABCDPQRS are under construction anymore! I mean, they'll always be under construction, but not "under construction" under construction. Much thanks goes to my <a href="https://github.com/eyqs/cvx/releases/">ridiculously silly LaTeX-to-HTML translater</a>, which is honestly just a find-and-replace script written in Haskell.</p>
     <p>But with that, I've the last unconstructed piece of my site, <a href="{{ "/resume/" | prepend: site.baseurl }}">my resume</a>, on as both a LaTeX PDF and a hideous HTML horror. You know what that means―it's time to find a job.</p>
   </article>
   <article>
-    <time>2016-03-14</time>
+    <time pubdate="pubdate">2016-03-14</time>
     <p>First, I just copied my navbar and footer manually, to every single page. Then I got tired of changing them, so I used Apache's Server Side Includes. But GitHub Pages didn't support them, so I scripted a terrible abomination that literally copied the navbar code into every single file at build time. Recently, I realized what horror I had made, and used jQuery .load() instead. Finally, I remembered that GitHub Pages had native support for <a href="https://jekyllrb.com/">Jekyll</a>, which I had previously written off as "too complicated".</p>
     <p>Today, I'm glad to say that I've deleted my disgusting script because Jekyll is exactly what I wanted my script to be! The site still looks exactly the same, but don't be fooled―it's all served by Jekyll now.</p>
+  </article>
   <article>
-    <time>2016-02-28</time>
+    <time pubdate="pubdate">2016-02-28</time>
     <p>After almost 24 hours of non-stop <a href="https://www.nwhacks.io/">nwHacking</a>, I have finally realized that hardware hackathons have had hella heck hard hopeless horrible hardships. You'll read all about it in my March blog post, but I'll try to get Android NFC and Bluetooth communication working on my own, and shall surely save some stress the subsequent season shaping software, not HARDware!</p>
   </article>
   <article>
-    <time>2016-02-25</time>
+    <time pubdate="pubdate">2016-02-25</time>
     <p>One more, pushed: the first release of <a href="https://github.com/eyqs/tsukiyo/releases/">Tsukiyo</a>, formerly known as polytope!</p>
   </article>
   <article>
-    <time>2016-02-13</time>
+    <time pubdate="pubdate">2016-02-13</time>
     <p>Now that Reading Week has officially begun, I commit (no pun intended) to push a commit of my polytope project every single day from now until the official end of Reading Week next Sunday. That'll bring it to version 0.99, which means I'll have just one more push until first release! Most likely, I'll lose interest halfway through the week or get completely burnt out and not release version 1.00 until after finals...</p>
   </article>
   <article>
-    <time>2016-01-26</time>
+    <time pubdate="pubdate">2016-01-26</time>
     <p>After visiting my optometrist yesterday and discovering my eyesight had deteriorated by another 0.25 dioptres in spite of orthokeratology, I finally declared that I would take a break every 30 minutes from staring at computer screens. Hence comes forth <a href="https://github.com/eyqs/2do/releases/">2do</a>, in which I unleash the power of D-Bus notifications to notificationize me.</p>
   </article>
   <article>
-    <time>2016-01-22</time>
+    <time pubdate="pubdate">2016-01-22</time>
     <p>I've finally run out of things to automate. Starting with a script to copy the navbar and footer across all my webpages I wrote exactly two weeks ago, I've written a script to tally things for when I can't be bothered to find pen and paper, a script to check all my repos' git status for uncommitted changes, a script to automatically compile, execute, and move between APSC160 labs I need to mark, and even a script to calculate e.g. direction cosines or cross product for Mastering[SubjectName] and WebWork!</p>
     <p>All those scripts are in Python, and there would've been one more to automatically compile my C algorithm implementations into shared objects, if I hadn't realized that's basically a makefile...</p>
   </article>
   <article>
-    <time>2016-01-01</time>
+    <time pubdate="pubdate">2016-01-01</time>
     <p>I finally bought my own domain, at <a href="http://eyqs.ca/">http://eyqs.ca/</a>, although all it does is point to the GitHub Pages site at <a href="http://eyqs.github.io/">http://eyqs.github.io/</a>.</p>
     <p>I bought the domain for a year from <a href="https://www.namecheap.com/">Namecheap</a> and transferred the DNS to <a href="https://www.cloudflare.com/">CloudFlare</a>, all for under $12.00 USD (but the exchange rate...)</p>
   </article>

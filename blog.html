@@ -3,11 +3,15 @@ title: Blog
 description: The blog of Eugene Y. Q. Shen, where various boring web logs about school, life, and video games are posted every month.
 ---
 <section role="main" class="col-xs-12">
-  <p class="rss-subscribe">(Subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">by RSS!</a>)</p>
+  <p class="rss-subscribe">(Subscribe <a rel="alternate" href="{{ "/feed.xml" | prepend: site.baseurl }}">by RSS!</a>)</p>
   {% for post in site.posts %}
-    <h3>{{ post.title }}</h3>
-    <h4 class="post-meta"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y %B" }}</time></h4>
-    {{ post.excerpt }}
-    <a class="post-link" href="{{ site.baseurl }}{{ post.url }}">Read more »</a>
+    <article>
+      <header>
+        <h1 class="section-title">{{ post.title }}</h1>
+        <time datetime="{{ post.date | date_to_xmlschema }}" pubdate="pubdate">{{ post.date | date: "%Y %B" }}</time>
+      </header>
+      {{ post.excerpt }}
+      <a class="post-link" href="{{ site.baseurl }}{{ post.url }}">Read more »</a>
+    </article>
   {% endfor %}
 </section>
