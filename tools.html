@@ -1,0 +1,25 @@
+---
+title: Tools
+description: Some JavaScript tools written by Eugene Y. Q. Shen expressly for your personal convenience and comfort.
+---
+<section role="main" class="col-xs-12">
+  <h1 class="section-title">Tile Planner</h1>
+  <p>Tile Planner is a tool to help you plan out how to lay out your tiles on your floor. Simply enter your floor length and width (in pixels, of course) and the length and width of the tile you plan to use to tile it with. At the moment Tile Planner doesn't actually help you plan anything at all, but in the future it might!</p>
+	<script src="{{ "/tools/tile.js" | prepend: site.baseurl }}"></script>
+  <form id="form" onsubmit="initApp(document.getElementById('form'),
+                                    document.getElementById('nocanvas'),
+                                    document.getElementById('canvas'));
+                            return false;">
+    Floor length:<br>
+    <input type="number" id="floorheight"><br>
+    Floor width:<br>
+    <input type="number" id="floorwidth"><br>
+    Tile length:<br>
+    <input type="number" id="tileheight"><br>
+    Tile width:<br>
+    <input type="number" id="tilewidth"><br>
+    <input type="submit" value="Launch">
+  </form>
+  <p id="nocanvas"></p>
+  <canvas id="canvas"></canvas>
+</section>
