@@ -116,7 +116,7 @@ make examples for each base case and self-reference case, at least two long
 reference relationship: the use of a non-primitive type in a type comment
 natural helper: function that matches reference relationship in type comment
 helper function call: if more than one primitive function needs to operate
-	on the referred-to type, call another function based on the natural helper
+    on the referred-to type, call another function based on the natural helper
 
     Module 5A: Naturals
 

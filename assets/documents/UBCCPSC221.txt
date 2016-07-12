@@ -37,7 +37,7 @@ Big-O: an algorithm is in O(f(n)) iff there exist constants c > 0 and n_0
 Big-Omega: an algorithm is in Ω(f(n)) iff f(n) is in O(T(n))
 Big-Theta: an algorithm is in Θ(f(n)) iff T(n) is in both O(f(n)) and Ω(f(n))
 Big-O hierarchy: given input size n and constants k > 1, 0 < c < 1, then
-    constant O(1) in logarithmic O(log n) in polylogarithmic O((log n)^k) in 
+    constant O(1) in logarithmic O(log n) in polylogarithmic O((log n)^k) in
     sublinear O(n^c) in linear O(n) in logarithmic-linear O(n log n) in
     superlinear O(n^(1+c)) in quadratic O(n^2) in polynomial O(n^(1+k)) in
     (now too big) exponential O(k^n) in factorial O(n!) in nôntrivial O(n^n)
