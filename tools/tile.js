@@ -1,5 +1,5 @@
 /* Tile Planner v0.1
- * Copyright © 2016 Eugene Y. Q. Shen.
+ * Copyright (c) 2016 Eugene Y. Q. Shen.
  *
  * Tile Planner is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -177,7 +177,7 @@ function drawApp() {
     ctx.fillText("Full tiles:", sidebar, 40);
     ctx.fillText("Part tiles:", sidebar, 180);
     ctx.font = "8px sans-serif";
-    ctx.fillText("Copyright © 2016 Eugene Y. Q. Shen.", sidebar, 390);
+    ctx.fillText("Copyright (c) 2016 Eugene Y. Q. Shen.", sidebar, 390);
     ctx.fillStyle = "#CCCCCC";
     ctx.fillRect(fxstart, fystart, fwidth, fheight);
     ctx.stroke();

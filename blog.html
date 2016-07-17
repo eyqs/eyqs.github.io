@@ -11,7 +11,7 @@ description: The blog of Eugene Y. Q. Shen, where various boring web logs about 
         <time datetime="{{ post.date | date_to_xmlschema }}" pubdate="pubdate">{{ post.date | date: "%Y %B" }}</time>
       </header>
       {{ post.excerpt }}
-      <a class="post-link" href="{{ site.baseurl }}{{ post.url }}">Read more »</a>
+      <a class="post-link" href="{{ site.baseurl }}{{ post.url }}">Read more &rarr;</a>
     </article>
   {% endfor %}
 </section>
