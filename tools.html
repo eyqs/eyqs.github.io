@@ -1,8 +1,19 @@
 ---
 title: Tools
-description: Some JavaScript tools written by Eugene Y. Q. Shen expressly for your personal convenience and comfort.
+description: Some tools written by Eugene Y. Q. Shen expressly for your personal convenience and comfort.
 ---
 <section role="main" class="col-xs-12">
+  <h1 class="section-title">Arch Linux Wifi</h1>
+  <p>This <a href="https://raw.githubusercontent.com/eyqs/dot/master/misc/wifi.txt">Arch Linux wifi configuration file</a> guides you through the steps of configuring your Arch Linux wifi configuration for wireless networking with your home, ubcsecure, and eduroam networks.</p>
+  <ol>
+    <li>Run <pre>ip link</pre> to find your wireless interface name. Mine's <pre>wlp5s0</pre>.</li>
+    <li>Download the file linked above as <pre>/etc/wpa_supplicant/wpa_supplicant-wlp5s0.conf</pre>, where you replace <pre>wlp5s0</pre> with the name of your wireless interface.</li>
+    <li>WPA-PSK networks have the absolute minimum level of authentication&mdash;a single passphrase, often provided by the internet service provider. These are common for small home networks, so you'll find yourself adding new WPA-PSK networks in the file relatively often. Run <pre>wpa_passphrase ssid password</pre> with the actual SSID and password to get the PSK, then paste the SSID and PSK into the template in the file.</li>
+    <li>UBC Secure uses the RADIUS protocol for authentication, so instead of a single passphrase, you'll have to have a campus-wide login account to connect to it. Run <pre>echo -n password | iconv -t utf16le | openssl md4</pre> with your actual CWL password to hash it, then paste your CWL ID and hashed password into the template in the file.</li>
+    <li>Some notes: the purpose of hashing is to protect your CWL account, not to secure your wifi access. If you don't already have the Thawte certificate, just search <a href="https://search.thawte.com/support/ssl-digital-certificates/index?page=content&id=AR1530">Thawte Premium Server CA</a> and download it as <pre>/etc/ssl/certs/Thawte_Premium_Server_CA.pem</pre>. No, I have no idea why Thawte's website organization is so confusing.</li>
+    <li>eduroam works the same way as UBC Secure at UBC, except your identity becomes <pre>username@ubc.ca</pre>. With this setup, you should be able to visit <a href="https://www.eduroam.org/">thousands of eduroam-connected campuses</a> across the world and automatically connect to wifi!</li>
+  </ol>
+
   <h1 class="section-title">Tile Planner</h1>
   <p>Tile Planner is a tool to help you plan out how to lay out your tiles on your floor. Simply enter your floor length and width (in pixels, of course) and the length and width of the tile you plan to use to tile it with. At the moment Tile Planner doesn't actually help you plan anything at all, but in the future it might!</p>
   <script src="{{ "/tools/tile.js" | prepend: site.baseurl }}"></script>
