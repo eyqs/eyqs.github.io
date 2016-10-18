@@ -47,7 +47,7 @@ function Point(x, y, num) {
 }
 
 /* Return the cursor position relative to the canvas */
-function getCursorPosition(e) {
+function getCursorPositionTile(e) {
     var x, y;
     if (e.pageX != undefined && e.pageY != undefined) {
         x = e.pageX;
@@ -64,8 +64,8 @@ function getCursorPosition(e) {
 }
 
 /* Decide what to do when user clicks */
-function onClick(e) {
-    var pos = getCursorPosition(e);
+function onClickTile(e) {
+    var pos = getCursorPositionTile(e);
     if (selected) {
         if (fxstart < pos.x && fxend > pos.x &&
             fystart < pos.y && fyend > pos.y)
@@ -163,7 +163,7 @@ function drawTile(t) {
 }
 
 /* Draw the entire application on the canvas */
-function drawApp() {
+function drawFloor() {
     ctx.clearRect(0, 0, swidth, sheight);
     ctx.fillStyle = "#000000";
     ctx.strokeRect(0, 0, swidth, sheight);
@@ -186,7 +186,7 @@ function drawApp() {
 }
 
 /* Initialize the application */
-function initApp(formElement, messageElement, canvasElement) {
+function initTile(formElement, messageElement, canvasElement) {
     c = canvasElement;
     ctx = c.getContext("2d");
     if (!ctx)
@@ -209,7 +209,7 @@ function initApp(formElement, messageElement, canvasElement) {
         floor = [new Point(0, 0, 0)];
         c.width = swidth;
         c.height = sheight;
-        c.addEventListener("click", onClick, false);
-        drawApp();
+        c.addEventListener("click", onClickTile, false);
+        drawFloor();
     }
 }
