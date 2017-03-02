@@ -6,7 +6,7 @@ posts = ['1601-first-post/', '1602-dwarf-fort/', '1603-teach-aide/',
          '1604-hard-ware/', '1605-may-exams/', '1606-elap-rules/',
          '1607-intro-books/', '1608-first-year/', '1609-lack-code/',
          '1610-net-hack/', '1611-iron-pin/', '1612-first-coop/',
-         '1701-being-late/']
+         '1701-being-late/', '1702-none-phone/']
 if __name__ == '__main__':
     for page in pages:
         urllib.request.urlopen('http://web.archive.org/save/' +
