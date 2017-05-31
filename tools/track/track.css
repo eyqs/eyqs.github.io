@@ -1,0 +1,34 @@
+h1 {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+#wrapper {
+  margin: 0 auto;
+  max-width: 40em;
+}
+
+.banner {
+  display: flex;
+  justify-content: space-between;
+}
+
+#track {
+  display: flex;
+}
+
+input[type="text"] {
+  margin: 0 1em 0 0;
+  flex: 1;
+}
+
+#main {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cell {
+  flex-basis: 3em;
+  border: 0.1em black solid;
+  padding: 0.2em;
+}
