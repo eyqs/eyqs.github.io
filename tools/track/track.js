@@ -23,21 +23,64 @@ let current_list = [];
 // utility functions
 
 function clickCell(activity) {
-  return startActivity(activity);
+  return startAction({activity});
+}
+
+function clickChain(chain) {
+  const next = [];
+  for (const activity of chain) {
+    next.push(activity);
+  }
+  return startAction({activity, next});
 }
 
 function submitInput() {
   const form = document.getElementById("track");
-  const value = form.elements.activity.value;
+  let activity = form.elements.activity.value;
+  const next = activity.split(",");
+  if (next.length > 1) {
+    activity = next[0];
+    next.splice(0, 1);
+  }
   form.elements.activity.value = "";
-  return startActivity(value);
+  return startAction({activity, next});
 }
 
-function clickBanner(index) {
-  const end_time = new Date().getTime();
-  const {activity, time: start_time} = current_list[index];
+function toggleBanner(index) {
+  const current_time = new Date().getTime();
+  const {activity, time, paused} = current_list[index];
+  current_list[index].time = current_time;
+  current_list[index].paused = !paused;
+  if (paused) {
+    exportData();
+    render();
+  } else {
+    return stopAction({activity, time}, current_time);
+  }
+}
+
+function stopBanner(index) {
+  const current_time = new Date().getTime();
+  const {activity, time, paused} = current_list[index];
   current_list.splice(index, 1);
-  return stopActivity(activity, start_time, end_time);
+  if (paused) {
+    exportData();
+    render();
+  } else {
+    return stopAction({activity, time}, current_time);
+  }
+}
+
+function nextBanner(index) {
+  const current_time = new Date().getTime();
+  const {activity, time, paused, next} = current_list[index];
+  current_list.splice(index, 1);
+  if (!paused) {
+    stopAction({activity, time}, current_time);
+  }
+  if (next.length > 0) {
+    return startAction({activity: next[0], next: next.slice(1)});
+  }
 }
 
 function sortData() {
@@ -67,23 +110,24 @@ function resetData() {
 }
 
 
-// start tracking the given activity
+// start tracking the given action
 
-function startActivity(activity) {
-  const time = new Date().getTime();
-  current_list.push({activity, time});
+function startAction(action) {
+  action.time = new Date().getTime();
+  action.paused = false;
+  current_list.push(action);
   exportData();
   render();
 }
 
 
-// stop tracking the given activity
+// stop tracking the given action
 
-function stopActivity(activity, start_time, end_time) {
-  if (past_list[activity]) {
-    past_list[activity].push({start_time, end_time});
+function stopAction(action, end_time) {
+  if (past_list[action.activity]) {
+    past_list[action.activity].push({start_time: action.time, end_time});
   } else {
-    past_list[activity] = [{start_time, end_time}];
+    past_list[action.activity] = [{start_time: action.time, end_time}];
   }
   exportData();
   render();
@@ -99,19 +143,31 @@ function render() {
   const main_element = document.getElementById("main");
   const main_html = [];
   for (const activity of activity_list) {
-    main_html.push(`<div class="cell">${activity}</div>\n`);
+    main_html.push(`<div class="cell">${activity} ${past_list[activity].length}</div>\n`);
   }
   main_element.innerHTML = main_html.join("");
 
   // render the banner
   const banner_element = document.getElementById("banner");
   const banner_html = [];
-  for (const current of current_list) {
-    const time_string = new Date(current.time).toString().split(" ")[4];
+  for (const action of current_list) {
+    const banner_buttons = [];
+    let time_string = new Date(action.time).toString().split(" ")[4];
+    if (action.paused) {
+      time_string = "paused";
+      banner_buttons.push("<div class='banner-button'>\u25B6</div>");
+    } else {
+      banner_buttons.push("<div class='banner-button'>\u25AE\u25AE</div>");
+    }
+    banner_buttons.push("<div class='banner-button'>\u25FC</div>");
+    if (action.next && action.next.length > 0) {
+      banner_buttons.push("<div class='banner-button'>\u2794</div>");
+    }
     banner_html.push(
       `<div class="banner">
-         <div class="banner-activity">${current.activity}</div>
+         <div class="banner-activity">${action.activity}</div>
          <div class="banner-time">${time_string}</div>
+         <div class="banner-controls">${banner_buttons.join("")}</div>
        </div>`
     );
   }
@@ -123,8 +179,12 @@ function render() {
       () => clickCell(activity_list[i]));
   }
   for (let i = 0; i < current_list.length; i++) {
-    banner_element.children[i].addEventListener("click",
-      () => clickBanner(i));
+    const controls = banner_element.children[i].children[2];
+    try {
+      controls.children[0].addEventListener("click", () => toggleBanner(i));
+      controls.children[1].addEventListener("click", () => stopBanner(i));
+      controls.children[2].addEventListener("click", () => nextBanner(i));
+    } catch (ignore) {}
   }
 }
 

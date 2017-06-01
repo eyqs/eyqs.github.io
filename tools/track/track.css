@@ -13,8 +13,26 @@ h1 {
   justify-content: space-between;
 }
 
+.banner-activity {
+  flex: 1;
+}
+
+.banner-controls {
+  margin: 0 0 0 1em;
+}
+
+.banner-button {
+  display: inline-block;
+  height: 1.5em;
+  width: 1.5em;
+  line-height: 1.5em;
+  border: 0.1em black solid;
+  text-align: center;
+}
+
 #track {
   display: flex;
+  margin: 2em 0;
 }
 
 input[type="text"] {
