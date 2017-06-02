@@ -1,4 +1,4 @@
-/* Tiny Tracker v0.1
+/* Tiny Tracker v0.2
  * Copyright (c) 2017 Eugene Y. Q. Shen.
  *
  * Tiny Tracker is free software: you can redistribute it and/or
@@ -16,92 +16,111 @@
  */
 
 const LOCAL_STORAGE_NAME = "eyqs_track_data";
-let past_list = {};
+const IGNORE_EVENT_TIME = 5000;
+const EMPTY_JSON_LENGTH = 64;
+// "name": [{start_time: 0, end_time: 7}, ...]
+let past_dict = {};
+// "name": {activity: "name", instant: true, count: 8}
+let cell_dict = {};
+// "name, foo, bar": {chain: "name, foo, bar", activity: "name",
+//                    next: ["foo", "bar"], count: 32}
+let chain_dict = {};
+// {activity: "name", time: 9, paused: true, next: ["next"]}
 let current_list = [];
 
 
 // utility functions
 
-function clickCell(activity) {
-  return startAction({activity});
+function clickCell(cell) {
+  return startAction({activity: cell.activity}, cell.instant);
 }
 
 function clickChain(chain) {
-  const next = [];
-  for (const activity of chain) {
-    next.push(activity);
-  }
-  return startAction({activity, next});
+  return startAction({activity: chain.activity, next: chain.next}, false);
 }
 
 function submitInput() {
   const form = document.getElementById("track");
-  let activity = form.elements.activity.value;
-  const next = activity.split(",");
-  if (next.length > 1) {
-    activity = next[0];
-    next.splice(0, 1);
-  }
+  const value = form.elements.activity.value;
+  const instant = form.elements.instant.checked;
+  const split = value.split(",").map((item) => item.trim())
+    .filter((item) => item.length !== 0);
+  const chain = split.join(", ");
+  const activity = split[0];
+  const next = split.slice(1);
   form.elements.activity.value = "";
-  return startAction({activity, next});
+  form.elements.instant.checked = false;
+  if (split.length > 0) {
+    if (split.length > 1) {
+      if (chain_dict[chain]) {
+        chain_dict[chain].count += 1;
+      } else {
+        chain_dict[chain] = {chain, activity, next, count: 1};
+      }
+      return startAction({activity, next}, false);
+    }
+    return startAction({activity}, instant);
+  }
 }
 
 function toggleBanner(index) {
+  const action = current_list[index];
   const current_time = new Date().getTime();
-  const {activity, time, paused} = current_list[index];
-  current_list[index].time = current_time;
-  current_list[index].paused = !paused;
-  if (paused) {
-    exportData();
-    render();
+  action.paused = !action.paused;
+  // if action is now unpaused, start a new action
+  if (!action.paused) {
+    action.time = current_time;
+    return update();
   } else {
-    return stopAction({activity, time}, current_time);
+    return stopAction(action, current_time);
   }
 }
 
 function stopBanner(index) {
+  const action = current_list[index];
   const current_time = new Date().getTime();
-  const {activity, time, paused} = current_list[index];
   current_list.splice(index, 1);
-  if (paused) {
-    exportData();
-    render();
+  if (action.paused) {
+    return update();
   } else {
-    return stopAction({activity, time}, current_time);
+    return stopAction(action, current_time);
   }
 }
 
 function nextBanner(index) {
+  const action = current_list[index];
   const current_time = new Date().getTime();
-  const {activity, time, paused, next} = current_list[index];
   current_list.splice(index, 1);
-  if (!paused) {
-    stopAction({activity, time}, current_time);
+  if (!action.paused) {
+    stopAction(action, current_time);
   }
-  if (next.length > 0) {
-    return startAction({activity: next[0], next: next.slice(1)});
+  if (action.next.length > 0) {
+    return startAction({
+      activity: action.next[0],
+      next: action.next.slice(1),
+    }, false);
   }
 }
 
-function sortData() {
-  return Object.keys(past_list).sort(
-    (a, b) => past_list[b].length - past_list[a].length);
+function sortData(list) {
+  return Object.keys(list).sort((a, b) => list[b].count - list[a].count);
 }
 
 function importData() {
   const data = window.localStorage.getItem(LOCAL_STORAGE_NAME);
   if (data) {
     try {
-      ({past_list, current_list} = JSON.parse(data));
+      ({past_dict, cell_dict, chain_dict, current_list} = JSON.parse(data));
     } catch (ignore) {}
   }
 }
 
 function exportData() {
-  const data = JSON.stringify({past_list, current_list});
-  if (data.length > 34) {
-    window.localStorage.setItem(LOCAL_STORAGE_NAME,
-      JSON.stringify({past_list, current_list}));
+  const data = JSON.stringify(
+    {past_dict, cell_dict, chain_dict, current_list}
+  );
+  if (data.length >= EMPTY_JSON_LENGTH) {
+    window.localStorage.setItem(LOCAL_STORAGE_NAME, data);
   }
 }
 
@@ -112,25 +131,47 @@ function resetData() {
 
 // start tracking the given action
 
-function startAction(action) {
-  action.time = new Date().getTime();
-  action.paused = false;
-  current_list.push(action);
-  exportData();
-  render();
+function startAction(action, instant) {
+  const current_time = new Date().getTime();
+  if (instant) {
+    saveEvent(action.activity, current_time, current_time, true);
+  } else {
+    for (current of current_list) {
+      if (action.activity === current.activity) {
+        return;
+      }
+    }
+    action.time = new Date().getTime();
+    action.paused = false;
+    current_list.push(action);
+  }
+  return update();
 }
 
 
 // stop tracking the given action
 
 function stopAction(action, end_time) {
-  if (past_list[action.activity]) {
-    past_list[action.activity].push({start_time: action.time, end_time});
-  } else {
-    past_list[action.activity] = [{start_time: action.time, end_time}];
+  if (end_time - action.time > IGNORE_EVENT_TIME) {
+    saveEvent(action.activity, action.time, end_time, false);
   }
-  exportData();
-  render();
+  return update();
+}
+
+
+// save the given event in past_dict
+
+function saveEvent(activity, start_time, end_time, instant) {
+  if (past_dict[activity]) {
+    past_dict[activity].push({start_time, end_time});
+  } else {
+    past_dict[activity] = [{start_time, end_time}];
+  }
+  if (cell_dict[activity]) {
+    cell_dict[activity].count += 1;
+  } else {
+    cell_dict[activity] = {activity, instant, count: 1};
+  }
 }
 
 
@@ -138,14 +179,24 @@ function stopAction(action, end_time) {
 
 function render() {
 
-  // render the activity list
-  const activity_list = sortData();
-  const main_element = document.getElementById("main");
-  const main_html = [];
-  for (const activity of activity_list) {
-    main_html.push(`<div class="cell">${activity} ${past_list[activity].length}</div>\n`);
+  // render the cell list
+  const cell_list = sortData(cell_dict);
+  const cell_element = document.getElementById("cells");
+  const cell_html = [];
+  for (const cell of cell_list) {
+    cell_html.push(`<div class="cell">${cell_dict[cell].activity}</div>\n`);
   }
-  main_element.innerHTML = main_html.join("");
+  cell_element.innerHTML = cell_html.join("");
+
+  // render the chain list
+  const chain_list = sortData(chain_dict);
+  const chain_element = document.getElementById("chains");
+  const chain_html = [];
+  for (const chain of chain_list) {
+    chain_html.push(`<div class="cell">${chain_dict[chain].chain}</div>\n`);
+  }
+  chain_element.innerHTML = chain_html.join("");
+
 
   // render the banner
   const banner_element = document.getElementById("banner");
@@ -155,7 +206,7 @@ function render() {
     let time_string = new Date(action.time).toString().split(" ")[4];
     if (action.paused) {
       time_string = "paused";
-      banner_buttons.push("<div class='banner-button'>\u25B6</div>");
+      banner_buttons.push("<div class='banner-button'>\u25B6\uFE0E</div>");
     } else {
       banner_buttons.push("<div class='banner-button'>\u25AE\u25AE</div>");
     }
@@ -167,16 +218,20 @@ function render() {
       `<div class="banner">
          <div class="banner-activity">${action.activity}</div>
          <div class="banner-time">${time_string}</div>
-         <div class="banner-controls">${banner_buttons.join("")}</div>
+         <div class="banner-controls">${banner_buttons.join("\n")}</div>
        </div>`
     );
   }
   banner_element.innerHTML = banner_html.join("");
 
   // add event listeners
-  for (let i = 0; i < activity_list.length; i++) {
-    main_element.children[i].addEventListener("click",
-      () => clickCell(activity_list[i]));
+  for (let i = 0; i < cell_list.length; i++) {
+    cell_element.children[i].addEventListener("click",
+      () => clickCell(cell_dict[cell_list[i]]));
+  }
+  for (let i = 0; i < chain_list.length; i++) {
+    chain_element.children[i].addEventListener("click",
+      () => clickChain(chain_dict[chain_list[i]]));
   }
   for (let i = 0; i < current_list.length; i++) {
     const controls = banner_element.children[i].children[2];
@@ -186,6 +241,14 @@ function render() {
       controls.children[2].addEventListener("click", () => nextBanner(i));
     } catch (ignore) {}
   }
+}
+
+
+// update everything
+
+function update() {
+  exportData();
+  return render();
 }
 
 

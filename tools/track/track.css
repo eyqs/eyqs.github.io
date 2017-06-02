@@ -1,11 +1,19 @@
-h1 {
+body {
   font-family: sans-serif;
+  font-size: 1em;
+}
+
+h1 {
   text-align: center;
 }
 
 #wrapper {
   margin: 0 auto;
   max-width: 40em;
+}
+
+#wrapper > div {
+  margin: 2em 0;
 }
 
 .banner {
@@ -18,29 +26,45 @@ h1 {
 }
 
 .banner-controls {
-  margin: 0 0 0 1em;
+  width: 8em;
 }
 
 .banner-button {
   display: inline-block;
+  float: right;
   height: 1.5em;
-  width: 1.5em;
+  width: 2em;
   line-height: 1.5em;
+  margin: 0 0 0 0.1em;
   border: 0.1em black solid;
   text-align: center;
 }
 
+.banner-button, .cell, input[type="submit"] {
+  cursor: pointer;
+}
+
+.banner-button:hover, .cell:hover, input[type="submit"]:hover {
+  background: lightgray;
+}
+
 #track {
   display: flex;
-  margin: 2em 0;
+  flex-wrap: wrap;
 }
 
-input[type="text"] {
-  margin: 0 1em 0 0;
+#track > input[type="text"] {
   flex: 1;
+  flex-basis: 30em;
+  font-size: inherit;
+  margin: 0 1em 0 0;
 }
 
-#main {
+#track > label {
+  margin: 0 1em 0 0;
+}
+
+#cells, #chains {
   display: flex;
   flex-wrap: wrap;
 }
