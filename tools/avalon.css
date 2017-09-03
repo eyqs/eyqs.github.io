@@ -1,0 +1,33 @@
+body {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+#wrapper {
+  margin: 0 auto;
+  max-width: 20em;
+}
+
+#game {
+  display: none;
+}
+
+textarea {
+  padding: 0.5em 1em;
+}
+
+input, button, textarea {
+  font-size: 1em;
+}
+
+input[type="submit"], button {
+  color: white;
+  background-color: dimgray;
+  padding: 0.5em 1em;
+  border-radius: 1em;
+}
+
+input[type="submit"]:hover, input[type="submit"]:focus,
+input[type="submit"]:active, button:hover, button:focus, button:active {
+  background-color: gray;
+}
