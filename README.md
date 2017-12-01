@@ -10,7 +10,7 @@ for my personal website from GitHub Pages, which hosts my personal website.
 
 ## License
 
-Copyright &copy; 2016 Eugene Y. Q. Shen.
+Copyright &copy; 2016, 2017 Eugene Y. Q. Shen.
 
 eyqs.ca is free software: you can redistribute it and/or
 modify it under the terms of the GNU General Public License
