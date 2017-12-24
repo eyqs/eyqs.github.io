@@ -36,20 +36,7 @@ description: Some tools written by Eugene Y. Q. Shen expressly for your personal
   <canvas id="tilecanvas"></canvas>
 
   <h1 class="section-title">req</h1>
-  <p>req is a tool to help you visualize UBC course prerequisites. Simply enter a list of the courses you're interested in. Click on a course to toggle whether you've already taken it or not.</p>
-  <p>Green courses are already taken; white courses can be taken; yellow courses have some prerequisite that's not in your list; orange courses only have missing corequisites; red courses cannot be taken; and blue courses are credit-excluded with respect to some course you've taken. Play around with it!</p>
-  <script src="{{ "req.txt" | prepend: site.baseurl }}"></script>
-  <script src="{{ "req.js" | prepend: site.baseurl }}"></script>
-  <form id="reqform" onsubmit="initReq(document.getElementById('reqform'),
-                                       document.getElementById('reqnocanvas'),
-                                       document.getElementById('reqcanvas'));
-                               return false;">
-    Enter course codes to display, separated by commas and spaces (no newlines! remember the space!):<br>
-    <textarea id="courses" rows="10" placeholder="MATH 100, MATH 101, ENGL 112"></textarea><br>
-    <input type="submit" value="Launch">
-  </form>
-  <p id="reqnocanvas"></p>
-  <canvas id="reqcanvas"></canvas>
+  <p>req is a tool to help you visualize UBC course prerequisites. <a href="{{ "/tools/req/" | prepend: site.baseurl }}">Please click on this link to open req.</a></p>
 </body>
 </html>
 </section>
