@@ -8,25 +8,11 @@ layout: null
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tiny Tracker</title>
   <link href="{{ "/tools/track/track.css" | prepend: site.baseurl }}" rel="stylesheet">
-  <script src="{{ "/tools/track/track.js" | prepend: site.baseurl }}"></script>
 </head>
 <body>
-  <div id="wrapper">
-    <h1>Tiny Tracker</h1>
-    <div id="banner">
-    </div>
-    <form id="track">
-      <input name="activity" type="text">
-      <label>
-        Instant
-        <input name="instant" type="checkbox">
-      </label>
-      <input type="submit" value="Track">
-    </form>
-    <div id="cells">
-    </div>
-    <div id="chains">
-    </div>
+  <div id="app">
   </div>
 </body>
+<script src="{{ "/tools/vue.min.js" | prepend: site.baseurl }}"></script>
+<script src="{{ "/tools/track/track.js" | prepend: site.baseurl }}"></script>
 </html>

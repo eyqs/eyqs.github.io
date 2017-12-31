@@ -7,12 +7,12 @@ h1 {
   text-align: center;
 }
 
-#wrapper {
+#app {
   margin: 0 auto;
   max-width: 40em;
 }
 
-#wrapper > div {
+#app > div {
   margin: 2em 0;
 }
 
@@ -26,7 +26,7 @@ h1 {
 }
 
 .banner-controls {
-  width: 8em;
+  width: 10em;
 }
 
 .banner-button {
@@ -40,12 +40,25 @@ h1 {
   text-align: center;
 }
 
-.banner-button, .cell, input[type="submit"] {
+.banner-button, .cell, .button, input[type="submit"] {
   cursor: pointer;
 }
 
-.banner-button:hover, .cell:hover, input[type="submit"]:hover {
+.banner-button:hover, .cell:hover, .button:hover, input[type="submit"]:hover {
   background: lightgray;
+}
+
+input[type="file"], input[type="submit"] {
+  font-size: 1em;
+}
+
+input[type="submit"], .button {
+  text-decoration: none;
+  background-color: #DDD;
+  color: black;
+  border: 1px black solid;
+  padding: 0.1em 0.4em;
+  margin: 0 0.2em;
 }
 
 #track {
@@ -54,8 +67,7 @@ h1 {
 }
 
 #track > input[type="text"] {
-  flex: 1;
-  flex-basis: 30em;
+  flex: 1 1 30em;
   font-size: inherit;
   margin: 0 1em 0 0;
 }
@@ -64,13 +76,23 @@ h1 {
   margin: 0 1em 0 0;
 }
 
-#cells, #chains {
+#controls {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#controls > input[type="file"] {
+  flex: 1;
+}
+
+#activities, #chains {
   display: flex;
   flex-wrap: wrap;
 }
 
 .cell {
-  flex-basis: 3em;
+  flex: 1 1 3em;
   border: 0.1em black solid;
   padding: 0.2em;
+  margin: 0.1em;
 }
