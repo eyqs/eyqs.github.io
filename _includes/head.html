@@ -1,54 +1,49 @@
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% if page.url == '/' %}{{ site.title }}{% elsif page.title %}{{ page.title }} - {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
-  <meta name="description" content="{% if page.description %}{{ page.description }}{% endif %}">
-  <link rel="stylesheet" href="{{ "/css/bootstrap.min.css" | prepend: site.baseurl }}">
-  <link rel="icon" type="image/x-icon" href="{{ "/favicon.ico" | prepend: site.baseurl }}">
-  <link rel="canonical" href="{{ page.url | replace: 'index.html','' | prepend: site.baseurl | prepend: site.url }}">
-  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
-  <script async src="{{ "/js/jquery.min.js" | prepend: site.baseurl }}"></script>
-  <script async src="{{ "/js/bootstrap.min.js" | prepend: site.baseurl }}"></script>
-  <script type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-    "@type": "Person",
-    "name": "Eugene Y. Q. Shen",
-    "email": "eugene@eyqs.ca",
-    "url": "https://eyqs.ca/",
-    "sameAs": [
-      "https://www.linkedin.com/in/eugeneyqshen/",
-      "https://github.com/eyqs/",
-      "https://stackexchange.com/users/7130990/eyqs/"
-    ]
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [{
-      "@type": "ListItem",
-      "position": 1,
-      "item": {
-        "@id": "{{ "/" | prepend: site.baseurl | prepend: site.url }}",
-        "name": "Index"
-      }
-    },{
-      "@type": "ListItem",
-      "position": 2,
-      "item": {
-        "@id": "{{ page.url | prepend: site.baseurl | prepend: site.url }}",
-        "name": "{{ page.title }}"
-      }
-    }]
-  }
-  </script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-117777917-1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'UA-117777917-1');
-  </script>
-</head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% if page.url == '/' %}{{ site.title }}{% elsif page.title %}{{ page.title }} - {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+<meta name="description" content="{% if page.description %}{{ page.description }}{% endif %}">
+<link rel="icon" type="image/x-icon" href="{{ "/favicon.ico" | prepend: site.baseurl }}">
+<link rel="canonical" href="{{ page.url | replace: 'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+<link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Person",
+  "name": "Eugene Y. Q. Shen",
+  "email": "eugene@eyqs.ca",
+  "url": "https://eyqs.ca/",
+  "sameAs": [
+    "https://www.linkedin.com/in/eugeneyqshen/",
+    "https://github.com/eyqs/",
+    "https://stackexchange.com/users/7130990/eyqs/"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "item": {
+      "@id": "{{ "/" | prepend: site.baseurl | prepend: site.url }}",
+      "name": "Index"
+    }
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "item": {
+      "@id": "{{ page.url | prepend: site.baseurl | prepend: site.url }}",
+      "name": "{{ page.title }}"
+    }
+  }]
+}
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-117777917-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-117777917-1');
+</script>

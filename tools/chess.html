@@ -1,23 +1,15 @@
 ---
-layout: null
+layout: tools
+title: Tiny Chess
+css: "/tools/chess/chess.css"
+json: "/tools/chess/manifest.json"
 ---
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tiny Chess</title>
-  <link href="{{ "/tools/chess/chess.css" | prepend: site.baseurl }}" rel="stylesheet">
-  <link href="{{ "/tools/chess/manifest.json" | prepend: site.baseurl }}" rel="manifest">
-  <script src="{{ "/tools/chess/chess.js" | prepend: site.baseurl }}"></script>
-  <script src="{{ "/tools/chess/worker.js" | prepend: site.baseurl }}"></script>
-</head>
-<body>
 <div id="wrapper">
   <h1>Tiny Chess</h1>
   <button id="start">Start</button>
   <button id="undo">Undo</button>
   <div id="main">
   </div>
-</body>
-</html>
+</div>
+<script src="{{ "/tools/chess/chess.js" | prepend: site.baseurl }}"></script>
+<script src="{{ "/tools/chess/worker.js" | prepend: site.baseurl }}"></script>

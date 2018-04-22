@@ -1,36 +1,27 @@
 ---
-layout: null
+layout: tools
+title: Tiny Avalon
+css: "/tools/avalon.css"
 ---
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tiny Avalon</title>
-  <link href="{{ "/tools/avalon.css" | prepend: site.baseurl }}" rel="stylesheet">
-  <script src="{{ "/tools/avalon.js" | prepend: site.baseurl }}"></script>
-</head>
-<body>
-  <div id="wrapper">
-    <h1>Tiny Avalon</h1>
-    <div id="game">
-      <div id="messages">
-      </div>
-      <p id="confirmation"></p>
-      <button id="first"></button>
-      <button id="second"></button>
-      <button id="confirm">Yes</button>
-      <button id="deny">No</button>
-      <button id="next">Next</button>
+<div id="wrapper">
+  <h1>Tiny Avalon</h1>
+  <div id="game">
+    <div id="messages">
     </div>
-    <div id="start">
-      <p>Select the number of players:</p>
-      <input id="number" type="number" />
-      <p id="error"></p>
-      <p>Enter the names of the players in order, separated by commas:</p>
-      <textarea id="players" rows="6" cols="30"></textarea>
-      <button id="new">New Game</button>
-    </div>
+    <p id="confirmation"></p>
+    <button id="first"></button>
+    <button id="second"></button>
+    <button id="confirm">Yes</button>
+    <button id="deny">No</button>
+    <button id="next">Next</button>
   </div>
-</body>
-</html>
+  <div id="start">
+    <p>Select the number of players:</p>
+    <input id="number" type="number" />
+    <p id="error"></p>
+    <p>Enter the names of the players in order, separated by commas:</p>
+    <textarea id="players" rows="6" cols="30"></textarea>
+    <button id="new">New Game</button>
+  </div>
+</div>
+<script src="{{ "/tools/avalon.js" | prepend: site.baseurl }}"></script>

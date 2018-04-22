@@ -1,19 +1,9 @@
 ---
+layout: tools
 title: cit - The Cartographically Imbricating Transformer
 description: A tool to animate one line morphing into another.
-layout: null
+css: "/tools/cit/cit.css"
 ---
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>cit - The Cartographically Imbricating Transformer</title>
-  <link href="{{ "/tools/cit/cit.css" | prepend: site.baseurl }}" rel="stylesheet">
-  <script src="{{ "/tools/cit/CCapture.all.min.js" | prepend: site.baseurl }}"></script>
-  <script src="{{ "/tools/cit/cit.js" | prepend: site.baseurl }}"></script>
-</head>
-<body>
 <div id="wrapper">
   <h1>cit v0.2</h1>
   <h2>Cartographically Imbricating Transformer</h2>
@@ -113,5 +103,5 @@ layout: null
   <canvas id="background"></canvas>
   <canvas id="canvas"></canvas>
 </div>
-</body>
-</html>
+<script src="{{ "/tools/cit/CCapture.all.min.js" | prepend: site.baseurl }}"></script>
+<script src="{{ "/tools/cit/cit.js" | prepend: site.baseurl }}"></script>
