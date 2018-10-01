@@ -3,7 +3,7 @@ import urllib.request
 pages = ['', 'about/', 'blog/', 'cakes/', 'documents/', 'projects/',
          'questions/', 'resume/', 'sitemap/', 'tools/']
 posts = ['1804-ubcs-cpen/', '1805-late-rides/', '1806-wtfjs-idkjs/',
-         '1807-cloud-next/', '1808-sunny-vale/']
+         '1807-cloud-next/', '1808-sunny-vale/', '1809-mug-share/']
 if __name__ == '__main__':
     for page in pages:
         print('Archiving page: ' + page)
