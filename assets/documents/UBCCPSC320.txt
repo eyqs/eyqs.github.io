@@ -1,0 +1,176 @@
+    Week 1: Introduction, Stable Matching, Linear-Time Sorts
+
+brute force algorithm: enumerates all possibilities and chooses the right one;
+    simple but computationally intractable; find more efficient algorithms!
+polynomial time algorithm: slows by a constant factor when input size doubles;
+    there must exist c > 0, d > 0 such that its time T(n) ≤ cnᵈ for all n
+bounding strategy: bound number of iterations by using a measure of progress
+worst-case analysis: algorithm efficiency based on time taken in worst case
+matching: a set of ordered pairs such that each element is in at most one pair
+stable matching problem: match n men and n women, each with preference lists,
+    so that no unmatched man and woman would both rather be matched together;
+    variations include n men, m women; n companies, m students, p positions
+Gale–Shapley algorithm: while some are unmatched, each man proposes to the
+    woman he most prefers that has not rejected him yet, and each woman
+    rejects all but the man she most prefers that has proposed to her already;
+    men matched with best possible partner, women matched with worst possible,
+    order of proposals irrelevant; bounded by n² proposals so time O(n²)
+counting sort: if all n elements are integers between 0 and k, then count the
+    frequency of each element x, find the number m of elements less than x,
+    and place each element in sorted order based on m; easily made stable
+    scan input O(n), prefix sum O(k), fill output O(n), so time O(n + k)
+radix sort: if all n elements are d-digit integers in base k, then apply
+    counting sort on each digit in turn; left-to-right is lexicographic order,
+    right-to-left is numeric order; bounded by d digits so time O(d(n + k))
+bucket sort: if all n elements are real numbers between 0 and 1, then split
+    interval into equal-sized buckets, place each element in the right bucket,
+    sort each bucket using insertion sort, then concatenate all buckets;
+    insertion sort time O(n²); with uniform distribution, average time O(n)
+
+    Week 2: Greedy Algorithms, Amortized Analysis, Master Theorem
+
+greedy algorithm: always chooses the locally best option at every step;
+    solves interval scheduling by always choosing earliest ending interval
+stays ahead strategy: prove that a greedy algorithm is optimal by using
+    induction on a measure of superiority against any other optimal solution
+exchange strategy: prove optimal by transforming any other optimal solution
+    by swapping any inversions between optimal solution and greedy solution
+interval scheduling problem: given n intervals, each with start and end times,
+    choose the largest subset so that no two intervals in the subset overlap
+    variations include allowing m simultaneous overlaps; minimize lateness
+data compression problem: given a string that contains n distinct characters,
+    unambiguously encode each character in binary in the fewest bits possible
+Huffman coding: first, each character is a binary tree with one vertex; now
+    recursively make new binary tree whose children are the two trees with
+    the lowest frequencies, with root value equal to sum of those frequencies
+shortest path problem: find shortest path from s to t in weighted digraph;
+    variations include between two points; between all; with negative weights
+Dijkstra's algorithm: while some vertex is unvisited, visit the closest vertex
+    like BFS or DFS with a priority queue; does not work with negative weights
+spanning tree: a tree that includes every vertex in an undirected graph
+minimum spanning tree problem: find the spanning tree of minimum edge weight
+Prim's algorithm: while some vertex is not included in the tree, add the
+    vertex to the tree with the minimum edge among the available choices
+Kruskal's algorithm: while it exists, add the minimum edge with no cycle
+cut property: if all edge weights are distinct, then the minimum-cost edge
+    that connects a non-empty subset S to the non-empty rest of the graph
+    is part of every minimum spanning tree; make distinct by adding epsilons
+amortized analysis: algorithm efficiency based on time taken in worst case
+    of a sequence of n operations, then divided by n to average it out
+average-case analysis: algorithm efficiency based on statistical expectation
+union-find: data structure that keeps track of elements partitioned into
+    disjoint subsets with a linked list for each set; find returns subset of
+    a vertex and union appends two subsets; n operations amortized O(log n)
+data structure selection: important for analysis; Dijkstra's and Prim's
+    are O(E + V²) with array, O((E + V) log V) with heap and adjacency list
+    Kruskal's is O(EV³) with array or list, O(E + V log V) with disjoint set
+recurrence relation: relation of recursive runtime T(n) to subproblem T(n/b);
+    solve recurrence by using induction on a guess or by the master theorem
+master theorem: if time complexity T(n) = a T(n/b) + f(n) with a ≥ 1, b > 1,
+    k = log_b a; f(n) is Θ(nᵏ logᶜ n), c ≥ 0 → T(n) is Θ(nᵏ logᶜ⁺¹ n)
+    f(n) O(nᶜ) c < k → T(n) is Θ(nᵏ); f(n) Ω(nᶜ) c > k → T(n) is Θ(f(n))
+regularity condition: if f(n) is Ω(nᶜ), c > k, master theorem only holds if
+    a f(n/b) ≤ k f(n), k < 1 for large n; otherwise, cannot upper bound T(n)
+
+    Week 3: Divide and Conquer
+
+divide and conquer algorithm: splits problem into subproblems, first solves
+    subproblems recursively, then combines solutions to solve the problem;
+    solves inversions by adding number in each half to number between halves;
+    solves closest pair by minimizing distance in each side and between sides,
+    sort by both coordinates to compare between sides O(n), total O(n log n)
+inversions problem: given array a, count all pairs where i < j, a[i] > a[j]
+closest pair problem: given n points in the plane, find the closest pair
+integer multiplication: divide and conquer n-digit numbers in O(n^(log₂ 3))
+    by representing x as x₁ 2^(n/2) + x₀, calculating a = (x₁ + x₀)(y₁ + y₀),
+    b = x₁y₁, c = x₀y₀, and returning b 2^n + (a - b - c) 2^(n/2) + c
+
+    Week 4: Dynamic Programming, Flow Networks
+
+memoization: store already computed solutions of subproblems in a table
+dynamic programming: brute-force divide-conquer algorithm with memoization;
+    solves weighted interval scheduling by either choosing last one or not;
+    solves knapsack by either choosing each item or not, using 2D table;
+    solves sequence alignment by either matching both last letters or not
+optimal substructure: property of dynamic programming algorithms that express
+    optimal solution in terms of optimal solutions of overlapping subproblems;
+    compute full solution by tracing recursion back through memoized table
+top-down dynamic programming: add memoization to slow recursive algorithms
+bottom-up dynamic programming: build memoized table in iterative loops
+weighted interval scheduling problem: choose intervals, maximize total weight
+knapsack problem: given limit W and n items, each with weight and value,
+    choose subset of items with the largest total value but total weight < W
+alignment: a matching between characters of two strings x and y such that
+    if (xₘ, yₛ) and (xₙ, yₜ) are matched, m < n if and only if s < t
+sequence alignment problem: find the alignment with the smallest total cost
+    gap penalty: a cost incurred whenever any letter is not matched to another
+    mismatch penalty: whenever any two letters are matched, based on a table
+Bellman–Ford algorithm: find shortest path by finding shortest path of at most
+    x edges from any vertex to the destination; O(VE) using adjacency lists;
+    negative-weight cycle exists iff path of n edges shorter than path of n-1
+flow network: a digraph with non-negative capacities c(e) on every edge e,
+    a source vertex s with no indegree, and a sink vertex t with no outdegree
+flow: a function f that maps edges to numbers such that for all edges e,
+    capacity condition: 0 ≤ f(e) ≤ c(e), and for vertices v except s and t
+    conservation condition: sum of f(e) into v = sum of f(e) out of v
+maximum flow problem: find flow of maximum possible sum of f(e) out of s
+residual graph: for each e = (u, v) in flow network, if f(e) < c(e) add (u, v)
+    with capacity c(e) - f(e), and if f(e) > 0 add (v, u) with capacity f(e)
+Ford–Fulkerson algorithm: repeatedly construct residual graph, find any path
+    from s to t, and push more flow along that path until no paths are left;
+    O(EC) if maximum value is C, but only guaranteed to terminate on integers
+cut: a partition of vertices into two disjoint sets X and Y with s ∈ X, t ∈ Y
+minimum cut problem: find cut of minimum possible sum of c(e) out of X
+max-flow min-cut theorem: value of maximum flow is value of minimum cut
+bipartite graph: a graph with vertices X ∪ Y and all edges e = (x ∈ X, y ∈ Y)
+bipartite matching problem: find size of largest matching in bipartite graph
+    by connecting s to all x ∈ X, all y ∈ Y to t, and finding the maximum flow
+Hall's theorem: there is a matching of every vertex iff every subset within
+    either partition does not have fewer neighbours than it has elements
+disjoint paths problem: find maximum number of paths where none share an edge
+    by setting all capacities to 1 and then finding the maximum flow
+
+    Week 5: NP-Completeness, Order Statistics
+
+P: the set of all problems solvable with a polynomial time algorithm
+decision problem: a problem whose solution is either yes or no
+efficient certifier: an algorithm that can verify in polynomial time, given a
+    certificate of polynomial length, that the solution to a problem is yes
+NP: the set of all decision problems solvable with a non-deterministic
+    polynomial time algorithm, which always branches to the correct choices;
+    equivalent to the set of all decision problems with an efficient certifier
+P versus NP problem: does P ≡ NP? open problem with $1000000 millennium prize
+reduction: Y ≤ₚ X, or Y is polynomial-time reducible to X, iff problem Y can
+    always be solved in polynomial time given black box that solves problem X;
+    if X is in P, then Y is in P, and if Y is in NP-hard, then X is in NP-hard
+circuit satisfiability: is there an assignment of binary values to input wires
+    such that the given Boolean circuit using not, and, or gates outputs 1?
+Cook–Levin theorem: every problem in NP reduces to circuit satisfiability
+NP-hard: the set of all problems X such that for every problem Y in NP, Y ≤ₚ X
+NP-complete: the set of all problems that are both in NP and also in NP-hard;
+    circuit satisfiability is in NP-complete, so prove that problem X is too
+    by showing that X is in NP and Y ≤ₚ X for any problem Y in NP-complete
+independent set: a subset of vertices in a graph, none connected by an edge
+independent set problem: is there an independent set of k or more vertices?
+    weighted interval scheduling and bipartite matching are special cases
+vertex cover: a subset of vertices in which every edge in a graph has an end
+vertex cover problem: is there a vertex cover of k or fewer vertices?
+set cover: a set of subsets S₁ ⊆ U, S₂ ⊆ U, …, Sₙ ⊆ U, whose union is U
+set cover problem: is there a set cover of k or fewer subsets?
+    vertex cover reducible to set cover by mapping edges to elements of U
+gadgets: components in one problem domain that map to components in another
+clause: a disjunction of various Boolean variables or negations of variables
+truth assignment: an assignment of true or false to every Boolean variable
+Boolean satisfiability problem: is there a truth assignment such that the
+    conjunction of n clauses of length k, k > 2, logically evaluates to true?
+    when k = 3, reducible to independent set by gadgets, mapping each clause
+    to a fully connected subgraph of three variables and connecting negations
+Hamiltonian cycle: a cycle that visits every vertex once and only once
+Hamiltonian cycle problem: does a digraph contain a Hamiltonian cycle?
+    Boolean satisfiability reducible to Hamiltonian cycle by gadgets, mapping
+    each variable to a cycle with 3n + 3 vertices and connecting clauses
+travelling salesman problem: does a weighted fully connected digraph contain
+    contain a Hamiltonian cycle of total weight at most k?
+selection problem: find the i-th order statistic, the i-th smallest element;
+    use quicksort partition and only select correct subarray for average O(n);
+    divide into groups of five and use median of all medians as pivot for O(n)

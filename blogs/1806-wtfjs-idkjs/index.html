@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weird Things From JavaScript, Because I Don't Know JavaScript - Eugene Y. Q. Shen</title>
+<meta name="description" content="A selection of weird things from JavaScript that Eugene Y. Q. Shen finally understands after reading a book before this 2018 June blog post.">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="canonical" href="https://eyqs.ca/blogs/1806-wtfjs-idkjs/">
+<link rel="alternate" type="application/rss+xml" title="Eugene Y. Q. Shen" href="https://eyqs.ca/feed.xml">
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Person",
+  "name": "Eugene Y. Q. Shen",
+  "email": "eugene@eyqs.ca",
+  "url": "https://eyqs.ca/",
+  "sameAs": [
+    "https://www.linkedin.com/in/eugeneyqshen/",
+    "https://github.com/eyqs/",
+    "https://stackexchange.com/users/7130990/eyqs/"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "item": {
+      "@id": "https://eyqs.ca/",
+      "name": "Index"
+    }
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "item": {
+      "@id": "https://eyqs.ca/blogs/1806-wtfjs-idkjs/",
+      "name": "Weird Things From JavaScript, Because I Don't Know JavaScript"
+    }
+  }]
+}
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-117777917-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-117777917-1');
+</script>
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+
+  </head>
+  <body>
+    <header class="col-xs-12">
+  <nav role="navigation">
+    <ul class="nav nav-tabs nav-justified">
+      <li role="presentation"><a href="/">Index</a></li>
+      <li role="presentation"><a rel="author" href="/about/">About</a></li>
+      <li role="presentation"><a href="/blog/">Blog</a></li>
+      <li role="presentation"><a href="/cakes/">Cakes</a></li>
+      <li role="presentation"><a href="/documents/">Documents</a></li>
+      <li role="presentation"><a href="/projects/">Projects</a></li>
+      <li role="presentation"><a href="/questions/">Questions</a></li>
+      <li role="presentation"><a href="/resume/">Resume</a></li>
+      <li role="presentation"><a href="/sitemap/">Sitemap</a></li>
+      <li role="presentation"><a href="/tools/">Tools</a></li>
+    </ul>
+  </nav>
+</header>
+
+    <div class="container">
+      <article class="col-xs-12">
+        <header>
+          <h1 class="page-title">Weird Things From JavaScript, Because I Don't Know JavaScript</h1>
+          <h2 class="post-meta"><time datetime="2018-06-01T00:00:00-07:00">2018 June</time></h2>
+        </header>
+        <div class="post-content">
+          <p>I’m currently reading Kyle Simpson’s <a href="https://github.com/getify/You-Dont-Know-JS/">You Don’t Know JS</a> (YDKJS), the <a href="https://github.com/search?q=stars%3A%3E80000">eighth-most starred project on GitHub</a>, often considered the best JavaScript series ever written, and it is the best JavaScript series I’ve ever read. If you’re going to really work with JavaScript, or Node.js, or TypeScript, please just read <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/up%20%26%20going/ch3.md">this summary</a> to see everything you’re missing out on.</p>
+
+<p>But although the explanations are extremely comprehensive (yet mysteriously brief), there’s no end-of-chapter problems for me to solidify my understanding. If you’ve read that summary, you’ll think that Kyle’s favourite word is “perhaps” and his favourite hobby is debunking common misconceptions, demystifying widespread myths, tackling persistent mistruths, and overthrowing conventional wisdom about JavaScript. His eternal enemies are all the commoners who pause at a WTF moment, shrug their shoulders, and say resignedly, “Just JavaScript, eh?”</p>
+
+<p>So what better way to test my newfound knowledge than by addressing all these WTFs?</p>
+
+<!--more-->
+
+<p>The format of this post is slightly awkward, since I can’t link to sections within each chapter of YDKJS, but I’ll generally address each WTF with a direct quote from YDKJS. The first three words of the quote will be a link to the relevant chapter, so just Ctrl+F in the chapter until you find the context of the quote.</p>
+
+<h3 id="wtfjs">WTFJS</h3>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/et8xNAc2ic8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe>
+
+<p>Brian Leroux’s WTFJS was the original “Weird Things From JavaScript” talk, before everybody got tired of the same nits about type coercion and IEEE 754 floating-point numbers over and over again. YDKJS only has two rules about type coercion, and I’ll add a third:</p>
+
+<ol>
+  <li><a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch4.md">If either side</a> of the comparison can have <code class="highlighter-rouge">true</code> or <code class="highlighter-rouge">false</code> values, don’t ever, EVER use <code class="highlighter-rouge">==</code>.</li>
+  <li>If either side of the comparison can have <code class="highlighter-rouge">[]</code>, <code class="highlighter-rouge">""</code>, or <code class="highlighter-rouge">0</code> values, seriously consider not using <code class="highlighter-rouge">==</code>.</li>
+  <li>Otherwise, use <code class="highlighter-rouge">==</code> to allow type coercion, and <code class="highlighter-rouge">===</code> to forbid it.</li>
+</ol>
+
+<p>Now, on to the play-by-play.</p>
+
+<p>0:00: Introduction.</p>
+
+<p>1:08: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch4.md">The so-called “falsy”</a> values list is: <code class="highlighter-rouge">undefined</code>, <code class="highlighter-rouge">null</code>, <code class="highlighter-rouge">false</code>, <code class="highlighter-rouge">+0</code>, <code class="highlighter-rouge">-0</code>, <code class="highlighter-rouge">NaN</code>, and <code class="highlighter-rouge">""</code>.</p>
+
+<p>1:50: Rule 1. <code class="highlighter-rouge">null != false</code> makes sense, but the others are two of the seven items on the <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch4.md">“bad list”</a>. Don’t do this!</p>
+
+<p>2:30: Brian explains the next few WTFs.</p>
+
+<p>3:30: Rule 2. <code class="highlighter-rouge">0 == "0"</code> actually kinda makes sense, but <code class="highlighter-rouge">0 == ""</code> definitely doesn’t.</p>
+
+<p>3:45: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch4.md"><code class="highlighter-rouge">null</code> and <code class="highlighter-rouge">undefined</code></a> can be treated as indistinguishable for comparison purposes, if you use the <code class="highlighter-rouge">==</code> loose equality operator to allow their mutual implicit coercion.</p>
+
+<p>4:00: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/up%20%26%20going/ch2.md">There is a</a> <code class="highlighter-rouge">String</code> (capital S) object wrapper form that pairs with the primitive <code class="highlighter-rouge">string</code> type. Here, <code class="highlighter-rouge">'I am a string'</code> is a primitive <code class="highlighter-rouge">string</code> (after all, <code class="highlighter-rouge">typeof 'asdf' == 'string'</code>), so it’s obviously not an instance of any object.</p>
+
+<p>4:20: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch4.md">Chapter 4</a> and <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch3.md">chapter 3</a> of Types &amp; Grammar cover coercion (<code class="highlighter-rouge">String('a')</code>) and natives (<code class="highlighter-rouge">new String('a')</code>) respectively. Coercion gives a primitive <code class="highlighter-rouge">string</code>, and natives give the <code class="highlighter-rouge">String</code> object wrapper. Brian explains how <code class="highlighter-rouge">==</code> coerced the object wrapper into its string representation, giving us the result we expect by Rule 3. It’s not so weird after all!</p>
+
+<p>5:31: Brian explains this.</p>
+
+<p>5:48: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch1.md">The <code class="highlighter-rouge">typeof</code> operator</a> inspects the type of the given value, and always returns one of seven string values. So <code class="highlighter-rouge">typeof</code> anything that’s not a <code class="highlighter-rouge">string</code>, <code class="highlighter-rouge">number</code>, <code class="highlighter-rouge">boolean</code>, <code class="highlighter-rouge">undefined</code>, <code class="highlighter-rouge">function</code>, or <code class="highlighter-rouge">symbol</code> is <code class="highlighter-rouge">object</code>.</p>
+
+<p>6:07: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch3.md">Values that are</a> <code class="highlighter-rouge">typeof "object"</code> (such as an array) are additionally tagged with an internal <code class="highlighter-rouge">[[Class]]</code> property. This property can generally be revealed indirectly by borrowing the default <code class="highlighter-rouge">Object.prototype.toString(..)</code> method called against the value.</p>
+
+<p>6:40: Brian explains the next few WTFs.</p>
+
+<p>9:00: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch4.md">If either operand</a> to <code class="highlighter-rouge">+</code> is a <code class="highlighter-rouge">string</code>, the operation will be string concatenation. But <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch4.md">the <code class="highlighter-rouge">-</code> operator</a> is defined only for numeric subtraction, so <code class="highlighter-rouge">a - 0</code> forces <code class="highlighter-rouge">a</code>’s value to be coerced to a <code class="highlighter-rouge">number</code>.</p>
+
+<p>9:27: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch4.md">If the first</a> character was <code class="highlighter-rouge">'0'</code>, the guess was that you wanted to interpret the <code class="highlighter-rouge">string</code> as an octal (base-8) <code class="highlighter-rouge">number</code>. But as of ES5, <code class="highlighter-rouge">parseInt(..)</code> no longer guesses octal, and you’d have to do <code class="highlighter-rouge">parseInt('0o8')</code> instead.</p>
+
+<p>9:49: This was the only WTF in this talk that wasn’t covered in YDKJS. Going straight to the specifications for <a href="https://tc39.github.io/ecma262/#sec-number-constructor-number-value"><code class="highlighter-rouge">Number</code></a>, <a href="https://tc39.github.io/ecma262/#sec-parsefloat-string"><code class="highlighter-rouge">parseFloat</code></a> and <a href="https://tc39.github.io/ecma262/#sec-parseint-string-radix"><code class="highlighter-rouge">parseInt</code></a>, we see that <code class="highlighter-rouge">Number</code> and <code class="highlighter-rouge">parseFloat</code> explicitly check for a <a href="https://tc39.github.io/ecma262/#sec-tonumber-applied-to-the-string-type"><code class="highlighter-rouge">StrDecimalLiteral</code></a>—<code class="highlighter-rouge">Infinity</code>—while <code class="highlighter-rouge">parseInt</code> does not. This makes sense because IEEE 754 has representations for infinity, but infinity is not an integer.</p>
+
+<p>10:21: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch2.md">The trailing portion</a> of a decimal value after the <code class="highlighter-rouge">.</code>, if <code class="highlighter-rouge">0</code>, is optional. And it’s kinda pretty!</p>
+
+<p>10:54: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch4.md">Some developers use</a> the double tilde <code class="highlighter-rouge">~~</code> to truncate the decimal part of a <code class="highlighter-rouge">number</code>. This short section in YDKJS explains everything about <code class="highlighter-rouge">~~x</code> and why its behaviour <em>differs</em> from <code class="highlighter-rouge">Math.round(x)</code>, <code class="highlighter-rouge">Math.floor(x)</code>, and <code class="highlighter-rouge">x | 0</code>, so you can give that a quick read.</p>
+
+<p>11:13: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch2.md">Like most modern</a> languages, including practically all scripting languages, the implementation of JavaScript’s numbers is based on the “IEEE 754” standard. All this behaviour is specified in that standard.</p>
+
+<p>12:18: Brian explains this.</p>
+
+<p>12:50: The actual error is <code class="highlighter-rouge">Uncaught TypeError: Right-hand side of 'instanceof' is not callable</code>, which makes sense.</p>
+
+<p>13:03: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch2.md"><code class="highlighter-rouge">NaN</code> literally stands</a> for “not a <code class="highlighter-rouge">number</code>”, though this label/description is very poor and misleading, as we’ll see shortly. It would be much more accurate to think of <code class="highlighter-rouge">NaN</code> as being “invalid number,” “failed number,” or even “bad number,” than to think of it as “not a number.” But <code class="highlighter-rouge">NaN</code> is a primitive <code class="highlighter-rouge">number</code>, so again, it’s not an instance of any object.</p>
+
+<p>13:20: Brian explains this, but it’s worth noting that <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch2.md">the <code class="highlighter-rouge">isNaN(..)</code> utility</a> has a fatal flaw, so read that to find out why.</p>
+
+<p>13:43: It’s kinda fun. This is just handy.</p>
+
+<p>14:00: Brian explains this rather well, But remember Rule 2!</p>
+
+<p>14:55: Rule 3 gives us the result we expect.</p>
+
+<p>15:08: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/up%20%26%20going/ch2.md">This is a</a> long-standing bug in JS, but one that is likely never going to be fixed. This is also the only real WTF in the entire talk.</p>
+
+<p>15:22: Brian explains this rather quickly. <code class="highlighter-rouge">"constructor"</code> is a string. <code class="highlighter-rouge">"constructor".constructor</code> is the function that gets called when you run <code class="highlighter-rouge">new String()</code>. <code class="highlighter-rouge">"constructor".constructor.constructor</code> is the constructor of that function, which is the function that gets called when you run <code class="highlighter-rouge">new Function()</code>. And <code class="highlighter-rouge">new Function(..)()</code> returns a new function and calls it.</p>
+
+<p>16:15: This is just a hack for people who forget to write <code class="highlighter-rouge">foo = new Foo()</code> instead of <code class="highlighter-rouge">foo = Foo()</code>. If you use the new ES6 <code class="highlighter-rouge">class</code> syntax, you’ll get an <code class="highlighter-rouge">Uncaught TypeError: Class constructor Foo cannot be invoked without 'new'</code>, so you’ll never forget it.</p>
+
+<p>17:12: Conclusion.</p>
+
+<h3 id="javascript-sucks-and-it-doesnt-matter">Javascript sucks and it doesn’t matter</h3>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/PV_cFx29Xz0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe>
+
+<p>Rob Ashton gave this talk a month before Brian Leroux, which is primarily about “it doesn’t matter” rather than “JavaScript sucks”. But the first few minutes does have a few WTFs, and it’s the third most-viewed WTFJS video on YouTube, so it’s worth a look.</p>
+
+<p>0:00: Introduction.</p>
+
+<p>1:38: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch4.md">What do we</a> know about the <code class="highlighter-rouge">!</code> unary operator? It explicitly coerces to a <code class="highlighter-rouge">boolean</code> using the <code class="highlighter-rouge">ToBoolean</code> rules (and it also flips the parity). So before <code class="highlighter-rouge">[0] == ![0]</code> is even processed, it’s actually already translated to <code class="highlighter-rouge">[0] == false</code> […] the right-hand side <code class="highlighter-rouge">[0]</code> will go through a <code class="highlighter-rouge">ToPrimitive</code> coercion […] which then is <code class="highlighter-rouge">ToNumber</code> coerced to <code class="highlighter-rouge">0</code> for the right-hand side value, which is falsy.</p>
+
+<p>2:14: This WTF wasn’t covered in YDKJS, so we jump to the specs for <a href="https://www.ecma-international.org/ecma-262/#sec-array.prototype.tostring">Array.prototype.toString()</a>, which calls <a href="https://www.ecma-international.org/ecma-262/#sec-array.prototype.join">Array.prototype.join()</a>, which in step 7c says: “If element is <code class="highlighter-rouge">undefined</code> or <code class="highlighter-rouge">null</code>, let <em>next</em> be the empty String; otherwise, let <em>next</em> be ? ToString(<em>element</em>).” <code class="highlighter-rouge">[].toString()</code> comes from step 5 and 8: “Let <em>R</em> be the empty String. Return <em>R</em>.” That makes sense, but the special check for <code class="highlighter-rouge">undefined</code> or <code class="highlighter-rouge">null</code>… WTF?!</p>
+
+<p>2:54: Brian Leroux explains this at 12:19 of his talk.</p>
+
+<p>3:16: <a href="https://github.com/aemkei/jsfuck">WTF, JSFuck!?</a></p>
+
+<p>3:40: <a href="https://github.com/getify/You-Dont-Know-JS/tree/master/scope%20%26%20closures">Scopes.</a> <a href="https://github.com/getify/You-Dont-Know-JS/tree/master/this%20%26%20object%20prototypes">This.</a> <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/es6%20%26%20beyond/ch3.md">Classes.</a> <a href="https://github.com/getify/You-Dont-Know-JS/search?q=sugar&amp;unscoped_q=sugar">Sugar.</a> <a href="https://github.com/sorrycc/awesome-javascript">Tools.</a> As Rob elaborates in the rest of his talk, JavaScript had them all, even back in 2012!</p>
+
+<h3 id="wat">WAT</h3>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/BrB0oaSz8Nk" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe>
+
+<p>Gary Bernhardt gave this talk ten months before the previous, so maybe this is really the original WTFJS talk, before all the obscenity crept in.</p>
+
+<p>0:00: Ruby.</p>
+
+<p>1:21: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch4.md">If either operand</a> to <code class="highlighter-rouge">+</code> is a <code class="highlighter-rouge">string</code> (or becomes one with the above steps!), the operation will be <code class="highlighter-rouge">string</code> concatenation.</p>
+
+<p>1:51: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch5.md">Another commonly cited</a> JS gotcha is this exact example.</p>
+
+<p>2:26: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch5.md"><code class="highlighter-rouge">{}</code> is interpreted</a> as a standalone <code class="highlighter-rouge">{}</code> empty block (which does nothing). Finally, <code class="highlighter-rouge">+ {}</code> is an expression that <em>explicitly coerces</em> (see Chapter 4) the <code class="highlighter-rouge">{}</code> to a <code class="highlighter-rouge">number</code>, which is <code class="highlighter-rouge">NaN</code>.</p>
+
+<p>3:03: “This is actually the only line in this entire presentation that’s reasonable.”</p>
+
+<p>3:33: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch4.md">The <code class="highlighter-rouge">-</code> operator</a> is defined only for numeric subtraction, so <code class="highlighter-rouge">a - 0</code> forces <code class="highlighter-rouge">a</code>’s value to be coerced to a <code class="highlighter-rouge">number</code>, which is <code class="highlighter-rouge">NaN</code>.</p>
+
+<p>3:54: Conclusion.</p>
+
+<h3 id="wtfjscom">wtfjs.com</h3>
+
+<p>Because this post is apparently in reverse chronological order now, turns out that the original original WTFJS was Brian Leroux’s <a href="https://wtfjs.com/">wtfjs.com</a>. In fact, we’ve seen most of the WTFs already in the three videos above, respectively titled “Brian”, “Rob”, and “Gary”:</p>
+
+<ul>
+  <li><a href="https://wtfjs.com/wtfs/2010-02-12-almost-but-not-quite">almost but not quite</a>: Brian, 6:40.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-02-12-foonanny">foonanny</a>: Brian, 5:31.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-02-12-min-number-treachery">min number treachery</a>, Brian, 12:07.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-02-12-maths-fun">maths fun</a>: Brian, 13:03, 11:14, 7:06.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-02-12-not-a-number-is-a-number">not a number is a number</a>: Duplicate of <a href="https://wtfjs.com/wtfs/2010-02-12-maths-fun">maths fun</a>.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-02-12-not-a-number-is-not-a-not-a-number">not a number is not not a number</a>: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch2.md"><code class="highlighter-rouge">NaN</code> isn’t equal</a> to itself. <code class="highlighter-rouge">NaN</code> is the <em>only</em> value in the whole language where that’s true.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-02-12-null-is-not-an-object">null is not an object</a>: Brian, 15:08.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-02-12-parseint-treachery">parseint treachery</a>: Brian, 9:27.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-02-13-null-is-not-falsy">null is not falsy</a>: Brian, 1:50.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-02-13-string-is-not-string">string is not string</a>: Brian, 4:00.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-02-15-careful">careful</a>: Rob, 1:38.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-02-15-hoisting">hoisting</a>: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/scope%20%26%20closures/ch4.md">Only the declarations</a> themselves are hoisted, while any assignments or other executable logic are left <em>in place</em>. If hoisting were to re-arrange the executable logic of our code, that could wreak havoc.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-02-15-scope-fun">scope fun</a>: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/ch5.md">The top-end of</a> every normal <code class="highlighter-rouge">[[Prototype]]</code> chain is the built-in <code class="highlighter-rouge">Object.prototype</code>. So <code class="highlighter-rouge">window.foo === 10</code> in the browser or <code class="highlighter-rouge">global.foo === 10</code> in Node, then <code class="highlighter-rouge">console.log(foo)</code> is <code class="highlighter-rouge">console.log(window.foo)</code> or <code class="highlighter-rouge">console.log(global.foo)</code>.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-02-15-thc-timetravel">thc timetravel</a>: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch2.md">According to the</a> specification, if an operation like addition results in a value that’s too big to represent, the IEEE 754 “round-to-nearest” mode specifies what the result should be.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-02-15-true-has-a-value">true has a value</a>: Brian, 2:40.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-02-15-undefined-is-mutable">undefined is mutable</a>: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch2.md">In non-<code class="highlighter-rouge">strict</code> mode</a>, it’s actually possible (though incredibly ill-advised!) to assign a value to the globally provided <code class="highlighter-rouge">undefined</code> identifier:</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-02-16-automagic-semicolons">automagic semicolons</a>: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch5.md">The <code class="highlighter-rouge">return</code> statement</a> doesn’t carry across the newline, as automatic semicolon insertion assumes the <code class="highlighter-rouge">;</code> terminating the <code class="highlighter-rouge">return</code> statement.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-02-19-concat-coerce">concat coerce</a>: Brian, 9:00.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-02-23-boolean-paradox">boolean paradox</a>: Brian, 2:52.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-02-23-coerced">coerced</a>: Duplicate of <a href="https://wtfjs.com/wtfs/2010-02-12-parseint-treachery">parseint treachery</a>.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-02-23-makes-perfect-sense">makes perfect sense</a>: Brian, 8:29.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-02-24-messing-with-number-prototype">messing with number prototype</a>: Brian, 7:46.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-02-26-implicit-tostring-fun">implicit tostring fun</a>: Brian, 4:20.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-04-12-call-in-ur-call">call in ur call</a>: <code class="highlighter-rouge">let f = function (a) {return a}</code>. Then this is equivalent to <code class="highlighter-rouge">Function.prototype.call.apply(f, [1,2])</code>, which is <code class="highlighter-rouge">f.call(1, 2)</code>, which is <code class="highlighter-rouge">f(2)</code>, which is <code class="highlighter-rouge">2</code>.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-04-31-isNaN">isNaN</a>: <code class="highlighter-rouge">null !== NaN</code> makes sense. Brian, 13:20.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-06-02-instances-and-default-values">instances and default values</a>: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch4.md">It’s a very</a> little known fact that <strong><code class="highlighter-rouge">==</code> and <code class="highlighter-rouge">===</code> behave identically</strong> in the case where two <code class="highlighter-rouge">object</code>s are being compared! Two such values are only <em>equal</em> if they are both references to <em>the exact same value</em>.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-06-09-function-in-ur-string">function in ur string</a>: Brian, 15:22.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-07-15-typeof-number-is-not-number">typeof number is not number</a>: Duplicate of <a href="https://wtfjs.com/wtfs/2010-02-24-messing-with-number-prototype">messing with number prototype</a>.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-07-22-magic-increasing-number">magic increasing number</a>: Brian, 6:40.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-07-23-im-not-a-number-really">im not a number really</a>: Duplicate of <a href="https://wtfjs.com/wtfs/2010-02-12-maths-fun">maths fun</a>.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-11-10-false-advertising">false advertising</a>: <a href="https://github.com/getify/You-Dont-Know-JS/tree/master/this%20%26%20object%20prototypes/ch2.md">Unless the function</a> returns its own alternate <strong>object</strong>, the <code class="highlighter-rouge">new</code>-invoked function call will automatically return the newly constructed object.</li>
+  <li><a href="https://wtfjs.com/wtfs/2010-11-15-i-am-myself-but-also-not-myself">i am myself but also not myself</a>: Duplicate of <a href="https://wtfjs.com/wtfs/2010-02-15-careful">careful</a>.</li>
+  <li><a href="https://wtfjs.com/wtfs/2011-02-11-all-your-commas-are-belong-to-Array">all your commas are belong to Array</a>: Rob, 2:14.</li>
+  <li><a href="https://wtfjs.com/wtfs/2011-05-12-parseInt-is-not-eval">parseInt is not eval</a>: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch4.md">Parsing a numeric</a> value out of a string is <em>tolerant</em> of non-numeric characters – it just stops parsing left-to-right when encountered.</li>
+  <li><a href="https://wtfjs.com/wtfs/2011-06-23-parseint-magic">parseint magic</a>: Duplicate of <a href="https://wtfjs.com/wtfs/2012-10-10-infinity-madness">infinity madness</a>.</li>
+  <li><a href="https://wtfjs.com/wtfs/2011-06-27-min-less-max">min less max</a>: Brian, 12:07.</li>
+  <li><a href="https://wtfjs.com/wtfs/2011-07-26-iteration-demoralization">iteration demoralization</a>: <a href="https://github.com/getify/You-Dont-Know-JS/tree/master/this%20%26%20object%20prototypes/ch3.md">The <code class="highlighter-rouge">in</code> operator</a> has the appearance that it will check for the existence of a value inside a container, but it actually checks for the existence of a property name.</li>
+  <li><a href="https://wtfjs.com/wtfs/2012-04-18-changing-variables-changes-arguments">changing variables changes arguments</a>: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch5.md">If you pass</a> an argument, the <code class="highlighter-rouge">arguments</code> slot and the named parameter are linked to always have the same value. […] It’s almost certainly a bad idea to ever rely on any such linkage.</li>
+  <li><a href="https://wtfjs.com/wtfs/2012-05-07-Numbers-and-dots">Numbers and dots</a>: Brian, 10:21.</li>
+  <li><a href="https://wtfjs.com/wtfs/2012-10-10-infinity-madness">infinity madness</a>: Read the <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch4.md">Parsing Non-Strings</a> section for an explanation.</li>
+  <li><a href="https://wtfjs.com/wtfs/2012-12-28-undefined-props-on-numbers">undefined props on numbers</a>: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch3.md">Primitive values don’t</a> have properties or methods, so to access <code class="highlighter-rouge">.width</code> or <code class="highlighter-rouge">.height</code> you need an object wrapper around the value.</li>
+  <li><a href="https://wtfjs.com/wtfs/2013-02-13-unicode-vars">unicode vars</a>: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/es6%20%26%20beyond/ch2.md">Prior to ES6</a>, JavaScript strings could specify Unicode characters using Unicode escaping. […] As of ES6, we now have a new form for Unicode escaping (in strings and regular expressions), called Unicode <em>code point escaping</em>.</li>
+  <li><a href="https://wtfjs.com/wtfs/2013-02-21-why-am-i-a-number">why am i a number</a>: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch4.md">The unary <code class="highlighter-rouge">+</code></a> explicitly coerces its operand to a <code class="highlighter-rouge">number</code> value.</li>
+  <li><a href="https://wtfjs.com/wtfs/2013-02-22-parseint-radix">parseint radix</a>: Duplicate of <a href="https://wtfjs.com/wtfs/2012-10-10-infinity-madness">infinity madness</a>.</li>
+  <li><a href="https://wtfjs.com/wtfs/2013-02-28-null,-undefined-and-test">null, undefined and test</a>: <a href="https://www.ecma-international.org/ecma-262/#sec-regexp.prototype.test"><code class="highlighter-rouge">RegExp.prototype.test()</code> applies <code class="highlighter-rouge">ToString()</code></a>.</li>
+  <li><a href="https://wtfjs.com/wtfs/2013-03-06-false-isnt-false">false isn’t false</a>: Explained in the link.</li>
+  <li><a href="https://wtfjs.com/wtfs/2013-04-18-true-story-bro">true story bro</a>: Duplicate of <a href="https://wtfjs.com/wtfs/2013-03-06-false-isnt-false">false isn’t false</a>.</li>
+  <li><a href="https://wtfjs.com/wtfs/2013-04-28-isfinite-null-is-true">isfinite null is true</a>: <a href="https://www.ecma-international.org/ecma-262/#sec-isfinite-number"><code class="highlighter-rouge">isFinite()</code> applies <code class="highlighter-rouge">ToNumber()</code></a>, but <a href="https://www.ecma-international.org/ecma-262/#sec-number.isfinite"><code class="highlighter-rouge">Number.isFinite()</code> fixes this WTF</a>.</li>
+  <li><a href="https://wtfjs.com/wtfs/2013-06-20-negative-indexes">negative indexes</a>: <code class="highlighter-rouge">indexOf()</code> returning <code class="highlighter-rouge">-1</code> is unfortunate, but Perl, Python, Ruby, etc. all support negative array indices.</li>
+  <li><a href="https://wtfjs.com/wtfs/2013-07-04-array-constructor">array constructor</a>: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch3.md">The <code class="highlighter-rouge">a.map(..)</code> call</a> fails because the slots don’t actually exist, so <code class="highlighter-rouge">map(..)</code> has nothing to iterate over.</li>
+  <li><a href="https://wtfjs.com/wtfs/2013-07-18-array-ruse">array ruse</a>: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch3.md">Trailing commas in</a> lists (array values, property lists, etc.) are allowed (and thus dropped and ignored).</li>
+  <li><a href="https://wtfjs.com/wtfs/2013-08-07-Math.max()-behaviour">Math.max() behaviour</a>: <a href="https://www.ecma-international.org/ecma-262/#sec-math.max"><code class="highlighter-rouge">Math.max()</code> applies <code class="highlighter-rouge">ToNumber()</code></a> on each of its arguments, and returns <code class="highlighter-rouge">NaN</code> if any value is <code class="highlighter-rouge">NaN</code>.</li>
+  <li><a href="https://wtfjs.com/wtfs/2013-09-30-Array-Constructor2-is-Very-Undefined">Array Constructor2 is Very Undefined</a>: Duplicate of <a href="https://wtfjs.com/wtfs/2013-07-04-array-constructor">array constructor</a>.</li>
+  <li><a href="https://wtfjs.com/wtfs/2014-01-11-multiplying-arrays-and-objects">multiplying arrays and objects</a>: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch4.md">While far less</a> common, <code class="highlighter-rouge">a * 1</code> or <code class="highlighter-rouge">a / 1</code> would force <code class="highlighter-rouge">a</code>’s value to be coerced to a <code class="highlighter-rouge">number</code>, which is <code class="highlighter-rouge">NaN</code> for <code class="highlighter-rouge">{}</code> and <code class="highlighter-rouge">[4, 4]</code>.</li>
+  <li><a href="https://wtfjs.com/wtfs/2014-01-29-regular-expression-and-slash">regular expression and slash</a>: This is standard regex behaviour.</li>
+  <li><a href="https://wtfjs.com/wtfs/2014-02-04-Date.Date-vs-Year">Date.Date vs Year</a>: <a href="https://www.ecma-international.org/ecma-262/#sec-month-number">Months are identified</a> by an integer in the range 0 to 11, inclusive. But <a href="https://www.ecma-international.org/ecma-262/#sec-date-number">a date number</a> is identified by an integer in the range 1 through 31, inclusive. WTF?!</li>
+  <li><a href="https://wtfjs.com/wtfs/2014-02-22-wtf_document.all">wtf_document.all</a>: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch4.md">A “falsy object”</a> is a value that looks and acts like a normal object (properties, etc.), but when you coerce it to a <code class="highlighter-rouge">boolean</code>, it coerces to a <code class="highlighter-rouge">false</code> value. […] The most well-known case is <code class="highlighter-rouge">document.all</code>.</li>
+  <li><a href="https://wtfjs.com/wtfs/2014-02-25-array-indexof">array indexof</a>: Same idea as <a href="https://wtfjs.com/wtfs/2013-07-04-array-constructor">array constructor</a>.</li>
+  <li><a href="https://wtfjs.com/wtfs/2014-03-13-String-Integers-Comparison">String Integers Comparison</a>: <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch4.md">If both values</a> are <code class="highlighter-rouge">string</code>s for the <code class="highlighter-rouge">&lt;</code> comparison, simple lexicographic (natural alphabetic) comparison on the characters is performed.</li>
+  <li><a href="https://wtfjs.com/wtfs/2014-03-13-regex-test-true-false">regex test true false</a>: This is standard regex behaviour when you set the global flag <code class="highlighter-rouge">'g'</code>.</li>
+  <li><a href="https://wtfjs.com/wtfs/2014-05-05-this-length">this length</a>: <code class="highlighter-rouge">this</code> is the global <code class="highlighter-rouge">window</code> or <code class="highlighter-rouge">global</code> object, so <code class="highlighter-rouge">this.length === 0</code>.</li>
+  <li><a href="https://wtfjs.com/wtfs/2014-10-07-true-equals-false">true equals false</a>: Duplicate of <a href="https://wtfjs.com/wtfs/2013-03-06-false-isnt-false">false isn’t false</a>.</li>
+  <li><a href="https://wtfjs.com/wtfs/2014-11-22-object-as-object-key">object as object key</a>: <a href="https://www.ecma-international.org/ecma-262/#sec-property-accessors-runtime-semantics-evaluation">Accessing a property</a> calls <a href="https://www.ecma-international.org/ecma-262/#sec-topropertykey"><code class="highlighter-rouge">ToPropertyKey()</code>, which calls</a> <code class="highlighter-rouge">ToPrimitive()</code>, resulting in <code class="highlighter-rouge">[object Object]</code> for all empty objects.</li>
+  <li><a href="https://wtfjs.com/wtfs/2015-02-02-Boolean-constructor">Boolean constructor</a>: Objects are never falsy, except maybe <a href="https://wtfjs.com/wtfs/2014-02-22-wtf_document.all">document.all</a>.</li>
+  <li><a href="https://wtfjs.com/wtfs/2015-02-05-good-old-octal-decimal-wtf">good old octal decimal wtf</a>: Duplicate of <a href="https://wtfjs.com/wtfs/2010-02-12-parseint-treachery">parseint treachery</a>, plus a WTF for the silent fail.</li>
+  <li><a href="https://wtfjs.com/wtfs/2015-03-23-adding-arrays">adding arrays</a>: Gary, 1:21.</li>
+  <li><a href="https://wtfjs.com/wtfs/2015-04-08-array-sort">array sort</a>: <a href="https://www.ecma-international.org/ecma-262/#sec-array.prototype.sort"><code class="highlighter-rouge">Array.prototype.sort()</code>applies <code class="highlighter-rouge">toString()</code></a> on each element.</li>
+  <li><a href="https://wtfjs.com/wtfs/2015-04-16-moving-numbers">moving numbers</a>: <a href="https://www.ecma-international.org/ecma-262/#sec-left-shift-operator">Let <em>shiftCount</em> be</a> the result of masking out all but the least significant 5 bits of <code class="highlighter-rouge">rnum</code>. For <code class="highlighter-rouge">rnum === 32</code>, we get <code class="highlighter-rouge">shiftCount === 0</code>.</li>
+  <li><a href="https://wtfjs.com/wtfs/2015-04-23-screwy-negative-array-index">screwy negative array index</a>: Duplicate of <a href="https://wtfjs.com/wtfs/2013-06-20-negative-indexes">negative indexes</a>.</li>
+  <li><a href="https://wtfjs.com/wtfs/2016-03-10-Object-And-Array-Prototype-Length">Object And Array Prototype Length</a>: This doesn’t actually create a real array.</li>
+</ul>
+
+<h3 id="what-the-javascript">What the… JavaScript?</h3>
+
+<p>It’s 4:30 am, so let’s hastily conclude with <a href="https://github.com/denysdovhan/wtfjs">a link to a popular wtfjs repo</a>, and the most popular WTFJS video on YouTube, by Kyle Simpson himself:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2pL28CcEijU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe>
+
+
+        </div>
+      </article>
+      <footer class="col-xs-12" role="contentinfo">
+  <small>
+    <p>Copyright &copy; 2016<script>new Date().getFullYear()>2016 && document.write("&ndash;"+new Date().getFullYear());</script> Eugene Y. Q. Shen.</p>
+    <p>Content on this site is licensed under a <a rel="license" href='http://creativecommons.org/licenses/by-sa/4.0/'>Creative Commons Attribution-ShareAlike 4.0 International license</a>.</p>
+  </small>
+</footer>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,101 @@
+body {
+  font-family: sans-serif;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+#wrapper {
+  margin: 0 auto;
+  max-width: 36em;
+}
+
+#github {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#nocanvas {
+  color: red;
+}
+
+#main, #canvases {
+  display: none;
+}
+
+canvas {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 1em auto;
+  border: 1px solid dimgray;
+}
+
+#background {
+  z-index: -1;
+  opacity: 0.5;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+#controllist {
+  display: flex;
+}
+
+#controllist > li {
+  flex: 1;
+  padding: 1em;
+  text-align: center;
+  background-color: ghostwhite;
+  border: 1px solid dimgray;
+}
+
+#controllist > li:hover, #controllist > li.active {
+  background-color: lightgray;
+}
+
+label {
+  display: flex;
+  margin: 0 0 1em 0;
+}
+
+label > p {
+  flex: 2;
+  padding: 0;
+  margin: 0;
+}
+
+label > input {
+  flex: 3;
+  margin: 0 1em;
+}
+
+label > input[type="checkbox"] {
+  flex: initial;
+}
+
+form.line, textarea {
+  margin: 0 0 1em 0;
+}
+
+input[type="submit"], button {
+  color: white;
+  background-color: dimgray;
+  font-size: 1em;
+  padding: 0.5em 1em;
+  border-radius: 1em;
+}
+
+input {
+  font-size: 1em;
+}
+
+input[type="submit"]:hover, input[type="submit"]:focus,
+input[type="submit"]:active, button:hover, button:focus, button:active {
+  background-color: gray;
+}
