@@ -1,0 +1,245 @@
+    Week 1: Linked Lists, Stacks, Queues
+
+algorithm: high-level description of step-by-step process to solve a problem
+data structure: an object that solves problems using algorithms and memory
+    trade-offs are time/space, performance/elegance, generality/simplicity
+array: low-level data structure that matches the underlying memory
+    indexing O(1), appending O(1), prepending O(n); cannot resize
+    circular arrays use modular arithmetic so that prepending is O(1) too
+vector: array with variable size; copies array to double the space when full
+    indexing O(1), modifying (inserting/removing) O(n), resizing O(1) average
+pointer: an object that stores the memory location of another object
+node: an object that has a data item and possibly pointers to other nodes
+linked list: a chain of nodes that each point to the next node in the chain
+    indexing O(n), modifying O(1); automatically resizes to any length
+abstract data type: implementation-independent interface of a data structure
+    theoretically, declared by abstract base class, implemented by inheritance
+    pragmatically, different implementations may use different interfaces
+stack ADT: last in first out; if x pushed after y, then x popped before y
+    used for memory management and backtracking; use array or list, all O(1)
+queue ADT: first in first out; if x enqueued after y, then x dequeued after y
+    used for holding things in order; use circular array or list, all O(1)
+
+    Week 2: Big-O, Big-Omega, Big-Theta, Time and Space Complexity
+
+performance: the amount of time or space/memory needed to run an algorithm
+    depends on n, the size of the input, like length of list or number of bits
+basic operation: arithmetic, comparison, etc.; machine-independent operation
+time complexity: count all basic operations; ignore constants, as time varies
+    use sum of statements in body of functions and sum of iterations in loops
+space complexity: count the maximum number of memory cells the algorithm needs
+asymptotic analysis: analysis of performance as input size goes to infinity
+cases: different kinds of asymptotic analysis for different types of input
+    best case mostly useless; worst case somewhat useful but pessimistic;
+    average case useful but difficult; common case very useful but ill-defined
+Big-O: an algorithm is in O(f(n)) iff there exist constants c > 0 and n_0
+    such that its time or space complexity T(n) <= c f(n) for all n >= n_0
+Big-Omega: an algorithm is in Ω(f(n)) iff f(n) is in O(T(n))
+Big-Theta: an algorithm is in Θ(f(n)) iff T(n) is in both O(f(n)) and Ω(f(n))
+Big-O hierarchy: given input size n and constants k > 1, 0 < c < 1, then
+    constant O(1) in logarithmic O(log n) in polylogarithmic O((log n)^k) in
+    sublinear O(n^c) in linear O(n) in logarithmic-linear O(n log n) in
+    superlinear O(n^(1+c)) in quadratic O(n^2) in polynomial O(n^(1+k)) in
+    (now too big) exponential O(k^n) in factorial O(n!) in nôntrivial O(n^n)
+
+    Week 3: Induction and Recursion, Loop Invariants and Program Correctness
+
+iteration: a technique that repeats code in a loop by incrementing a counter
+recursion: a technique that repeats code in a function by calling itself
+    recursion can always replace iteration; iteration can only with a stack
+function call: an interruption in the execution flow of a program
+    current state saved on the stack and loaded after function call returns
+    each call takes extra time; max depth of the call stack is the max space
+tail call: a function call that is the last statement executed in a function
+tail recursion: the use of only tail calls; can always replace with iteration
+    most compilers do not add tail recursive calls to the stack, saving space
+induction: a technique that proves a proof by assuming it for smaller cases
+    used to prove performance bounds and correctness of recursive functions
+    use same base cases, same subproblems, and trust the recursion/induction
+assertion: a comment that describes something that is supposed to be true
+precondition: an assertion that holds just before a statement is executed
+postcondition: an assertion that holds just after a statement is executed
+loop invariant: an assertion true at the start of each iteration of a loop
+    used to prove correctness of iterative functions, but loop must terminate
+memoization: the strategy of storing values of recursive calls in a table
+    and looking up values of the table instead of recalculating them
+
+    Week 4: Priority Queues and Heaps
+
+key: a label that references a node; value: the data inside a node
+root: the only node without a parent; leaf: a node with no children
+child: a node pointed to by me; descendant: my child or my child's descendant
+parent: only node pointing to me; ancestor: my parent or my parent's ancestor
+subtree: node and its descendants; sibling: another child of my parent
+tree: recursive data structure, either null or a root node with subtrees
+depth: distance from root to nodes; degree: number of children of a node
+height: max depth in a tree; branch factor: maximum degree in a tree
+binary: tree has branch factor of 2; n-ary: tree has branch factor of n
+complete: tree with maximum number of nodes for its height and branch factor
+priority queue ADT: if x has lower priority than y, then x deleted before y
+    used for greedy algorithms, scheduling; use binary heap, all O(log n)
+heap: a complete tree, that only might lack rightmost nodes in deepest level,
+    with all the parents' keys less than or equal to their children's keys
+    keep invariant by percolating new nodes up and deleted nodes down
+    node with minimum key is always at top, heap depth is always O(log n)
+Williams's Method: build heap by adding the elements to empty heap; O(n log n)
+Floyd's Method: build heap by pretending an unsorted array is an unsorted heap
+    and percolate all violations down, from bottom to top; worst case O(n)
+d-heap: heap with degree d, chosen based on expected ratio of inserts, removes
+
+    Week 5: Mergesort, Insertion Sort, Quicksort, Heapsort
+
+sort: an algorithm that arranges elements of array in order from best to worst
+    theoretically proven worst case lower bound for all sorts is O(n log n)
+selection sort: select O(n), insert O(1); total always (best and worst) O(n^2)
+    select best unsorted element and append it to already sorted array
+insertion sort: select O(1), insert O(n); total best O(n) to worst O(n^2)
+    select first unsorted element and insert it in already sorted array
+heapsort: heapify O(n), select O(log n), insert O(1); total always O(n log n)
+    heapify array, then select top node and append it to already sorted array
+merge: take best element from sorted subarrays and append it to sorted array
+mergesort: merge O(n), log n merges; total always O(n log n) with O(n) space
+    array < 2 elements is sorted, otherwise split array into two arrays,
+    apply mergesort, and merge two sorted arrays into one sorted array
+quicksort: partition O(n), log n to n partitions; total O(n log n) to O(n^2)
+    pick pivot, partition better elements right worse left, apply quicksort
+    since pivot choice matters, quicksort is fragile; but also usually fastest
+stability: the property of a sort that keeps order of elements with same key
+    heapsort is unstable, quicksort is difficult, all other sorts are stable
+    mergesort uses more space than quicksort, all other sorts use no space
+
+    Week 6: Trees, Tree Traversal, Binary Search Trees
+
+binary search tree ADT: a binary tree such that for every parent, its key is
+    more than all in its left subtree and less than all in its right subtree
+    searching O(log n), modifying O(log n); in worst case, both become O(n)
+traversal: an algorithm that visits every element of a data structure in order
+    for binary search trees, traversals must visit root, l subtree, r subtree
+    preorder root to l to r, inorder l to root to r, postorder l to r to root
+
+    Week 7: Tree Rotation, B Trees
+
+balance factor: the left subtree height minus the right subtree height
+AVL tree ADT: a binary search tree such that every node has a balance factor
+    of -1, 0, or 1; searching O(log n), modifying O(log n) even in worst case
+tree rotation: keep balance by rotating tree, each rotation O(1)
+    build AVL tree by inserting into binary tree, checking balance factors,
+    then possibly rotating to keep balance, only two rotations needed
+    imbalance direction->rotation direction; LL->R; RR->L, LR->LR; RL->RL
+B-tree ADT: a n-ary search tree such that all leaves are at the same depth and
+    each node takes one block of memory, has many keys; modifying O(log_m n)
+    takes advantage of reading and writing large blocks to reduce height
+
+    Week 8: Hashing and Hash Tables
+
+dictionary ADT: stores values associated with keys; use hash table, all O(1)
+set ADT: stores only unique keys; used as math sets; use hash table, all O(1)
+hash function: a function that maps keys to integers, needed for indexing
+    ideal hash function is injective, surjective, and runs in constant time
+hash table: an unordered array that stores values based on their hashed keys
+    make hash function surjective by choosing a prime number as table size
+    searching O(1), modifying O(1), resizing O(1); cannot index with no order
+multiplicative hashing: hash integers by multiplying, then modulo table size
+Horner's Rule: hash strings by iterating through every character; first add
+    the integer value, multiply the result by a prime, then modulo table size
+universal hashing: hash by randomly choosing from a family of hash functions
+cryptographic hashing: hash by using algorithm secure against all attacks
+collision: the state of indexing two keys with the same hash in a hash table
+pigeonhole principle: impossible to put n+1 pigeons into n holes alone; or,
+    impossible to prevent collision with n+1 values in size n hash table
+birthday paradox: collision frequency about n^2 / (2 * size) with n values
+load factor: the number of entries in a hash table divided by its total size
+chaining: resolve collision by using unordered linked lists in each slot
+    allows much larger load factor, but searching O(n) with chain length n
+open addressing: resolve collision by placing values in the next empty slot
+probing function: a function f(i) that chooses the next empty slot
+    if collision at slot c, try slot c + f(1); if at c + f(i), try c + f(i+1)
+linear probing: f(i) = i, always succeeds for any load factor l < 1
+    search successful O(1/(1-l)) unsuccessful O(1/(i-l)^2); slow if l > 1/2
+primary clustering: values hashed together probe the same slots for f(i) = i
+quadratic probing: f(i) = i^2, avoids primary clustering; can fail if l > 1/2
+secondary clustering: values that collide probe the same slots for any f(i)
+double hashing: f(i, k) = i * hash(k) using other hash function, always works
+    new hash must never evaluate to 0 mod size; can choose prime p - x mod p
+    search successful O(ln(1/(1-l))/l) unsuccessful O(1/(1-l)); no clustering
+lazy deletion: mark items as deleted and treat them as empty when inserting
+rehashing: resize hash tables by rehashing elements with double the size,
+    when load factor is too large; O(1) on average, can improve performance
+
+    Week 9: Parallelism and Concurrency
+
+parallelism: a technique that improves performance by using extra resources
+concurrency: a technique that manages simultaneous access to shared resources
+Moore's Law: number of devices on integrated circuit doubles every two years
+    but speed of sequential programs limited by clock speed and temperature
+multithreading: a technique that uses multiple threads as stacks that
+    execute multiple statements at once from one non-sequential program
+shared memory model: model of parallel computation where threads communicate
+    by using variables in shared memory; widely used but not totally true
+message model: model where threads communicate by explicitly sending messages
+dataflow model: model where nodes in a directed acyclic graph execute in order
+data parallelism: model where threads execute the same task on different parts
+race condition: an error where multiple threads try to use a resource at once
+fork: a method that creates a new parallel thread from a sequential program
+join: a method that blocks its calling thread until its called thread returns
+    avoid race conditions by joining threads together to a sequential program
+divide-and-conquer parallelism: recursively fork to make very many threads
+    robust to load imbalances and variable numbers of available processors
+sequential cutoff: smallest value of n such that forking a thread is worth it
+reduce: a parallelizable method that returns a single answer from an array
+map: a parallelizable method that returns an array, with a function applied
+    to each element; reductions correct if associative, maps always correct
+work: time needed for one processor to complete a parallelizable computation
+span: time needed for infinite processors to complete the same computation
+    asymptotically optimal execution time is O((work / processors) + span)
+    work is O(n) and span is O(log n) for divide-and-conquer reduce and map
+speedup: the number of times longer it takes for one processor to do a task
+perfect linear speedup: maximum speedup is the number of processors used
+Amdahl's Law: maximum speedup of a task is 1/(s + (1-s)/processors), where
+    s is fraction of task that cannot be parallelized, at fixed workload
+prefix sum: a parallelizable method that returns an array, with a function
+    applied to each element that depends on all the previous elements
+filter: a parallelizable method that only keeps elements satisfying predicate
+    work is O(n) and span is O(log n) for prefix sum, filter using reduce, map
+parallel sort: a parallelized sort, such as parallel quicksort or mergesort
+    prefix in O(n) space, partition is O(log n), quicksort span O((log n)^2)
+    binary search to split, merge is O(log^2 n), mergesort span O((log n)^3)
+
+    Week 12: Graphs and Counting
+
+vertex: the name for a node in a graph; edge: a pointer from vertex to vertex
+graph ADT: a set of vertices and edges; subgraph: a subset of another graph
+simple: graph has max 1 edge per vertex pair, no edges from vertex to itself
+directed: graph edges have a direction; undirected: graph edges are two-way
+sparse: graph that has roughly V edges; dense: graph that has about V^2 edges
+adjacent: 2 vertices connected by edge; weighted: graph edges have a weight
+path: a sequence of edges that connects a sequence of adjacent vertices
+connected: undirected graph, where path exists between any two vertices
+weakly connected: directed graph, where path exists between any two vertices
+strongly connected: directed graph with path between any vertex to any vertex
+complete: simple undirected graph, with an edge between every pair of vertices
+isomorphic: two graphs with a bijection between their vertices and edges
+in-degree: number of edges into vertex; out-degree: number of edges out of it
+Handshaking Theorem: sum of all degrees in an undirected graph is even
+topological sort: order, with no vertex before any vertex with an edge to it
+cycle: path from some vertex to itself; acyclic graph: graph with no cycles
+directed acyclic graph: simple directed weakly connected acyclic graph
+    only directed acyclic graphs can be topologically sorted; includes trees
+adjacency matrix: 2-D array, with edges in the cells and vertices as the axes
+    indexing O(1), modifying O(1); good for dense graphs since space O(V^2)
+adjacency list: array of vertices, each with linked list of adjacent vertices
+    indexing O(V), modifying O(V); good for sparse graphs since space O(V+E)
+Dijkstra's Algorithm: get shortest path from single source to every vertex by
+    visiting cheapest unvisited vertex, setting cost of all adjacent vertices,
+    then looping until all are visited; assumes that all weights are positive
+    takes O(VM + ED) where M is time to find min and D is time to change cost
+    O(V^2) array or list; O((V+E)log V) adjacency list, with heap or AVL tree
+spanning tree: a subset of edges from a connected undirected graph, which
+    forms an acyclic graph, and touches all the vertices in the original graph
+Kruskal's Algorithm: find spanning tree with minimum total edge cost by
+    marking cheapest unmarked edge, and unioning sets of vertices of the edge
+    takes O(EM + EU) where U is time to union; O(E log E) with disjoint set
+breadth-first search: traverse graph by visiting dequeued vertex and enqueuing
+    adjacent vertices; edges in visited path makes shortest-path tree
+depth-first search: traverse by marking popped vertex, pushing adjacent ones;
+    vertices in reversed finished order makes topologically sorted array

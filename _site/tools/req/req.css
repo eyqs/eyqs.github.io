@@ -1,0 +1,50 @@
+body {
+  font-family: sans-serif;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+.wrapper {
+  margin: 0 auto;
+  padding-bottom: 1rem;
+  max-width: 36em;
+}
+
+footer {
+  text-align: center;
+}
+
+#github {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+button {
+  display: block;
+  color: white;
+  background-color: dimgray;
+  font-size: 1em;
+  padding: 0.5em 1em;
+  border-radius: 1em;
+}
+
+button:hover, button:focus, button:active {
+  background-color: gray;
+}
+
+#mobile {
+  display: none;
+}
+
+@media (max-width: 505px) {
+  #mobile {
+    display: block;
+  }
+
+  #app {
+    display: none;
+  }
+}

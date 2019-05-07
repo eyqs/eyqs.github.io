@@ -1,0 +1,370 @@
+    Module 1A: Beginning Student Language
+
+primitive: a built-in element provided by BSL (Beginning Student Language)
+value: a primitive data element, like a number, string, image, or boolean
+number: a value that represents a number, like `7`, `-5`, `3.1`, or `#1.4142`
+string: a value that represents a sequence of characters, like `"foo"`
+image: a value that represents a non-text item, like `(star 3 "solid" "red")`
+comment: a section of code that BSL ignores, which is everything after `;`
+expression: a value or something that reduces to a value; everything that
+    does not start with `define` in BSL in parentheses is an expression
+evaluate: the action that BSL does to expressions to reduce them to values
+operator: a primitive function that consumes expressions and produces a value
+operand: an expression that follows the operator in a primitive call
+primitive call: `(<operator> <expression> ...)` calls a primitive operator
+primitive rule: reduce all operands to values, then apply operator to them
+constant: `(define <name> <expression>)` defines a named constant
+    use constants to provide an easy to change single point of control
+constant rule: reduce expression to value, then replace all names by the value
+argument: a value passed to a function as its consumed input
+parameter: a name that is replaced by the arguments of a function call
+function: `(define (<name> <parameter> ...) <expression>)`, expr is its body
+    use functions to avoid redundancy and add higher-level meaning to code
+function call: `(<name> <expression> ...)` with one expression per parameter
+function rule: reduce all expressions to arguments, then replace function's
+    name by its body, which has its parameters replaced by its arguments
+boolean: a value that represents an answer to a yes-no question, like `true`
+predicate: an operator or a function which produces a boolean value, like `=`
+conditional: `(if <expression> <expression> <expression>)`, whose exprs are
+    question with boolean value, true answer, and false answer respectively
+if rule: reduce question to value; if value is `true` replace if expression by
+    true answer, if value is `false` replace by false answer, otherwise error
+short-circuit evaluation: `and` stops if expr false, `or` stops if expr true
+
+    Module 1B: How to Design Functions
+
+design: the process of making structured solution from poorly-formed problem
+signature: a comment about types in a function, like `Number String -> Image`
+purpose: a one-line summary of what a function produces given what it consumes
+stub: a syntactically valid function definition, like `(define (foo x) 0)`
+    use stubs for scaffolding and to ensure that unit tests are well-formed
+unit test: `(check-expect <expr> <expr>)`, error if expressions are not equal
+    use many examples to clarify problem and ensure validity for all cases
+template: a boilerplate function definition, like `(define (foo x) (... x))`
+    use templates to lay out structure and take inventory of usable items
+how to design functions: 1. write signature, purpose, stub 2. make unit tests
+    (wrapped in check-expect for BSL) 3. copy template 4. code body 5. debug
+boundary condition: an often tricky case at the limits of an input parameter
+code coverage: tests must cover all cases, uncovered cases blacked in BSL
+
+    Module 2: How to Design Data
+
+multi-armed conditional: `(cond [<expression> <expression>] ...)`, bracket is
+    question-answer pair, questions must produce boolean, last can be `else`
+cond rule: error if no expressions, otherwise reduce first question to value;
+    if value is `true` or `else` replace cond expression with first answer,
+    if value is `false` remove the first question and answer, otherwise error
+problem domain: the domain that has information about the problem to be solved
+program domain: the domain that only has data translated from the problem info
+type comment: a comment that defines a new type and describes how to form it
+data definition: a type definition with template for function that consumes it
+    also shows how to represent information as data and interpret data as info
+how to design data: 1. define a structure if compound 2. write type comment
+    3. add interpretation 4. make examples 5. create function template 6. run
+atomic data: data that cannot be broken into pieces, like `Image` or `false`
+non-distinct: the property of an item which can be any in a set, like `String`
+distinct: the property of an item which can only be one value, like `"red"`
+interval: data that represents numbers in a range, like `Integer[0, 10]`
+enumeration: data that represents a fixed number of distinct atomic items
+itemization: data that represents two or more subclasses, at least one which
+    is non-distinct, like `one of: false, "red", "yellow", "green", Number`
+    can use `else` for last question in itemizations and large enumerations
+mixed data itemization: itemization with different primitive types in it
+    guard using type-specific predicates to avoid acting on the wrong type
+the structure of the information gives the structure of the data, which gives
+    the structure of the template, which gives the structure of the function
+
+    Module 3A: How to Design Worlds
+
+interactive: the property of a program in which user input changes the output
+polymorphic: the property of a function which can consume many different types
+world specification: `(big-bang <parameter> (<option> <function>) ...)`, where
+    the parameter is the world state, of any type; big-bang is polymorphic
+wish-list entry: a function with a signature, purpose, `;; !!!`, and stub
+    use `;; !!!` to help find and keep track of wish-list entries to finish
+how to design worlds: on paper, 1. sketch scenarios 2. identify constant info
+    3. identify changing info 4. identify big-bang options; then in BSL,
+    5. make constants 6. make data 7. make main 8. make wish list 9. finish it
+program has 1. requires 2. one-line summary 3. constants 4. data 5. functions
+traceability: the property that paper analysis directly corresponds to result
+black-box testing: testing based only on knowledge of what the function does
+white-box testing: testing based also on knowledge of how the function works
+
+    Module 3B: Compound Data
+
+compound data: `(define-struct <name> (<field> ...))`, defines the following:
+constructor: `(make-<name> <expr> ...)`, one expr per field, makes the struct
+selector: `(<name>-<field> <struct>)`, produces value of expr in struct field
+predicate: `(<name>? <expr>)`, produces `true` if expr is struct of that type
+
+    Module 4A: Self-Reference
+
+arbitrary-sized information: information whose size cannot be known in advance
+arbitrary data: data that can store arbitrary-sized information, like a list
+list: `empty` or `(cons <expression> <list>)`, all exprs are reduced to values
+    treat `cons` as two-argument constructor with selectors `first` and `rest`
+self-reference: the use of the name of the type itself in its own type comment
+recursion: the concept of function calling or type comment referring to itself
+base case: has no self-reference; self-reference case: has self-reference
+well-formed self-referential data definition: used to store arbitrary data,
+    requires at least one base case and at least one self-reference case
+natural recursion: recursion that matches self-reference in type comment
+make examples for each base case and self-reference case, at least two long
+
+    Module 4B: Reference
+
+reference relationship: the use of a non-primitive type in a type comment
+natural helper: function that matches reference relationship in type comment
+helper function call: if more than one primitive function needs to operate
+    on the referred-to type, call another function based on the natural helper
+
+    Module 5A: Naturals
+
+`add1` produces a natural 1 bigger and `sub1` produces a natural 1 smaller,
+    like `cons` produces a list 1 longer and `rest` produces a list 1 shorter
+replace `add1` by `cons` and `sub1` by `rest` to represent naturals as lists
+
+    Module 5B: Helpers
+
+function composition: the use of output of one function as input of another
+helper function: a function that another function calls to do part of its work
+if a function must perform two or more distinct and complete operations, then
+    only test the function composition in the original, and create helpers
+if a function must operate on arbitrary-sized data many times, create a helper
+knowledge domain: a separate area of knowledge that corresponds to information
+if a function must operate on two or more knowledge domains, create a helper
+
+    Module 6A: Binary Search Trees
+
+list abbreviations: `(list "a" "b")` is same as `(cons "a" (cons "b" empty))`
+tree: a set of nodes and a set of edges such that each edge joins two nodes,
+    there is no cycle, and there is at most one edge going into a single node
+node: an element with some values and a list of edges going into other nodes
+root: a node with edges going out of it; leaf: a node with no edges going out
+parent: a node with an edge to its child; child: a node with edge from parent
+subtree: a tree inside a tree, or the collection of all descendants of a root
+invariant: a property which is always true, and for trees, true for every node
+binary search tree: a tree such that each node has at most two children, with
+    the invariant that for every root, each node in its left subtree has a
+    smaller value and each node in its right subtree has a greater value
+
+    Module 6B: Mutual Reference
+
+arbitrary-arity tree: a tree whose nodes have an arbitrary number of children
+mutual reference: the use of two types in each other's type comments
+natural mutual recursion: natural recursion that matches mutual reference
+for mutually referred-to types, group their data definition sections together
+    write functions for every type in the mutual recursion cycle all at once
+if something might not be found by a search, add `or false` to its signature
+    searches often backtrack, add `(if (not (false? ...)))` to decide when
+
+    Module 7A: Two One-Of Types
+
+when consuming two one-ofs, make table with cases for their type comments on
+    the axes, then fill with desired behaviour and add examples for each cell
+
+    Module 7B: Local
+
+local definition: `(local [<definition> ...] (<expression> ...))`, whose
+    definitions are only defined for the expressions in the local body
+top-level definition: a definition not defined in a local definition
+scope: the section of a program to which a definition is confined
+lexical scoping: the use of scopes based on the source code, like `local`
+global scope: the scope that contains all top-level definitions
+local rule: simultaneously rename all definition names to unique names,
+    lift all renamed definitions out of the local into the next scope, and
+    replace entire local by its body which only references renamed definitions
+encapsulation: the use of only a few externally visible definitions
+    use when a function has externally unused helpers or mutual recursion
+refactoring: changing the code or structure without changing the behaviour
+refactor encapsulation by wrapping all function definitions in a local,
+    adding a call to the main function, and deleting old signatures and tests
+trampoline: a call to the main function, if it comprises the whole local body
+refactor recomputation by wrapping the nearest enclosing expression in a local
+    and replacing the recomputed expression by a local definition instead
+
+    Module 8: Abstraction
+
+higher-order function: a function that can consume or produce functions
+type parameter: an arbitrary type, like X in the signature `X Number -> X`
+type inference: the process of creating a type signature by inspection
+how to design abstract functions from examples: 1. copy examples 2. find povs
+    3. replace by parameters 4. copy tests 5. write purpose 6. infer signature
+closure: a local function that refers to parameters in its enclosing function
+    closures close over those values, cannot replace with top-level function
+fold function: an abstract function based directly on the template
+
+    Module 9A: Generative Recursion
+
+structural recursion: natural recursion based on the type comment structure
+generative recursion: algorithmic recursion based on proofs for each case
+trivial case: the base case that stops the recursion; always start with these
+three-part termination argument: 1. base case 2. reduction step 3. argument
+    must prove in argument that repeating reduction step leads to base case
+
+    Module 9B: Search
+
+anonymous function expression: `(lambda (<parameter> ...) (<expression>))`
+    use lambdas to replace simple local functions that are only in one place
+template blending: can combine templates together to form complete inventory
+
+    Module 10: Accumulators
+
+context: information that was available earlier in a structural recursion
+accumulator: a parameter in a recursive function that preserves context
+how to design accumulators: 1. write signature, purpose, stub 2. make examples
+    3. copy template 4. wrap in outer function with a renamed parameter
+    6. add accumulator to inner functions 7. write type, invariant, examples
+    8. code body 9. preserve invariant, initialize accumulator 10. debug
+tail position: the property of an expression whose value is the function value
+tail recursion: recursion whose recursive calls are all in tail position
+    use `foldl` for tail recursion; not using tail recursion easily overflows
+worklist: an accumulator that stores the list of data left to evaluate
+must use accumulators to preserve positional context, to store intermediate
+    results in tail recursion, and to store worklists during recursion
+
+    Module 11: Graphs
+
+graph: a set of nodes and a set of edges such that each edge joins two nodes,
+    can have cycles and multiple edges going into a single node, unlike trees
+directed graph: a graph where the edges between nodes have a single direction
+directed acyclic graph: a directed graph that does not contain any cycles
+shared definition: `(shared ((<label> <expression>) ...) <expression>)`,
+    use to define labels that refer to themselves, reduces to last expression
+
+    Module 12: Mutation
+
+mutable variable: a variable that can change its value after being defined
+    overuse makes testing, parallelizing, and understanding difficult
+effectful function: `(set! <name> <expression>)` produces `(void)`, unusable
+    purpose is to affect state; sets value inside box of name to value of expr
+    `(begin! <expression> ...)` evaluates each expr and produces value of last
+    purpose is to use `set!` to affect state of last value in previous exprs
+for-each loop: `(for-each <function> <list>)` produces `(void)`, calls the
+    function on every element of the list; common in imperative languages
+
+
+    Template Rules:
+
+form of information:            data definition:                cond question:                  body or cond answer:
+
+non-distinct atomic info        atomic non-distinct             predicate                       (... x)
+                                (Number, String, Boolean)       (number? x)
+distinct atomic info            atomic distinct                 equality predicate              (...)
+                                (3, "abc", true, empty)         (string=? "abc" x)
+numbers in a range              interval                        predicate                       (... x)
+                                (Number[>=0], Integer(-5, 5))   (and (> -5 x) (< 5 x))
+fixed number of distinct items  enumeration                                                     cond with one pair of
+                                (one of: "red" "green" "blue")                                    questions and answers
+more than one subclass, with at itemization                                                       per subclass, with
+  least one non-distinct item   (one of: Natural(0, 10], "go")                                    predicate guards
+more than one item, which       compound data                   compound predicate              all selectors
+  naturally belong together     (make-loc Number Number)        (loc? x)                          (... (loc-x x) (loc-y x))
+more than one part, which       reference to another type                                       call other template function
+  naturally are different       (make-event Loc Natural)                                          (fn-for-loc (event-loc x))
+arbitrary sized info            self-referential                                                form natural recursion
+                                (cons Number (listof Number))                                     (fn-for-lst (rest lst))
+                                mutually referential                                              (fn-for-node (first node))
+                                (make-node Number (listof Node))                                  (fn-for-tree (rest node))
+
+
+;; generative recursion
+(define (genrec x)
+  (cond [(trivial? x) (trivial-answer x)]
+        [else
+          (... x
+               (genrec (next-problem x)))]))
+
+;; self-reference, list
+;; (listof X) is one of:
+;;  - empty
+;;  - (cons X (listof X))
+(define (fn-for-lox lox)
+  (cond [(empty? lox) (...)]
+        [else
+         (... (first lox)
+              (fn-for-lox (rest lox)))]))
+
+;; mutual reference, tree
+;; X is (make-x (listof X))
+(define (fn-for-x x)
+  (... (fn-for-lox (x-subs x))))
+(define (fn-for-lox lox)
+  (cond [(empty? lox) (...)]
+        [else
+         (... (fn-for-x (first lox))
+              (fn-for-lox (rest lox)))]))
+
+;; backtracking search
+(define (fn-for-x x)
+  (local [(define (fn-for-x x)
+            (... (fn-for-lox (x-subs x))))
+          (define (fn-for-lox lox)
+            (cond [(empty? lox) false]
+                  [else
+                   (local [(define try (fn-for-x (first x)))]
+                     (if (not (false? try))
+                         try
+                         (fn-for-lox (rest lox))))]))]
+    (fn-for-x x)))
+
+;; lost context accumulator
+(define (fn-for-lox lox0)
+  (local [(define (fn-for-lox lox acc)
+            (cond [(empty? lox) (...)]
+                  [else
+                   (... acc
+                        (first lox)
+                        (fn-for-lox (rest lox)
+                                    (... (first lox)
+                                         acc)))]))]
+    (fn-for-lox lox ...)))
+
+;; tail recursion accumulator
+(define (fn-for-lox lox)
+  (local [(define (fn-for-lox lox rsf)
+            (cond [(empty? lox) rsf]
+                  [else
+                   (fn-for-lox (rest lox)
+                               (... (first lox)
+                                    rsf))]))]
+    (fn-for-lox lox ...))
+
+;; worklist accumulator
+(define (fn-for-x x)
+  (local [(define (fn-for-x x todo rsf)
+            (if (...)
+                (fn-for-lox (append (x-subs) todo)
+                            (... rsf))
+                (fn-for-lox todo rsf)))
+          (define (fn-for-lox todo rsf)
+            (cond [(empty? lox) rsf]
+                  [else
+                   (fn-for-x (first todo)
+                             (rest todo)
+                             (... rsf))]))]
+    (fn-for-x x empty ...)))
+
+;; cyclic reference, graph
+(define (fn-for-x x)
+  (local [(define (fn-for-x x todo visited)
+            (... (if (member x visited)
+                     (fn-for-lox todo visited)
+                     (fn-for-lox (append (x-subs) todo)
+                                 (cons x visited)))))
+          (define (fn-for-lox todo visited)
+            (cond [(empty? todo) (...)]
+                  [else
+                   (fn-for-x (first todo)
+                             (rest todo)
+                             visited)]))]
+    (fn-for-x x empty empty)))
+
+;; for-each loop
+(define (fn-for-lox lox)
+  (local [(define acc ...)]
+    (begin
+      (for-each (lambda (x)
+                  (set! acc (... acc x)))
+                lox)
+      (... acc))))

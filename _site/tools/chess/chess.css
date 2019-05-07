@@ -1,0 +1,42 @@
+body {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+#wrapper {
+  margin: 0 auto;
+  max-width: 20em;
+}
+
+.row {
+  display: flex;
+}
+
+.cell {
+  position: relative;
+  overflow: hidden;
+  flex-basis: 12.5%;
+  border: 1px black solid;
+}
+
+.cell:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+
+.piece {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  font-size: 2em;
+}
+
+.cell.active {
+  background: cyan;
+}
+
+.error {
+  background: red;
+}

@@ -1,0 +1,100 @@
+body {
+  font-family: sans-serif;
+  font-size: 1em;
+}
+
+h1 {
+  text-align: center;
+}
+
+#app {
+  margin: 0 auto;
+  max-width: 40em;
+}
+
+#app > div {
+  margin: 2em 0;
+}
+
+.banner {
+  display: flex;
+  justify-content: space-between;
+}
+
+.banner-activity {
+  flex: 1;
+}
+
+.banner-controls {
+  width: 10em;
+}
+
+.banner-button {
+  display: inline-block;
+  float: right;
+  height: 1.5em;
+  width: 2em;
+  line-height: 1.5em;
+  margin: 0 0 0 0.1em;
+  border: 0.1em black solid;
+  text-align: center;
+}
+
+.banner-button, .cell, .button, input[type="submit"] {
+  cursor: pointer;
+  border-radius: 0;
+  -webkit-appearance: none;
+}
+
+.banner-button:hover, .cell:hover, .button:hover, input[type="submit"]:hover {
+  background: lightgray;
+}
+
+input[type="file"], input[type="submit"] {
+  font-size: 1em;
+}
+
+input[type="submit"], .button {
+  text-decoration: none;
+  background-color: #DDD;
+  color: black;
+  border: 1px black solid;
+  padding: 0.1em 0.4em;
+  margin: 0 0.2em;
+}
+
+#track {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#track > input[type="text"] {
+  flex: 1 1 28em;
+  font-size: inherit;
+  margin: 0 1em 0 0;
+}
+
+#track > label {
+  margin: 0 1em 0 0;
+}
+
+#controls {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#controls > input[type="text"] {
+  flex: 1 1 18em;
+}
+
+#activities, #chains {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cell {
+  flex: 1 1 3em;
+  border: 0.1em black solid;
+  padding: 0.2em;
+  margin: 0.1em;
+}

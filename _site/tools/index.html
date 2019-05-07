@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tools - Eugene Y. Q. Shen</title>
+<meta name="description" content="Some tools written by Eugene Y. Q. Shen expressly for your personal convenience and comfort.">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="canonical" href="https://eyqs.ca/tools/">
+<link rel="alternate" type="application/rss+xml" title="Eugene Y. Q. Shen" href="https://eyqs.ca/feed.xml">
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Person",
+  "name": "Eugene Y. Q. Shen",
+  "email": "eugene@eyqs.ca",
+  "url": "https://eyqs.ca/",
+  "sameAs": [
+    "https://www.linkedin.com/in/eugeneyqshen/",
+    "https://github.com/eyqs/",
+    "https://stackexchange.com/users/7130990/eyqs/"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "item": {
+      "@id": "https://eyqs.ca/",
+      "name": "Index"
+    }
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "item": {
+      "@id": "https://eyqs.ca/tools/",
+      "name": "Tools"
+    }
+  }]
+}
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-117777917-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-117777917-1');
+</script>
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+
+  </head>
+  <body>
+    <header class="col-xs-12">
+  <nav role="navigation">
+    <ul class="nav nav-tabs nav-justified">
+      <li role="presentation"><a href="/">Index</a></li>
+      <li role="presentation"><a rel="author" href="/about/">About</a></li>
+      <li role="presentation"><a href="/blog/">Blog</a></li>
+      <li role="presentation"><a href="/cakes/">Cakes</a></li>
+      <li role="presentation"><a href="/documents/">Documents</a></li>
+      <li role="presentation"><a href="/projects/">Projects</a></li>
+      <li role="presentation"><a href="/questions/">Questions</a></li>
+      <li role="presentation"><a href="/resume/">Resume</a></li>
+      <li role="presentation"><a href="/sitemap/">Sitemap</a></li>
+      <li role="presentation"><a href="/tools/">Tools</a></li>
+    </ul>
+  </nav>
+</header>
+
+    <div class="container">
+      <header>
+        <h1 class="page-title col-xs-12">Tools</h1>
+      </header>
+      <section role="main" class="col-xs-12">
+  <h1 class="section-title">Arch Linux Wifi</h1>
+  <p>This <a href="https://raw.githubusercontent.com/eyqs/dot/master/misc/wifi.txt">Arch Linux wifi configuration file</a> guides you through the configuration of your Arch Linux wifi for wireless networking with your home, ubcsecure, and eduroam networks.</p>
+  <ol>
+    <li>Run <samp>ip link</samp> to find your wireless interface name. Mine's <samp>wlp5s0</samp>.</li>
+    <li>Download the file linked above as <samp>/etc/wpa_supplicant/wpa_supplicant-wlp5s0.conf</samp>, where you replace <samp>wlp5s0</samp> with the name of your wireless interface.</li>
+    <li>WPA-PSK networks have the absolute minimum level of authentication&mdash;a single passphrase, often provided by the internet service provider. These are common for small home networks, so you'll find yourself adding new WPA-PSK networks in the file relatively often. Run <samp>wpa_passphrase ssid password</samp> with the actual SSID and password to get the PSK, then paste the SSID and PSK into the template in the file.</li>
+    <li>UBC Secure uses the RADIUS protocol for authentication, so instead of a single passphrase, you'll have to have a campus-wide login account to connect to it. Run <samp>echo -n password | iconv -t utf16le | openssl md4</samp> with your actual CWL password to hash it, then paste your CWL ID and hashed password into the template in the file.</li>
+    <li>eduroam works the same way as UBC Secure at UBC, except your identity becomes <samp>username@ubc.ca</samp>. With this setup, you should be able to visit <a href="https://www.eduroam.org/">thousands of eduroam-connected campuses</a> across the world and automatically connect to wifi!</li>
+    <li>Some notes: the purpose of hashing is to protect your CWL account, not to secure your wifi access. If you don't already have it, just download the <a href="https://www.thawte.com/roots/thawte_Primary_Root_CA.pem">Thawte Primary Root CA</a> as <samp>/etc/ssl/certs/thawte_Primary_Root_CA.pem</samp>.
+    <li>Finally, to enable automatic wifi connection on boot, run <samp>systemctl enable dhcpcd@wlp5s0.service</samp> with your wireless interface name instead of <samp>wlp5s0</samp>, and then <samp>ln -s /usr/share/dhcpcd/hooks/10-wpa_supplicant /usr/lib/dhcpcd/dhcpcd-hooks/</samp>. If this doesn't work, well, you'll have to consult the much more comprehensive <a href="https://wiki.archlinux.org/index.php/Wireless_network_configuration">Arch Linux wireless network configuration wiki article</a> sooner or later&hellip;</li>
+  </ol>
+
+  <h1 class="section-title">Tile Planner</h1>
+  <p>Tile Planner is a tool to help you plan out how to lay out your tiles on your floor. Simply enter your floor length and width (in pixels, of course) and the length and width of the tile you plan to use to tile it with. At the moment Tile Planner doesn't actually help you plan anything at all, but in the future it might!</p>
+  <script src="/tools/tile.js"></script>
+  <form id="tileform" onsubmit="initTile(document.getElementById('tileform'),
+                                    document.getElementById('tilenocanvas'),
+                                    document.getElementById('tilecanvas'));
+                                return false;">
+    Floor length:<br>
+    <input type="number" id="floorheight"><br>
+    Floor width:<br>
+    <input type="number" id="floorwidth"><br>
+    Tile length:<br>
+    <input type="number" id="tileheight"><br>
+    Tile width:<br>
+    <input type="number" id="tilewidth"><br>
+    <input type="submit" value="Launch">
+  </form>
+  <p id="tilenocanvas"></p>
+  <canvas id="tilecanvas"></canvas>
+
+  <h1 class="section-title">req</h1>
+  <p>req is a tool to help you visualize UBC course prerequisites. <a href="/tools/req/">Please click on this link to open req.</a></p>
+</body>
+</html>
+</section>
+
+      <footer class="col-xs-12" role="contentinfo">
+  <small>
+    <p>Copyright &copy; 2016<script>new Date().getFullYear()>2016 && document.write("&ndash;"+new Date().getFullYear());</script> Eugene Y. Q. Shen.</p>
+    <p>Content on this site is licensed under a <a rel="license" href='http://creativecommons.org/licenses/by-sa/4.0/'>Creative Commons Attribution-ShareAlike 4.0 International license</a>.</p>
+  </small>
+</footer>
+
+    </div>
+  </body>
+</html>
