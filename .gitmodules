@@ -6,6 +6,6 @@
     url = https://github.com/eyqs/req.git
     branch = web
 [submodule "tools/track"]
-	path = tools/track
-	url = https://github.com/eyqs/webapps
-	branch = track
+    path = tools/track
+    url = https://github.com/eyqs/webapps
+    branch = track
