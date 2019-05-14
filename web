@@ -8,36 +8,37 @@ import git
 import urllib
 
 
-REPO_ROOT = '/home/eyqs/Downloads/Dropbox/Projects/web/'
 REPO_REMOTE = 'origin'
 BUILD_BRANCH = 'gh-pages'
 BUILD_FOLDER = '_site/'
+PAGES_FOLDER = '_pages/'
+POSTS_FOLDER = '_posts/'
+
+REPO_ROOT = '/home/eyqs/Downloads/Dropbox/Projects/web/'
 BUILD_PATH = os.path.join(REPO_ROOT, BUILD_FOLDER)
+PAGES_PATH = os.path.join(REPO_ROOT, PAGES_FOLDER)
+POSTS_PATH = os.path.join(REPO_ROOT, POSTS_FOLDER)
 
 IGNORED_FILES = ['.git', '.gitignore', '.gitmodules',
         '_includes', '_layouts', '_pages', '_posts', '_redirects',
         'LICENSE.md', 'README.md', 'requirements.txt', 'web']
+IGNORED_PAGES = ['404.html', 'index.html']
+PAGE_NAMES = ['']
+POST_NAMES  = []
 
 
 
 def archive():
 
-    pages = ['', 'about/', 'blog/', 'cakes/', 'documents/', 'projects/',
-             'questions/', 'resume/', 'sitemap/', 'tools/']
-
-    posts = ['1804-ubcs-cpen/', '1805-late-rides/', '1806-wtfjs-idkjs/',
-             '1807-cloud-next/', '1808-sunny-vale/', '1809-mug-share/',
-             '1811-music-18w1/', '1901-new-year/', '1902-wand-earth/']
-
-    for page in pages:
+    for page in PAGE_NAMES:
         print(f'Archiving page: {page}')
         urllib.request.urlopen(
-                f'http://web.archive.org/save/https://eyqs.ca/{page}')
+                f'http://web.archive.org/save/https://eyqs.ca/{page}/')
 
-    for post in posts:
+    for post in POST_NAMES:
         print(f'Archiving post: {post}')
         urllib.request.urlopen(
-                f'http://web.archive.org/save/https://eyqs.ca/blogs/{post}')
+                f'http://web.archive.org/save/https://eyqs.ca/blogs/{post}/')
 
 
 def push():
@@ -72,6 +73,14 @@ if __name__ == '__main__':
         exit(1)
 
     os.chdir(REPO_ROOT)
+    with os.scandir(PAGES_PATH) as it:
+        for entry in it:
+            if entry.name not in IGNORED_PAGES:
+                PAGE_NAMES.append(os.path.splitext(entry.name)[0])
+    with os.scandir(POSTS_PATH) as it:
+        for entry in it:
+            POST_NAMES.append(os.path.splitext(entry.name)[0])
+
     if sys.argv[1] == 'archive':
         archive()
     elif sys.argv[1] == 'build':
