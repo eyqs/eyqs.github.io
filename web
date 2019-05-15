@@ -10,17 +10,21 @@ import urllib
 
 REPO_REMOTE = 'origin'
 BUILD_BRANCH = 'gh-pages'
-BUILD_FOLDER = '_site/'
-PAGES_FOLDER = '_pages/'
-POSTS_FOLDER = '_posts/'
+BUILD_FOLDER = '_site'
+PAGES_FOLDER = '_pages'
+POSTS_FOLDER = '_posts'
+BLOGS_FOLDER = 'blogs'
+REDIRECTS_FOLDER = '_redirects'
 
 REPO_ROOT = '/home/eyqs/Downloads/Dropbox/Projects/web/'
 BUILD_PATH = os.path.join(REPO_ROOT, BUILD_FOLDER)
 PAGES_PATH = os.path.join(REPO_ROOT, PAGES_FOLDER)
 POSTS_PATH = os.path.join(REPO_ROOT, POSTS_FOLDER)
+BLOGS_PATH = os.path.join(BUILD_PATH, BLOGS_FOLDER)
+REDIRECTS_PATH = os.path.join(REPO_ROOT, REDIRECTS_FOLDER)
 
-IGNORED_FILES = ['.git', '.gitignore', '.gitmodules',
-        '_includes', '_layouts', '_pages', '_posts', '_redirects',
+IGNORED_FILES = [PAGES_FOLDER, POSTS_FOLDER, REDIRECTS_FOLDER,
+        '.git', '.gitmodules', '_includes', '_layouts',
         'LICENSE.md', 'README.md', 'requirements.txt', 'web']
 
 
@@ -58,7 +62,7 @@ def push():
 def build():
 
     if os.path.exists(BUILD_PATH):
-        print(f'Removing build directory: {BUILD_FOLDER}')
+        print(f'Removing build directory: {BUILD_FOLDER}/')
         shutil.rmtree(BUILD_PATH)
 
     with os.scandir(REPO_ROOT) as it:
@@ -71,6 +75,28 @@ def build():
                 else:
                     print(f'Copying page: {entry.name}')
                     shutil.copy(entry.path, dest_path)
+
+    with os.scandir(PAGES_PATH) as it:
+        for entry in it:
+            print(f'Copying page: {entry.name}')
+            folder = os.path.join(BUILD_PATH, name_to_url(entry.name))
+            os.mkdir(folder)
+            shutil.copy(entry.path, os.path.join(folder, 'index.html'))
+
+    os.mkdir(BLOGS_PATH)
+    with os.scandir(POSTS_PATH) as it:
+        for entry in it:
+            print(f'Copying post: {entry.name}')
+            folder = os.path.join(BLOGS_PATH, name_to_url(entry.name))
+            os.mkdir(folder)
+            shutil.copy(entry.path, os.path.join(folder, 'index.html'))
+
+    with os.scandir(REDIRECTS_PATH) as it:
+        for entry in it:
+            print(f'Copying redirect: {entry.name}')
+            folder = os.path.join(BUILD_PATH, name_to_url(entry.name))
+            os.mkdir(folder)
+            shutil.copy(entry.path, os.path.join(folder, 'index.html'))
 
 
 
