@@ -123,16 +123,23 @@ def generate(src_path, dest_path, page_url):
             else:
                 before_tag.append(line)
 
-    with open(dest_path, 'w') as outfile:
-        for line in before_tag:
-            if has_tag(line):
-                key = get_tag(line)
-                if key not in parameters:
-                    print(f'Warning: key "{key}" was not found in {src_path}')
-                else:
-                    outfile.write(replace_tag(line, parameters[key]))
+    before_url = []
+    for line in before_tag:
+        if has_tag(line):
+            key = get_tag(line)
+            if key not in parameters:
+                print(f'Warning: key "{key}" was not found in {src_path}')
             else:
-                outfile.write(line)
+                before_url.append(replace_tag(line, parameters[key]))
+        else:
+            before_url.append(line)
+
+    with open(dest_path, 'w') as outfile:
+        for line in before_url:
+            if line.strip():
+                outfile.write(line.replace('"%/', f'"{SITE_URL}/'))
+            else:
+                outfile.write('\n')
 
 
 

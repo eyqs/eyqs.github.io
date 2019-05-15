@@ -18,7 +18,7 @@ description: Some tools written by Eugene Y. Q. Shen expressly for your personal
 
   <h1 class="section-title">Tile Planner</h1>
   <p>Tile Planner is a tool to help you plan out how to lay out your tiles on your floor. Simply enter your floor length and width (in pixels, of course) and the length and width of the tile you plan to use to tile it with. At the moment Tile Planner doesn't actually help you plan anything at all, but in the future it might!</p>
-  <script src="{{ "/tools/tile.js" | prepend: site.baseurl }}"></script>
+  <script src="%/tools/tile.js"></script>
   <form id="tileform" onsubmit="initTile(document.getElementById('tileform'),
                                     document.getElementById('tilenocanvas'),
                                     document.getElementById('tilecanvas'));
@@ -37,7 +37,7 @@ description: Some tools written by Eugene Y. Q. Shen expressly for your personal
   <canvas id="tilecanvas"></canvas>
 
   <h1 class="section-title">req</h1>
-  <p>req is a tool to help you visualize UBC course prerequisites. <a href="{{ "/tools/req/" | prepend: site.baseurl }}">Please click on this link to open req.</a></p>
+  <p>req is a tool to help you visualize UBC course prerequisites. <a href="%/tools/req/">Please click on this link to open req.</a></p>
 </body>
 </html>
 </section>
