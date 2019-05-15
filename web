@@ -20,6 +20,7 @@ BUILD_FOLDER = '_site'
 BLOGS_FOLDER = 'blogs'
 BUILD_PATH = os.path.join(REPO_ROOT, BUILD_FOLDER)
 
+PREAMBLE_SEPARATOR = '---\n'
 IGNORED_FILES = ['.git', '.gitmodules',
         'LICENSE.md', 'README.md', 'requirements.txt', 'web',
         POSTS_FOLDER, LAYOUTS_FOLDER, INCLUDES_FOLDER, BUILD_FOLDER]
@@ -38,6 +39,86 @@ def get_extension(name):
 
 def is_content(name):
     return get_extension(name) in CONTENT_EXTENSIONS
+
+
+def is_include(line):
+    strip = line.strip()
+    return strip.startswith('{% include ') and strip.endswith('.html %}')
+
+
+def get_include(line):
+    return line.strip().split()[2]
+
+
+def has_tag(line):
+    return '{{' in line and '}}' in line
+
+
+def get_tag(line):
+    start = line.index('{{')
+    end = line.index('}}')
+    return line[start+2:end].strip()
+
+
+def replace_tag(line, value):
+    start = line.index('{{')
+    end = line.index('}}')
+    return line.replace(line[start:end+2], value)
+
+
+def generate(src_path, dest_path):
+
+    content = []
+    preamble = None
+    parameters = {}
+
+    with open(src_path, 'r') as infile:
+        for line in infile:
+            if preamble and line == PREAMBLE_SEPARATOR:
+                preamble = False
+            if preamble:
+                key, value = line.split(':', 1)
+                if key == 'content':
+                    raise ValueError(
+                            f'must not use "content" as key in {src_path}')
+                parameters[key] = value.strip()
+            if preamble is None and line == PREAMBLE_SEPARATOR:
+                preamble = True
+            if not preamble:
+                content.append(line)
+
+    if 'layout' not in parameters:
+        raise ValueError(f'must have "layout" as key in {src_path}')
+
+    with open(dest_path, 'w') as outfile:
+        layout_path = os.path.join(
+                REPO_ROOT, LAYOUTS_FOLDER, f'{parameters["layout"]}.html')
+
+        with open(layout_path, 'r') as layoutfile:
+            for line in layoutfile:
+                indent = line.split('{', 1)[0]
+
+                if is_include(line):
+                    include_path = os.path.join(
+                            REPO_ROOT, INCLUDES_FOLDER, get_include(line))
+                    with open(include_path, 'r') as includefile:
+                        for includeline in includefile:
+                            outfile.write(indent + includeline)
+
+                elif has_tag(line):
+                    key = get_tag(line)
+                    if key == 'content':
+                        for contentline in content:
+                            outfile.write(indent + contentline)
+                    elif key not in parameters:
+                        raise ValueError(
+                                f'key "{key}" was not found in {src_path}')
+                    else:
+                        outfile.write(replace_tag(line, parameters[key]))
+
+                else:
+                    outfile.write(line)
+
 
 
 def archive():
@@ -83,7 +164,7 @@ def build():
                     dest_path = os.path.join(
                             BUILD_PATH, f'{get_name(entry.name)}.html')
                     print(f'Generating page: {entry.name}')
-                    shutil.copy(entry.path, dest_path)
+                    generate(entry.path, dest_path)
                 else:
                     dest_path = os.path.join(BUILD_PATH, entry.name)
                     if entry.is_dir():
@@ -99,7 +180,7 @@ def build():
             print(f'Generating post: {entry.name}')
             dest_path = os.path.join(
                     BUILD_PATH, BLOGS_FOLDER, f'{get_name(entry.name)}.html')
-            shutil.copy(entry.path, dest_path)
+            generate(entry.path, dest_path)
 
 
 
