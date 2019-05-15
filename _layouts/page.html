@@ -4,13 +4,17 @@
     {% include head.html %}
     {% include bootstrap.html %}
   </head>
+
   <body>
     {% include header.html %}
+
     <div class="container">
       <header>
         <h1 class="page-title col-xs-12">{{ title }}</h1>
       </header>
+
       {{ content }}
+
       {% include footer.html %}
     </div>
   </body>
