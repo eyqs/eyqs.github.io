@@ -22,23 +22,31 @@ POSTS_PATH = os.path.join(REPO_ROOT, POSTS_FOLDER)
 IGNORED_FILES = ['.git', '.gitignore', '.gitmodules',
         '_includes', '_layouts', '_pages', '_posts', '_redirects',
         'LICENSE.md', 'README.md', 'requirements.txt', 'web']
-IGNORED_PAGES = ['404.html', 'index.html']
-PAGE_NAMES = ['']
-POST_NAMES  = []
 
+
+
+def name_to_url(name):
+    return os.path.splitext(name)[0]
 
 
 def archive():
 
-    for page in PAGE_NAMES:
-        print(f'Archiving page: {page}')
-        urllib.request.urlopen(
-                f'http://web.archive.org/save/https://eyqs.ca/{page}/')
+    print('Archiving index')
+    urllib.request.urlopen('http://web.archive.org/save/https://eyqs.ca/')
 
-    for post in POST_NAMES:
-        print(f'Archiving post: {post}')
-        urllib.request.urlopen(
-                f'http://web.archive.org/save/https://eyqs.ca/blogs/{post}/')
+    with os.scandir(PAGES_PATH) as it:
+        for entry in it:
+            page = name_to_url(entry.name)
+            print(f'Archiving page: {page}')
+            urllib.request.urlopen(
+                    f'http://web.archive.org/save/https://eyqs.ca/{page}/')
+
+    with os.scandir(POSTS_PATH) as it:
+        for entry in it:
+            p = name_to_url(entry.name)
+            print(f'Archiving post: {p}')
+            urllib.request.urlopen(
+                    f'http://web.archive.org/save/https://eyqs.ca/blogs/{p}/')
 
 
 def push():
@@ -73,14 +81,6 @@ if __name__ == '__main__':
         exit(1)
 
     os.chdir(REPO_ROOT)
-    with os.scandir(PAGES_PATH) as it:
-        for entry in it:
-            if entry.name not in IGNORED_PAGES:
-                PAGE_NAMES.append(os.path.splitext(entry.name)[0])
-    with os.scandir(POSTS_PATH) as it:
-        for entry in it:
-            POST_NAMES.append(os.path.splitext(entry.name)[0])
-
     if sys.argv[1] == 'archive':
         archive()
     elif sys.argv[1] == 'build':
