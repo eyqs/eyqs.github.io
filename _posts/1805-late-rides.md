@@ -1,4 +1,5 @@
 ---
+layout: post
 title: Late Buses, Late Planes; Late Cars, Late Trains; Late Rides, Late Pains
 description: A series of stories about various rides that Eugene Y. Q. Shen was late for, before and hopefully not after this 2018 May blog post.
 ---

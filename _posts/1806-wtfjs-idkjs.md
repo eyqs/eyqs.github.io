@@ -1,4 +1,5 @@
 ---
+layout: post
 title: Weird Things From JavaScript, Because I Don't Know JavaScript
 description: A selection of weird things from JavaScript that Eugene Y. Q. Shen finally understands after reading a book before this 2018 June blog post.
 ---

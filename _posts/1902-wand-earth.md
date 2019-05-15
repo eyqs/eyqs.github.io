@@ -1,4 +1,5 @@
 ---
+layout: post
 title: The Wandering Earth Movie Review and 流浪地球 Novella Review
 description: A movie review of The Wandering Earth, which Eugene Y. Q. Shen watched and tried to read in Chinese for this 2019 February blog post.
 ---

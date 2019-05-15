@@ -1,4 +1,5 @@
 ---
+layout: post
 title: Dismantling the UBC SEEDS Mug Share Pilot Vending Machine
 description: A photo article of how Eugene Y. Q. Shen destroyed a 32 person-hour vending machine for fun, profit, and this 2018 September blog post.
 ---

@@ -1,4 +1,5 @@
 ---
+layout: post
 title: A Review of All UBC's Computer Engineering/Science Courses That Eugene Actually Took
 description: A review of all UBC's computer engineering/science courses that Eugene Y. Q. Shen will actually take, and has in fact actually taken before this 2018 April blog post.
 ---

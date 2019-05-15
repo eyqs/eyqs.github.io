@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "2019 New Year's Resolutions: 1) Don't Be Sick, 2) Go to Sleep"
 description: A story of what Eugene Y. Q. Shen did instead of a free trip to Waterloo, and the associated New Year's resolutions manifested in this 2019 January blog post.
 ---
