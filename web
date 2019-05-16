@@ -19,17 +19,25 @@ LAYOUTS_FOLDER = '_layouts'
 INCLUDES_FOLDER = '_includes'
 BUILD_FOLDER = '_site'
 BLOGS_FOLDER = 'blogs'
+ASSETS_FOLDER = 'assets'
+DEFAULT_FILE = 'index.html'
 BUILD_PATH = os.path.join(REPO_ROOT, BUILD_FOLDER)
-INDEX_PATH = os.path.join(REPO_ROOT, 'index.html')
+INDEX_PATH = os.path.join(REPO_ROOT, DEFAULT_FILE)
 
 PREAMBLE_SEPARATOR = '---\n'
-IGNORED_FILES = ['.git', '.gitmodules',
-        'LICENSE.md', 'README.md', 'requirements.txt', 'web',
+IGNORED_FILES = ['.git', '.gitignore', '.gitmodules', 'web',
+        'LICENSE.md', 'README.md', 'requirements.txt', ASSETS_FOLDER,
         POSTS_FOLDER, LAYOUTS_FOLDER, INCLUDES_FOLDER, BUILD_FOLDER]
-UNARCHIVED_FILES = ['index.html', '404.html']
 CONTENT_EXTENSIONS = ['.html', '.md']
+SPECIAL_FILES = [DEFAULT_FILE, '404.html']
 SPECIAL_KEYS = ['content', 'head_title', 'site_title', 'url']
 
+
+
+def mkdir(*args):
+    directory = os.path.join(*args)
+    if not os.path.exists(directory):
+        os.mkdir(directory)
 
 
 def get_name(name):
@@ -103,7 +111,7 @@ def generate(src_path, dest_path, page_url):
     if src_path == INDEX_PATH:
         parameters['url'] = f'{SITE_URL}/'
     else:
-        parameters['url'] = f'{SITE_URL}/{page_url}/'
+        parameters['url'] = f'{SITE_URL}/{page_url}'
 
     layout_path = os.path.join(
             REPO_ROOT, LAYOUTS_FOLDER, f'{parameters["layout"]}.html')
@@ -172,39 +180,56 @@ def push():
     repo.git.subtree('push', REPO_REMOTE, BUILD_BRANCH, prefix=BUILD_FOLDER)
 
 
+def copy_folder(srcfolder='', destfolder=None):
+
+    if destfolder == None:
+        destfolder = srcfolder
+
+    mkdir(BUILD_PATH, destfolder)
+    with os.scandir(os.path.join(REPO_ROOT, srcfolder)) as it:
+        for entry in it:
+            if entry.name in IGNORED_FILES:
+                continue
+
+            if is_content(entry.name):
+                if entry.name in SPECIAL_FILES:
+                    dest = os.path.join(BUILD_FOLDER, destfolder,
+                            f'{get_name(entry.name)}.html')
+                    print('Generating page: ' +
+                            f'{os.path.join(srcfolder, entry.name)} -> {dest}')
+                    generate(entry.path, os.path.join(REPO_ROOT, dest),
+                            f'{destfolder}/{get_name(entry.name)}.html')
+                else:
+                    dest = os.path.join(BUILD_FOLDER, destfolder,
+                            get_name(entry.name), DEFAULT_FILE)
+                    print('Generating page: ' +
+                            f'{os.path.join(srcfolder, entry.name)} -> {dest}')
+                    mkdir(BUILD_PATH, destfolder, get_name(entry.name))
+                    generate(entry.path, os.path.join(REPO_ROOT, dest),
+                            f'{destfolder}/{get_name(entry.name)}/')
+
+            else:
+                if entry.is_dir():
+                    copy_folder(f'{os.path.join(srcfolder, entry.name)}/',
+                            f'{os.path.join(destfolder, entry.name)}/')
+                else:
+                    dest = os.path.join(BUILD_FOLDER, destfolder, entry.name)
+                    print('Copying file: ' +
+                            f'{os.path.join(srcfolder, entry.name)} -> {dest}')
+                    shutil.copy(entry.path, os.path.join(REPO_ROOT, dest))
+
+
 def build():
 
     if os.path.exists(BUILD_PATH):
         print(f'Removing build directory: {BUILD_FOLDER}/')
         shutil.rmtree(BUILD_PATH)
 
-    os.mkdir(BUILD_PATH)
-    with os.scandir(REPO_ROOT) as it:
-        for entry in it:
-            if entry.name not in IGNORED_FILES:
-                if is_content(entry.name):
-                    dest_path = os.path.join(
-                            BUILD_PATH, f'{get_name(entry.name)}.html')
-                    print(f'Generating page: {entry.name}')
-                    generate(entry.path, dest_path, get_name(entry.name))
-                else:
-                    dest_path = os.path.join(BUILD_PATH, entry.name)
-                    if entry.is_dir():
-                        print(f'Copying folder: {entry.name}/')
-                        shutil.copytree(entry.path, dest_path)
-                    else:
-                        print(f'Copying file: {entry.name}')
-                        shutil.copy(entry.path, dest_path)
-
-    os.mkdir(os.path.join(BUILD_PATH, BLOGS_FOLDER))
-    with os.scandir(os.path.join(REPO_ROOT, POSTS_FOLDER)) as it:
-        for entry in it:
-            print(f'Generating post: {entry.name}')
-            dest_path = os.path.join(
-                    BUILD_PATH, BLOGS_FOLDER, f'{get_name(entry.name)}.html')
-            generate(entry.path, dest_path,
-                    f'{BLOGS_FOLDER}/{get_name(entry.name)}')
-
+    copy_folder()
+    copy_folder(POSTS_FOLDER, BLOGS_FOLDER)
+    print(f'Copying folder: {ASSETS_FOLDER}/ -> {ASSETS_FOLDER}/')
+    shutil.copytree(os.path.join(REPO_ROOT, ASSETS_FOLDER),
+            os.path.join(BUILD_PATH, ASSETS_FOLDER))
 
 
 
