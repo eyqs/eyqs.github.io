@@ -2,6 +2,7 @@
 
 import os
 import shutil
+import subprocess
 import sys
 
 import git
@@ -20,6 +21,7 @@ INCLUDES_FOLDER = '_includes'
 BUILD_FOLDER = '_site'
 BLOGS_FOLDER = 'blogs'
 ASSETS_FOLDER = 'assets'
+SCRIPT_FILE = 'web'
 DEFAULT_FILE = 'index.html'
 BUILD_PATH = os.path.join(REPO_ROOT, BUILD_FOLDER)
 INDEX_PATH = os.path.join(REPO_ROOT, DEFAULT_FILE)
@@ -210,8 +212,15 @@ def copy_folder(srcfolder='', destfolder=None):
 
             else:
                 if entry.is_dir():
+                    if os.path.exists(os.path.join(entry.path, SCRIPT_FILE)):
+                        subprocess.call([
+                            'python',
+                            os.path.join(entry.path, SCRIPT_FILE),
+                            'build',
+                        ])
                     copy_folder(f'{os.path.join(srcfolder, entry.name)}/',
                             f'{os.path.join(destfolder, entry.name)}/')
+
                 else:
                     dest = os.path.join(BUILD_FOLDER, destfolder, entry.name)
                     print('Copying file: ' +

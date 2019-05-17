@@ -2,9 +2,10 @@
 <html lang="en">
   <head>
     {% include head.html %}
-    <link href="{{ page.css | prepend: site.baseurl }}" rel="stylesheet">
-    <link href="{{ page.json | prepend: site.baseurl }}" rel="manifest">
+    <link href="{{ css }}" rel="stylesheet">
+    <link href="{{ json }}" rel="manifest">
   </head>
+
   <body>
     {{ content }}
   </body>

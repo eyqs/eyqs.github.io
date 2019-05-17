@@ -3,11 +3,15 @@
 import os
 import sys
 
+import git
+
 
 REPO_ROOT = '/home/eyqs/Downloads/Dropbox/Projects/web/'
 PREAMBLE_SEPARATOR = '---\n'
 DEFAULT_FILE = 'index.html'
 
+BODY_OPENING_TAG = '<body>\n'
+BODY_CLOSING_TAG = '</body>\n'
 TOOLS_LAYOUT = 'layout: tools\n'
 TOOLS_FOLDER = 'tools'
 TOOLS_ROOT = os.path.join(REPO_ROOT, TOOLS_FOLDER)
@@ -39,6 +43,9 @@ PREAMBLES = {
 
 def build():
 
+    repo = git.Repo(REPO_ROOT)
+    repo.git.submodule('foreach', 'git reset --hard')
+
     with os.scandir(TOOLS_ROOT) as it:
         for entry in it:
             if entry.is_dir():
@@ -52,14 +59,24 @@ def build():
                 content.append(PREAMBLE_SEPARATOR)
 
                 file_path = os.path.join(entry.path, DEFAULT_FILE)
+                print('Overwriting tools page: ' +
+                        os.path.join(TOOLS_FOLDER, entry.name, DEFAULT_FILE))
+
                 with open(file_path, 'r') as infile:
+                    in_body = False
                     for line in infile:
-                        content.append(line)
+                        if line == BODY_CLOSING_TAG:
+                            break
+                        if in_body:
+                            content.append(line)
+                        elif line == BODY_OPENING_TAG:
+                            in_body = True
 
                 with open(file_path, 'w') as outfile:
                     for line in content:
                         if line.strip():
-                            outfile.write(line)
+                            outfile.write(line.replace(
+                                './', f'%/{TOOLS_FOLDER}/{entry.name}/'))
                         else:
                             outfile.write('\n')
 
