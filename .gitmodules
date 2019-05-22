@@ -1,0 +1,20 @@
+[submodule "tools/avalon"]
+	path = tools/avalon
+	url = https://eyqs@github.com/eyqs/webapps.git
+	branch = avalon
+[submodule "tools/chess"]
+	path = tools/chess
+	url = https://eyqs@github.com/eyqs/webapps.git
+	branch = chess
+[submodule "tools/cit"]
+	path = tools/cit
+	url = https://eyqs@github.com/eyqs/cit.git
+	branch = gh-pages
+[submodule "tools/req"]
+	path = tools/req
+	url = https://eyqs@github.com/eyqs/req.git
+	branch = web
+[submodule "tools/track"]
+	path = tools/track
+	url = https://eyqs@github.com/eyqs/webapps.git
+	branch = track
