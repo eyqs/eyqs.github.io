@@ -200,7 +200,8 @@ def copy_folder(srcfolder='', destfolder=None):
                     print('Generating page: ' +
                             f'{os.path.join(srcfolder, entry.name)} -> {dest}')
                     generate(entry.path, os.path.join(REPO_ROOT, dest),
-                            f'{destfolder}/{get_name(entry.name)}.html')
+                        os.path.join(destfolder,
+                                f'{get_name(entry.name)}.html'))
                 else:
                     dest = os.path.join(BUILD_FOLDER, destfolder,
                             get_name(entry.name), DEFAULT_FILE)
@@ -208,7 +209,7 @@ def copy_folder(srcfolder='', destfolder=None):
                             f'{os.path.join(srcfolder, entry.name)} -> {dest}')
                     mkdir(BUILD_PATH, destfolder, get_name(entry.name))
                     generate(entry.path, os.path.join(REPO_ROOT, dest),
-                            f'{destfolder}/{get_name(entry.name)}/')
+                        os.path.join(destfolder, get_name(entry.name)) + '/')
 
             else:
                 if entry.is_dir():
