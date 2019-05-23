@@ -22,15 +22,18 @@ let state;                          // state of a board at a given turn;
 let history;                        // history of all states of the board
 let white_turn;                     // true = white, false = black
 let selection;                      // ex. {piece: "P", row: 3, col: 5}
-let error;                          // ex. {row: 0, col: 7}
+let error;                          // position of certain cells,
+let check;                          //   ex. {row: 0, col: 7}
 
 
 // constants
+// all cells {row, col} must have 0 <= row < ROWS and 0 <= col < COLS
 
 const ROWS = 8;
 const COLS = 8;
 const WHITE_PIECES = "PNBRQK";
 const BLACK_PIECES = "pnbrqk";
+const INITIAL_KINGS = {true: {row: 0, col: 3}, false: {row: 7, col: 3}};
 const INITIAL_CASTLE = {0: {0: true, 7: true}, 7: {0: true, 7: true}};
 const FINAL_CASTLE = {0: {0: false, 7: false}, 7: {0: false, 7: false}};
 const INITIAL_BOARD = [
@@ -47,6 +50,7 @@ const INITIAL_STATE = {
   board: INITIAL_BOARD,
   current_turn: 0,
   en_passant_column: -1,
+  king_cells: INITIAL_KINGS,
   can_castle: INITIAL_CASTLE,
 };
 
@@ -66,6 +70,9 @@ function getClass(piece, row, col) {
     result.push("active");
   }
   if (error && error.row === row && error.col === col) {
+    result.push("error");
+  }
+  if (check && check.row === row && check.col === col) {
     result.push("error");
   }
   if (piece) {
@@ -94,13 +101,9 @@ function getIcon(piece) {
 }
 
 
-/* return true iff the player can castle with the rook in the given position
- * requires:
- *  - 0 <= selection.row, row < ROWS
- *  - 0 <= selection.col, col < COLS
- */
+// return true iff the player can castle with the rook in the given position
 
-function canCastle(selection, row, col) {
+function canCastle(cell, row, col) {
   let rook_col;
   if (col === 1) {
     rook_col = 0;
@@ -109,10 +112,25 @@ function canCastle(selection, row, col) {
   } else {
     return false;
   }
-  if (!isEmpty("orthogonal", selection.row, selection.col, row, rook_col)) {
+  if (!isEmpty("orthogonal", cell.row, cell.col, row, rook_col)) {
     return false;
   }
   if (row !== 0 && row !== 7) {
+    return false;
+  }
+  if (rook_col > col) {
+    for (let column = cell.col; column <= col; column++) {
+      if (checkAttack(state.white_turn, row, column)) {
+        return false;
+      }
+    }
+  } else if (rook_col < col) {
+    for (let column = cell.col; column >= col; column--) {
+      if (checkAttack(state.white_turn, row, column)) {
+        return false;
+      }
+    }
+  } else {
     return false;
   }
   return state.can_castle[row][rook_col];
@@ -121,10 +139,7 @@ function canCastle(selection, row, col) {
 
 /* return true iff all the squares between start and end exclusive are empty
  *  - e.g. to move a bishop from (0,0) to (2,2), only (1,1) must be empty
- * requires:
- *  - direction = "orthogonal" or "diagonal"
- *  - 0 <= start_row, end_row < ROWS
- *  - 0 <= start_col, end_col < COLS
+ * requires: direction = "orthogonal" or "diagonal"
  */
 
 function isEmpty(direction, start_row, start_col, end_row, end_col) {
@@ -208,62 +223,127 @@ function isEmpty(direction, start_row, start_col, end_row, end_col) {
 }
 
 
-/* return true iff the given selection can move to the given cell
- * requires:
- *  - the piece at (row, col) is not a friendly piece
- *  - 0 <= selection.row, row < ROWS
- *  - 0 <= selection.col, col < COLS
+/* return true iff the given cell can move to the given cell
+ * requires: the piece at (row, col) is not a friendly piece
  */
 
-function canMove(selection, row, col) {
-  switch (selection.piece.toLowerCase()) {
+function canMove(cell, row, col) {
+  switch (cell.piece.toLowerCase()) {
   case "p":
     // TODO: promotion
-    if (col === selection.col) {
+    if (col === cell.col) {
       // cannot capture given cell
       const direction = white_turn ? 1 : -1;
-      if (isEmpty("orthogonal",
-          selection.row, selection.col, row + direction, col)) {
+      if (isEmpty("orthogonal", cell.row, cell.col, row + direction, col)) {
         // normal move
-        return row === selection.row + direction
+        return row === cell.row + direction
         // first move
-            || (white_turn && selection.row === 1 && row === 3)
-            || (!white_turn && selection.row === 6 && row === 4);
+            || (white_turn && cell.row === 1 && row === 3)
+            || (!white_turn && cell.row === 6 && row === 4);
       }
-    } else if ((col === selection.col + 1 || col === selection.col - 1)
-        && isEmpty("diagonal", selection.row, selection.col, row, col)) {
+    } else if ((col === cell.col + 1 || col === cell.col - 1)
+        && isEmpty("diagonal", cell.row, cell.col, row, col)) {
       // capturing move
-      return ((white_turn && row === selection.row + 1)
-              || (!white_turn && row === selection.row - 1))
+      return ((white_turn && row === cell.row + 1)
+              || (!white_turn && row === cell.row - 1))
           && (state.board[toCell(row, col)]
               || (((white_turn && row === 5) || (!white_turn && row === 2))
                   && col === state.en_passant_column));
     }
     break;
   case "n":
-    return ((col === selection.col + 2 || col === selection.col - 2)
-            && (row === selection.row + 1 || row === selection.row - 1))
-        || ((col === selection.col + 1 || col === selection.col - 1)
-            && (row === selection.row + 2 || row === selection.row - 2));
+    return ((col === cell.col + 2 || col === cell.col - 2)
+            && (row === cell.row + 1 || row === cell.row - 1))
+        || ((col === cell.col + 1 || col === cell.col - 1)
+            && (row === cell.row + 2 || row === cell.row - 2));
     break;
   case "b":
-    return isEmpty("diagonal", selection.row, selection.col, row, col);
+    return isEmpty("diagonal", cell.row, cell.col, row, col);
     break;
   case "r":
-    return isEmpty("orthogonal", selection.row, selection.col, row, col);
+    return isEmpty("orthogonal", cell.row, cell.col, row, col);
     break;
   case "q":
-    return isEmpty("diagonal", selection.row, selection.col, row, col)
-        || isEmpty("orthogonal", selection.row, selection.col, row, col);
+    return isEmpty("diagonal", cell.row, cell.col, row, col)
+        || isEmpty("orthogonal", cell.row, cell.col, row, col);
     break;
   case "k":
-    return ((col === selection.col + 1 || col === selection.col
-            || col === selection.col - 1)
-        && (row === selection.row + 1 || row === selection.row
-            || row === selection.row - 1))
-    // castling, TODO: check
-        || (row === selection.row && canCastle(selection, row, col)
-            && (col === selection.col + 2 || col === selection.col - 2));
+    return ((col === cell.col + 1 || col === cell.col
+            || col === cell.col - 1)
+        && (row === cell.row + 1 || row === cell.row
+            || row === cell.row - 1))
+    // castling
+        || (row === cell.row && canCastle(cell, row, col)
+            && (col === cell.col + 2 || col === cell.col - 2));
+    break;
+  }
+  return false;
+}
+
+
+// return the list of cells that the piece in the given cell can move to
+
+function getMoves(row, col) {
+  const result = [];
+  const moves = [];
+  const piece = state.board[toCell(row, col)];
+  const cell = {piece, row, col};
+  let white_piece;
+  if (WHITE_PIECES.indexOf(piece) !== -1) {
+    white_piece = true;
+  } else if (BLACK_PIECES.indexOf(piece) !== -1) {
+    white_piece = false;
+  } else {
+    return result;
+  }
+  switch (piece.toLowerCase()) {
+  case "p":
+    const direction = white_piece ? 1 : -1;
+    for (let i = -1; i <= 1; i++) {
+      moves.push({row: row + direction, col: col + i});
+    }
+    if ((white_piece && row === 1) || (!white_piece && row === 7)) {
+      moves.push({row: row + 2 * direction, col});
+    }
+    break;
+  case "n":
+    moves.push({row: row + 2, col: col + 1});
+    moves.push({row: row + 2, col: col - 1});
+    moves.push({row: row + 1, col: col + 2});
+    moves.push({row: row + 1, col: col - 2});
+    moves.push({row: row - 1, col: col + 2});
+    moves.push({row: row - 1, col: col - 2});
+    moves.push({row: row - 2, col: col + 1});
+    moves.push({row: row - 2, col: col - 1});
+    break;
+  case "b":
+    for (let i = -ROWS; i < ROWS; i++) {
+      moves.push({row: row + i, col: col + i});
+      moves.push({row: row + i, col: col - i});
+    }
+    break;
+  case "r":
+    for (let i = -ROWS; i < ROWS; i++) {
+      moves.push({row: row + i, col: col});
+      moves.push({row: row, col: col + i});
+    }
+    break;
+  case "q":
+    for (let i = -ROWS; i < ROWS; i++) {
+      moves.push({row: row + i, col: col + i});
+      moves.push({row: row + i, col: col - i});
+      moves.push({row: row + i, col: col});
+      moves.push({row: row, col: col + i});
+    }
+    break;
+  case "k":
+    moves.push({row: row, col: col + 2});
+    moves.push({row: row, col: col - 2});
+    for (let i = -1; i <= 1; i++) {
+      for (let j = -1; j <= 1; j++) {
+        moves.push({row: row + i, col: col + j});
+      }
+    }
     break;
   }
   return false;
@@ -275,7 +355,7 @@ function canMove(selection, row, col) {
  * modifies: state
  */
 
-function doMove(selection, row, col) {
+function doMove(row, col) {
   const piece = selection.piece.toLowerCase();
   state.board[toCell(row, col)] = selection.piece;
   state.board[toCell(selection.row, selection.col)] = "";
@@ -308,6 +388,7 @@ function doMove(selection, row, col) {
     } else {
       state.can_castle = JSON.parse(JSON.stringify(FINAL_CASTLE));
     }
+    state.king_cells[white_turn] = {row, col};
   }
   if (piece === "r" && (selection.row === 0 || selection.row === 7)) {
     state.can_castle[selection.row][selection.col] = false;
@@ -315,8 +396,27 @@ function doMove(selection, row, col) {
 }
 
 
+/* check if the given cell is under attack by the other player
+ * modifies: check
+ */
+
+function checkAttack(is_white, end_row, end_col) {
+  for (let row = 0; row < ROWS; row++) {
+    for (let col = 0; col < COLS; col++) {
+      const piece = state.board[toCell(row, col)];
+      if (piece && ((is_white && BLACK_PIECES.indexOf(piece) !== -1)
+              || (!is_white && WHITE_PIECES.indexOf(piece) !== -1))
+          && canMove({piece, row, col}, end_row, end_col)) {
+        check = {row: end_row, col: end_col};
+        return;
+      }
+    }
+  }
+  check = null;
+}
+
+
 /* decide what to do when user clicks
- * requires: 0 <= row < ROWS, 0 <= col < COLS
  * modifies: state, selection, error
  */
 
@@ -330,7 +430,7 @@ function clickCell(row, col) {
     } else if ((!piece || (white_turn && WHITE_PIECES.indexOf(piece) === -1)
             || (!white_turn && BLACK_PIECES.indexOf(piece) === -1))
         && canMove(selection, row, col)) {
-      doMove(selection, row, col);
+      doMove(row, col);
       selection = null;
       error = null;
       state.current_turn++;
