@@ -1,5 +1,0 @@
-# robots.txt for https://eyqs.ca/
-
-User-agent: *
-Disallow: /404
-Disallow: /cdn-cgi/
