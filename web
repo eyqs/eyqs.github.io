@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+
+import urllib.request
+
+
+SITE_URL = 'https://eyqs.ca/'
+ARCHIVE_URL = 'http://web.archive.org/save/'
+
+BLOG_FOLDER = 'blog/'
+
+ARCHIVED_PAGES = ['', 'about/', 'blog/']
+ARCHIVED_POSTS = ['2001-first-post/']
+
+
+for page in ARCHIVED_PAGES:
+    page_url = SITE_URL + page
+    print('Archiving page: ' + page_url)
+    urllib.request.urlopen(ARCHIVE_URL + page_url)
+
+for post in ARCHIVED_POSTS:
+    post_url = SITE_URL + BLOG_FOLDER + post
+    print('Archiving post: ' + post_url)
+    urllib.request.urlopen(ARCHIVE_URL + post_url)
