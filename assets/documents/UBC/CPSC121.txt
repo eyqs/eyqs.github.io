@@ -1,0 +1,298 @@
+    Module 1: Propositional Logic
+
+proposition: a sentence that is true or false but not both, where
+    sentence, true (T), and false (F) are all undefined terms;
+    sentences that depend on variables are not propositions, like "it is hot"
+compound proposition: a proposition that is built using other propositions
+logical connective: that which connects propositions in a compound proposition
+negation: ¬p, NOT p, true if p is false and false if p is true
+conjunction: p∧q, p AND q, true if and only if (iff) p is true and q is true
+disjunction: p∨q, p OR q, true iff p is true or q is true or both are true
+exclusive or: p⊕q, p XOR q, true iff p is true or q is true but not both
+propositional form: a collection of variables like p and connectives like ¬
+    that becomes a proposition when propositions are filled into variables
+truth table: a table of the values of a propositional form     | p | q | p∧q |
+    for all combinations of values of its component variables; | F | F |  F  |
+    always list component values in binary increasing order;   | F | T |  F  |
+    convert to propositional form by taking the conjunction of | T | F |  F  |
+    each row, then taking the disjunction of all conjunctions  | T | T |  T  |
+
+logic gate: a device that processes discrete signals to implement connectives;
+    inverter implements ¬, AND-gate implements ∧, OR-gate implements ∨, etc.
+digital logic circuit: an electronic circuit matching a propositional form;
+    convert to propositional form by substituting connective for logic gate
+    that produces output; use first input as left argument, second as right
+combinational circuit: a circuit whose output only depends on current input;
+    can split input into two, but never combine two inputs; can use output as
+    input, but never connect an output of a gate to somehow feed back into it
+multiplexer: a circuit that chooses between many streams; with two streams,
+    if select high, connects stream 1 to output; if low, connects stream 2
+demultiplexer: a circuit that chooses between many outputs; with two outputs,
+    if select high, connects stream to output 1; if low, connects to output 2
+half-adder: a circuit that adds two bits as inputs and outputs sum and carry;
+    made with one XOR-gate to output sum and one AND-gate to output carry
+full-adder: a circuit that adds three bits as input and outputs sum and carry;
+    made with two half-adders to output sum and an OR-gate for both carries
+parallel adder: a circuit that adds two binary numbers using many full-adders
+propagation delay: the time between input change and output change; nonzero
+fan-out: the number of inputs that can be connected to a logic gate; finite
+race condition: a situation where order of signal arrival changes output; bad
+instability: a situation where propagation delays momentarily change output;
+    so propositional logic is not a perfect model of digital logic circuits
+
+    Module 2: Conditionals and Logical Equivalences
+
+conditional: p→q, p IMPLIES q, false iff p is true and q is false;
+    contrapositive: (¬q)→(¬p); converse: q→p; inverse: (¬p)→(¬q)
+biconditional: p↔q, p IFF q, true iff p→q is true and q→p is also true
+tautology: a propositional form that is always true; written t
+contradiction: a propositional form that is always false; written c
+equivalent: describes two forms with the same truth table; written p ≡ q
+equivalence rule: an equation between equivalent propositional forms;
+    definitions include: p⊕q ≡ (p∨q)∧¬(p∧q); p→q ≡ (¬p)∨q; p↔q ≡ (p→q)∧(q→p);
+    laws include: negation pv(¬p) ≡ t, p∧(¬p) ≡ c; double negative ¬(¬p) ≡ p;
+    identity p∧t ≡ p, pvc ≡ p; universal bound pvt ≡ t, p∧c ≡ c;
+    contrapositive p→q ≡ (¬q)→(¬p); all following laws can switch ∧ and ∨:
+    De Morgan's ¬(p∧q) ≡ (¬p)∨(¬q), or ¬(pvq) ≡ (¬p)∧(¬q) when switched;
+    associative p∧(q∧r) ≡ (p∧q)∧r; distributive p∧(q∨r) ≡ (p∧q)∨(p∧r);
+    commutative p∧q ≡ q∧p; idempotent p∧p ≡ p; absorption pv(p∧q) ≡ p
+
+    Module 3: Representing Values in a Computer
+
+binary: the representation of numbers in base 2, with 0 in base 10 = 0, 1 = 1
+bit: a binary digit; in digital logic, 0 replaces F and 1 replaces T
+unsigned integer: cannot represent negative integers, but represent positive
+    integers by directly converting bases, with values in [0, 2ⁿ) with n bits
+one's complement: the result of swapping all 0s and 1s in a binary integer x
+two's complement: the result of taking the one's complement of a positive
+    binary integer x, and then adding one; two's complement of x is 2ⁿ − x
+signed integer: represent positive integers by directly converting bases;
+    represent negative integers as the two's complement of its absolute value;
+    addition with negative integers is the same as with positive integers;
+    but with n bits, if i = n∕2, then can only represent values in [−2ⁱ, 2ⁱ)
+hexadecimal: the representation of numbers in base 16, with 0 in base 10 = 0,
+    1 = 1, …, 9 = 9, 10 = A, 11 = B, 12 = C, 13 = D, 14 = E, and 15 = F;
+    useful for human inspection of raw binary data, C more readable than 1010
+encoding: represent characters using bits too, like EBCDIC, ASCII, Unicode
+mantissa: the multiplicative factor of a number written in scientific notation
+floating point: represent real numbers by only using sign, exponent, mantissa;
+    sign stored in 1 bit, exponent stored in 7 bits in a float, 10 bits
+    in a double, mantissa stored in 24 bits in a float, 53 in a double
+overflow: representable range limited, exceeding bounds makes bad stuff happen
+imprecise representation: many real numbers do not have a terminating binary
+    expansion, so errors of at least 1 in 2⁵³ may grow in every calculation
+
+    Module 4: Logical Inference and Propositional Logic Proofs
+
+argument: a sequence of propositions, each of which is either a premise or the
+    result of applying equivalence or inference rules to earlier propositions
+premise: a proposition that is not the result of applying logical rules
+conclusion: the final proposition in an argument; the premises are the
+    argument's assumptions, and the conclusion is the argument's result
+argument form: a sequence of propositional forms, analogous to an argument
+valid: describes argument form whose conclusion is true if its premises are;
+    demonstrate validity by applying equivalence or inference rules, or by
+    truth table to see if all rows with all premises true have conclusion true
+sound: describes an argument with a valid argument form and all premises true
+proof: a sound argument, used to convince people that a conditional is true
+propositional logic proof: a proof that only uses compound statements
+inference rule: a valid argument form; conclusion preceded by therefore ∴;
+    forms include: modus ponens p→q, p, ∴q; modus tollens p→q, ¬q, ∴¬p;
+    generalization p, ∴(pvq); specialization p∧q, ∴p; elimination pvq, ¬q, ∴p;
+    conjunction p, q, ∴(p∧q); proof by division into cases pvq, p→r, q→r, ∴r;
+    transitivity p→q, q→r, ∴(p→r); proof by contradiction (¬p)→c, ∴p
+
+    Modules 5 and 6: Predicate Logic
+
+set membership: an element x in a set S is a member of S; written x ∈ S, where
+    set and element are both undefined terms; ∀x, ∀S, either x ∈ S or x ∉ S;
+    the set of all reals is ℝ, rationals is ℚ, integers is ℤ, naturals is ℕ
+empty set: the unique set ∅ with no elements in it, so that ∀x, x ∉ S
+set roster notation: specifies a set by enumerating its members, like {1,2,3}
+set builder notation: specifies a set by a condition, like {x ∈ ℤ | 0 < x < 4}
+predicate: a sentence that depends on variables, which are then removed;
+    sentence "it is hot"; variable "it", or x; predicate "x is hot", or P(x);
+    predicates become propositions when values are filled into variables;
+    equivalent, valid, sound if proposition is, no matter what values are used
+quantifier: a construct that tells for how many elements a predicate is true
+universal quantifier: ∀, for all; true iff predicate true for every element;
+    ∀x ∈ {x₀, x₁, …, xₙ}, P(x) is equivalent to P(x₀) ∧ P(x₁) ∧ ⋯ ∧ P(xₙ)
+existential quantifier: ∃, exists; true iff predicate true for at least one;
+    ∃x ∈ {x₀, x₁, …, xₙ}, P(x) is equivalent to P(x₀) ∨ P(x₁) ∨ ⋯ ∨ P(xₙ)
+uniqueness quantifier: ∃!, exists one; true iff predicate true for only one;
+    ∃!x ∈ S, P(x) is equivalent to ∃x ∈ S, (∀y ∈ S, (P(y) ↔ (y = x)))
+counterexample: an element x for which a universally quantified P(x) is false;
+    prove that a universal quantifier is false by finding one counterexample,
+    or that an existential quantifier is true by finding one P(x) that is true
+method of exhaustion: prove that a universal quantifier is true or that an
+    existential quantifier is false by enumerating all P(x₀), P(x₁), …, P(xₙ)
+universal conditional: ∀x ∈ S, P(x) → Q(x); most important sentence in math!
+    ∀x ∈ D, Q(x) is equivalent to a universal conditional with P(x) = x ∈ D
+negations of quantifiers: ¬(∀x ∈ S, P(x) → Q(x)) ≡ ∃x ∈ S, P(x)∧(¬Q(x));
+    ¬(∀x ∈ S, P(x)) ≡ ∃x ∈ S, ¬Q(x); ¬(∃x ∈ S, P(x)) ≡ ∀x ∈ S, ¬Q(x)
+predicate logic proof: a proof that uses compound statements and predicates;
+    can apply any equivalence rule or inference rule to predicates as well
+universal instantiation: x ∈ S, (∀y ∈ S, P(y)), ∴P(x); if (∀y ∈ S, P(y)→Q(y)),
+    universal modus ponens x∈S, P(x), ∴Q(x); modus tollens x∈S, ¬Q(x), ∴¬P(x)
+existential instantiation: (∃y ∈ S, P(y)), ∴(P(x) for a new variable x ∈ S)
+universal generalization: P(x) for an arbitrary x ∈ S, ∴(∀y ∈ S, P(y))
+existential generalization: P(x) for a specific x ∈ S, ∴(∃y ∈ S, P(y))
+challenge method: imagine a two-player game; A picks values of existentially
+    quantified variables, B picks values of universally quantified variables;
+    predicate is true iff A can always pick values that make proposition true
+
+    Module 7: Proof Techniques
+
+proof of existence: prove that predicate with existential quantifier is true;
+    constructive: find one example that is true, or give a method to find it;
+    nonconstructive: use a predicate logic proof, or a proof by contradiction
+disproof by counterexample: prove that predicate with universal quantifier
+    is false; find one example that is false, or give a method to find it
+exhaustive proof: prove predicate is true or false using method of exhaustion
+generalizing from the generic particular: prove that every element of a set
+    satisfies a condition using universal generalization; show that any
+    particular, but arbitrarily chosen, element must satisfy the condition
+direct proof: prove that universal conditional is true by generalizing from
+    the generic particular and showing that the conditional is always true
+proof by division into cases: prove ∀x, (P₀(x) v P₁(x) v ⋯ v Pₙ(x)) → Q(x)
+    is true by showing that P₀(x) → Q(x), P₁(x) → Q(x), …, Pₙ(x) → Q(x)
+proof by contradiction: prove that predicate is true by showing that
+    if the predicate were not true, then a contradiction would arise
+proof by contraposition: prove that universal conditional is true or false
+    by showing that the contrapositive of the conditional is true or false
+
+    Module 8: Sequential Circuits
+
+state: the collection of all the information currently stored in a circuit
+sequential circuit: a circuit whose output depends on current state and input
+memory: the ability to store states, or the components that have this ability
+latch: a sequential circuit with memory; made with a multiplexer whose output
+    feeds back into it, which stores the value of its previous output
+flip-flop: a sequential circuit with memory; made with two latches with
+    opposite control inputs; flip-flops store their output when control input
+    turns on, while latches store their output while control input remains on
+frequency divider: a circuit that outputs its input at a different frequency;
+    half-frequency dividers made with one flip-flop feeding into itself
+shift register: a circuit that shifts bits stored in it using many flip-flops
+branch predictor: a circuit that guesses which path a branch will evaluate to,
+    in order to save time by performing multiple instructions simultaneously
+finite-state automaton: a model of a sequential circuit as a machine that is
+    in a state and transitions to states based on its current state and input;
+    consists of a finite set of input symbols, a finite set of states,
+    an initial state, a set of accepting states, and a transition function;
+    convert to circuit by using flip-flop states and multiplexer transitions
+transition diagram: a graph that represents the transition function; each node
+    represents a state, and each edge represents a transition between states
+Mealy machine: a finite-state automaton whose output values are determined
+    both by its current state and input; outputs after every transition
+Moore machine: a finite-state automaton whose output determined only by state;
+    Mealy machine output shown on edges; Moore machine output shown on nodes
+alphabet: a finite set Σ of characters; language: a set of strings over Σ
+string: either the null string ε or a finite sequence of characters in Σ
+accepting state: a state represented by a double circle; automaton accepts
+    an input string iff it is in an accepting state after the string is input;
+    language accepted by an automaton is the set of all strings it accepts
+
+    Module 9: Mathematical Induction
+
+sigma notation: ∑ⁿₖ₌ₘ xₖ = xₖ + xₖ₊₁ + ⋯ + xₙ; summation from k = m to n of xₖ
+pi notation: ∏ⁿₖ₌ₘ xₖ = xₖ × xₖ₊₁ × ⋯ × xₙ; product from k = m to n of xₖ
+mathematical induction: prove that a condition P(n) is true for all integers n
+    given that n ≥ n₀ for a fixed integer n₀, by showing that P(n₀) is true
+    and that, for all integers k ≥ n₀, if P(k) is true, then P(k + 1) is true
+base case: show that P(n₀); inductive step: show that ∀k ≥ n₀, P(k) → P(k+1)
+induction hypothesis: the supposition that P(k) is true in the inductive step
+strong mathematical induction: prove that a condition P(n) is true for n ≥ a
+    with fixed a and b, by showing that P(a), P(a+1), …, P(b) are all true and
+    that, for k ≥ b, if P(a), P(a+1), …, P(k) are true, then P(k + 1) is true
+well-ordering principle: if S is a non-empty set of integers and all of its
+    elements are greater than some fixed integer, then S has a least element;
+    both types of induction and the well-ordering principle are all equivalent
+
+    Module 10: A Working Computer
+
+stored-program computer: an electronic device that performs arithmetic or
+    logical operations based on instructions that are stored in main memory
+machine code: the binary numbers that represent the instructions to perform
+von Neumann architecture: a design for a stored-program computer that
+    stores program data and instruction data in the same main memory;
+    also has input and output devices and CPU, which contains ALU and CU
+main memory: a memory component that stores data as bits in memory locations
+random-access memory: a form of main memory in which data from any location
+    can be read in the same amount of time, unlike sequential-access memory
+central processing unit: a component that performs the instructed operations
+arithmetic logic unit: a component that actually performs the fundamental
+    arithmetic operations using adders and logical operations using gates
+control unit: a component that decides which instructions to perform in CPU;
+    recognizes instructions by using machine code as multiplexer selects
+register: a small memory component that can be accessed very quickly by CPU
+program counter: a register that contains the location of the next instruction
+Y86 architecture: a simplified design for a basic CPU with six stages;
+    fetch: read instruction and decide the next value of the program counter;
+    decode: read values from registers; execute: perform computations in ALU;
+    memory: write data to main memory or read data from memory into registers;
+    write-back: write values into registers; update: write new program counter
+
+    Module 11: Sets, Functions, and DFAs
+
+subset: a set A whose elements are all also elements of set B; written A ⊆ B
+proper subset: a subset A of B such that A ⊆ B but B ⊈ A; written A ⊂ B
+set equality: a set A is equal to a set B if A ⊆ B and B ⊆ A; written A = B
+element argument: prove that A ⊆ B by showing that ∀x, (x ∈ A) → (x ∈ B)
+universal set: a set U such that S ⊆ U for every set S under consideration
+union: the set A ∪ B of all elements that are in at least one of A or B
+intersection: the set A ∩ B of all elements that are in both A and B
+complement: the set Aᶜ of all elements that are in U but not in A
+set difference: the set B − A of all elements that are in B but not in A
+power set: the set P(A) of all subsets of A, including the empty set
+Russell's paradox: with S = {A | A is a set and A ∉ A}, S cannot be a set
+halting problem: there cannot exist an algorithm that accepts any algorithm A
+    and input I, and always correctly determines if A halts when run with I
+
+ordered pair: a pair of elements a and b with a first and a second element;
+    formulated as {{a}, {a,b}} using only set notation; written (a,b)
+Cartesian product: the set A × B of all ordered pairs (a,b) where a ∈ A, b ∈ B
+relation: a subset R of A × B; x ∈ A related to y ∈ B by R, written (x,y) ∈ R;
+    domain: the set A in this relation; co-domain: the set B in this relation
+function: a relation f from A to B such that ∀x ∈ A, ∃y ∈ B, (x,y) ∈ f,
+    and also that if (x,y) ∈ f and (x,z) ∈ f, then y = z; written f: A → B;
+    f = {(x,y) ∈ A × B | y = f(x)}; f = g means f(x) = g(x) for all x ∈ A
+image: the unique element y ∈ B that is related to x ∈ A by f; written f(x)
+pre-image: an element x ∈ A that is related to y ∈ B by f, so that f(x) = y
+range: the set of the images of x under f for all x ∈ A, or {f(x) | x ∈ A}
+arrow diagram: a model of a function as a set of arrows drawn from dots in
+    one ellipse to dots in another; dots are elements and ellipses are sets
+injective: describes a function f such that ∀x,y ∈ A, (f(x) = f(y)) → (x = y);
+    also called one-to-one; at most one arrow points to each element in B
+surjective: describes a function f such that ∀y ∈ B, ∃x ∈ A, f(x) = y;
+    also called onto; at least one arrow points to each element in B
+bijective: describes a function f that is both injective and surjective;
+    also called a one-to-one correspondence; exactly one arrow points to each
+inverse function: a function f⁻¹: B → A that undoes the action of a bijective
+    function f: A → B, such that f⁻¹ = {(y, x) ∈ B x A | y = f(x)}
+cardinality: a measure of size for sets; the cardinality |S| of a finite set S
+    is the number of elements it contains; a set A has the same cardinality
+    as another set B iff there exists a bijective function from A to B
+countable: describes a set that either has a finite number of elements, or has
+    has the same cardinality as the positive integers ℤ⁺, such as ℕ, ℤ, or ℚ
+uncountable: describes a set that is not countable, such as the real numbers ℝ
+Cantor diagonalization process: one technique that proves ℝ is uncountable
+
+Hamming distance: the function H: (Sₙ x Sₙ) → ℕ, where Sₙ is the set of
+    all binary strings of length n, such that H(s, t) is the number of
+    positions where s and t differ; very important in coding theory
+cryptography: the study of methods for sending secret messages
+RSA cipher: a cryptography system that uses modular arithmetic
+coding theory: the study of rules that convert information into another form;
+    codes are used for data compression, error correction, and cryptography
+regular expression: a certain sequence of characters that defines a language
+    through concatenation (rs), selection (r|s), and repetition (r*)
+regular language: a language that can be defined by a regular expression;
+    a language is accepted by an automaton iff it is a regular language;
+    but there exist non-regular languages that cannot be modelled by any DFA
+DFA: a deterministic finite-state automaton, such that each transition is
+    uniquely determined by its current state and input; all DFAs are NFAs
+NFA: a non-deterministic finite-state automaton, such that each transition
+    leads to a subset of states; all NFAs can still be represented as DFAs
+quotient automaton: a simplified finite-state automaton that accepts the
+    same language as an automaton A, by combining equivalent states of A
