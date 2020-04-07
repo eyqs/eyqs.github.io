@@ -8,8 +8,8 @@ ARCHIVE_URL = 'http://web.archive.org/save/'
 
 BLOG_FOLDER = 'blog/'
 
-ARCHIVED_PAGES = ['', 'about/', 'blog/']
-ARCHIVED_POSTS = ['2001-first-post/']
+ARCHIVED_PAGES = ['', 'about/', 'blog/', 'cakes/', 'documents/', 'sitemap/']
+ARCHIVED_POSTS = ['2001-first-post/', '2002-ubcs-cpen/', '2003-japn-trans/']
 
 
 for page in ARCHIVED_PAGES:
