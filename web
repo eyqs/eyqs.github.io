@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
 
+import os
 import sys
 
+import git
 import urllib.request
 
 
 SITE_URL = 'https://eyqs.ca'
+REPO_REMOTE = 'origin'
+BUILD_BRANCH = 'gh-pages'
 
+REPO_ROOT = '/home/eugeneyqshen/web'
+BUILD_FOLDER = '_site'
 BLOG_FOLDER = 'blog'
 
 ARCHIVE_URL = 'http://web.archive.org/save'
@@ -32,8 +38,16 @@ def archive():
 
 
 
+def push():
+
+    repo = git.Repo(REPO_ROOT)
+    repo.git.push(REPO_REMOTE)
+    repo.git.subtree('push', REPO_REMOTE, BUILD_BRANCH, prefix=BUILD_FOLDER)
+
+
+
 def bad_input():
-    print('Usage: ./web [archive]')
+    print('Usage: ./web [archive|push]')
     exit(1)
 
 
@@ -43,7 +57,10 @@ if __name__ == '__main__':
     if len(sys.argv) != 2:
         bad_input()
 
+    os.chdir(REPO_ROOT)
     if sys.argv[1] == 'archive':
         archive()
+    elif sys.argv[1] == 'push':
+        push()
     else:
         bad_input()
