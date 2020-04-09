@@ -1,23 +1,49 @@
 #!/usr/bin/env python3
 
+import sys
+
 import urllib.request
 
 
-SITE_URL = 'https://eyqs.ca/'
-ARCHIVE_URL = 'http://web.archive.org/save/'
+SITE_URL = 'https://eyqs.ca'
 
-BLOG_FOLDER = 'blog/'
+BLOG_FOLDER = 'blog'
 
-ARCHIVED_PAGES = ['', 'about/', 'blog/', 'cakes/', 'documents/', 'sitemap/']
-ARCHIVED_POSTS = ['2001-first-post/', '2002-ubcs-cpen/', '2003-japn-trans/']
+ARCHIVE_URL = 'http://web.archive.org/save'
+ARCHIVED_PAGES = ['about', 'blog', 'cakes', 'documents', 'sitemap']
+ARCHIVED_POSTS = ['2001-first-post', '2002-ubcs-cpen', '2003-japn-trans']
 
 
-for page in ARCHIVED_PAGES:
-    page_url = SITE_URL + page
-    print('Archiving page: ' + page_url)
-    urllib.request.urlopen(ARCHIVE_URL + page_url)
 
-for post in ARCHIVED_POSTS:
-    post_url = SITE_URL + BLOG_FOLDER + post
-    print('Archiving post: ' + post_url)
-    urllib.request.urlopen(ARCHIVE_URL + post_url)
+def archive():
+
+    print('Archiving index')
+    urllib.request.urlopen(f'{ARCHIVE_URL}/{SITE_URL}/')
+
+    for page in ARCHIVED_PAGES:
+        page_url = f'{SITE_URL}/{page}'
+        print(f'Archiving page: {page}')
+        urllib.request.urlopen(f'{ARCHIVE_URL}/{page_url}/')
+
+    for post in ARCHIVED_POSTS:
+        post_url = f'{SITE_URL}/{BLOG_FOLDER}/{post}'
+        print(f'Archiving post: {post}')
+        urllib.request.urlopen(f'{ARCHIVE_URL}/{post_url}/')
+
+
+
+def bad_input():
+    print('Usage: ./web [archive]')
+    exit(1)
+
+
+
+if __name__ == '__main__':
+
+    if len(sys.argv) != 2:
+        bad_input()
+
+    if sys.argv[1] == 'archive':
+        archive()
+    else:
+        bad_input()
