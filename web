@@ -16,16 +16,26 @@ BUILD_BRANCH = 'gh-pages'
 SERVER_PORT = 8080
 
 REPO_ROOT = '/home/eugeneyqshen/web'
-BUILD_FOLDER = '_site'
-BLOG_FOLDER = 'blog'
-ASSETS_FOLDER = 'assets'
-BUILD_PATH = os.path.join(REPO_ROOT, BUILD_FOLDER)
+BUILD_DIR = '_site'
+BLOG_DIR = 'blog'
+ASSETS_DIR = 'assets'
+INDEX_FILE = 'index.html'
+BUILD_PATH = os.path.join(REPO_ROOT, BUILD_DIR)
 
 ARCHIVE_URL = 'http://web.archive.org/save'
 ARCHIVED_PAGES = ['about', 'blog', 'cakes', 'documents', 'sitemap']
 ARCHIVED_POSTS = ['2001-first-post', '2002-ubcs-cpen', '2003-japn-trans']
 
 
+
+def get_name(name):
+    return os.path.splitext(name)[0]
+
+def get_extension(name):
+    return os.path.splitext(name)[1]
+
+def strip_repo_root(path):
+    return os.path.relpath(path, REPO_ROOT)
 
 def print_progress(message, func):
     print(f'{message}...', end='\r', flush=True)
@@ -34,12 +44,36 @@ def print_progress(message, func):
         output = output[0]
     print(f'{message}: {output.strip()}', flush=True)
 
+
 def create_directory(*args):
     directory = os.path.join(BUILD_PATH, *args)
     if not os.path.exists(directory):
-        print_progress('Creating directory',
-                lambda: (f'{os.path.join(BUILD_FOLDER, *args)}/',
-                        os.mkdir(directory)))
+        print_progress('Creating directory', lambda: (
+                f'{strip_repo_root(directory)}/', os.mkdir(directory)))
+    return directory
+
+
+def generate_page(src_path, dest_path):
+
+    shutil.copy(src_path, dest_path, follow_symlinks=False)
+    return f'{strip_repo_root(src_path)} -> {strip_repo_root(dest_path)}'
+
+
+def copy_directory(src_dir='', dest_dir=None):
+
+    if dest_dir is None:
+        dest_dir = src_dir
+    create_directory(dest_dir)
+
+    with os.scandir(os.path.join(REPO_ROOT, src_dir)) as it:
+        for entry in it:
+            if get_extension(entry.name) == '.html':
+                entry_dir = create_directory(dest_dir, get_name(entry.name))
+                print_progress('Generating page', lambda: (generate_page(
+                        entry.path,
+                        os.path.join(entry_dir, INDEX_FILE)
+                )))
+
 
 
 def archive():
@@ -53,7 +87,7 @@ def archive():
                 urllib.request.urlopen(f'{ARCHIVE_URL}/{page_url}/')))
 
     for post in ARCHIVED_POSTS:
-        post_url = f'{SITE_URL}/{BLOG_FOLDER}/{post}'
+        post_url = f'{SITE_URL}/{BLOG_DIR}/{post}'
         print_progress('Archiving post', lambda: (post,
                 urllib.request.urlopen(f'{ARCHIVE_URL}/{post_url}/')))
 
@@ -61,19 +95,19 @@ def archive():
 def build():
 
     clean()
-    create_directory()
-    print_progress('Copying assets folder', lambda: (f'{ASSETS_FOLDER}/',
-            shutil.copytree(os.path.join(REPO_ROOT, ASSETS_FOLDER),
-                    os.path.join(BUILD_PATH, ASSETS_FOLDER))))
+    copy_directory()
+    print_progress('Copying assets directory', lambda: (f'{ASSETS_DIR}/',
+            shutil.copytree(os.path.join(REPO_ROOT, ASSETS_DIR),
+                    os.path.join(BUILD_PATH, ASSETS_DIR))))
 
 
 def clean():
 
     if os.path.exists(BUILD_PATH):
         print_progress('Removing build directory',
-                lambda: (f'{BUILD_FOLDER}/', shutil.rmtree(BUILD_PATH)))
+                lambda: (f'{BUILD_DIR}/', shutil.rmtree(BUILD_PATH)))
     else:
-        print(f'Build directory does not exist: {BUILD_FOLDER}/')
+        print(f'Build directory does not exist: {BUILD_DIR}/')
 
 
 def push():
@@ -83,7 +117,7 @@ def push():
             lambda: repo.remotes.origin.push()[0].summary)
     print_progress('Pushing subtree to production',
             lambda: repo.git.subtree('push',
-                    REPO_REMOTE, BUILD_BRANCH, prefix=BUILD_FOLDER))
+                    REPO_REMOTE, BUILD_BRANCH, prefix=BUILD_DIR))
 
 
 def serve():
