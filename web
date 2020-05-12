@@ -3,6 +3,8 @@
 import os
 import sys
 import shutil
+import functools
+import http.server
 import urllib.request
 
 import git
@@ -11,6 +13,7 @@ import git
 SITE_URL = 'https://eyqs.ca'
 REPO_REMOTE = 'origin'
 BUILD_BRANCH = 'gh-pages'
+SERVER_PORT = 8080
 
 REPO_ROOT = '/home/eugeneyqshen/web'
 BUILD_FOLDER = '_site'
@@ -83,9 +86,20 @@ def push():
                     REPO_REMOTE, BUILD_BRANCH, prefix=BUILD_FOLDER))
 
 
+def serve():
+
+    print(f'Serving website at http://localhost:{SERVER_PORT}/')
+    server_address = ('', SERVER_PORT)
+    request_handler = functools.partial(
+            http.server.SimpleHTTPRequestHandler,
+            directory=BUILD_PATH
+    )
+    http.server.HTTPServer(server_address, request_handler).serve_forever()
+
+
 
 def bad_input():
-    print('Usage: ./web [archive|build|clean|push]')
+    print('Usage: ./web [archive|build|clean|push|serve]')
     exit(1)
 
 if __name__ == '__main__':
@@ -102,5 +116,7 @@ if __name__ == '__main__':
         clean()
     elif sys.argv[1] == 'push':
         push()
+    elif sys.argv[1] == 'serve':
+        serve()
     else:
         bad_input()
