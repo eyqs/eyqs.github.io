@@ -2,9 +2,10 @@
 
 import os
 import sys
+import shutil
+import urllib.request
 
 import git
-import urllib.request
 
 
 SITE_URL = 'https://eyqs.ca'
@@ -14,6 +15,8 @@ BUILD_BRANCH = 'gh-pages'
 REPO_ROOT = '/home/eugeneyqshen/web'
 BUILD_FOLDER = '_site'
 BLOG_FOLDER = 'blog'
+ASSETS_FOLDER = 'assets'
+BUILD_PATH = os.path.join(REPO_ROOT, BUILD_FOLDER)
 
 ARCHIVE_URL = 'http://web.archive.org/save'
 ARCHIVED_PAGES = ['about', 'blog', 'cakes', 'documents', 'sitemap']
@@ -28,6 +31,12 @@ def print_progress(message, func):
         output = output[0]
     print(f'{message}: {output.strip()}', flush=True)
 
+def create_directory(*args):
+    directory = os.path.join(BUILD_PATH, *args)
+    if not os.path.exists(directory):
+        print_progress('Creating directory',
+                lambda: (f'{os.path.join(BUILD_FOLDER, *args)}/',
+                        os.mkdir(directory)))
 
 
 def archive():
@@ -46,6 +55,23 @@ def archive():
                 urllib.request.urlopen(f'{ARCHIVE_URL}/{post_url}/')))
 
 
+def build():
+
+    clean()
+    create_directory()
+    print_progress('Copying assets folder', lambda: (f'{ASSETS_FOLDER}/',
+            shutil.copytree(os.path.join(REPO_ROOT, ASSETS_FOLDER),
+                    os.path.join(BUILD_PATH, ASSETS_FOLDER))))
+
+
+def clean():
+
+    if os.path.exists(BUILD_PATH):
+        print_progress('Removing build directory',
+                lambda: (f'{BUILD_FOLDER}/', shutil.rmtree(BUILD_PATH)))
+    else:
+        print(f'Build directory does not exist: {BUILD_FOLDER}/')
+
 
 def push():
 
@@ -59,10 +85,8 @@ def push():
 
 
 def bad_input():
-    print('Usage: ./web [archive|push]')
+    print('Usage: ./web [archive|build|clean|push]')
     exit(1)
-
-
 
 if __name__ == '__main__':
 
@@ -72,6 +96,10 @@ if __name__ == '__main__':
     os.chdir(REPO_ROOT)
     if sys.argv[1] == 'archive':
         archive()
+    elif sys.argv[1] == 'build':
+        build()
+    elif sys.argv[1] == 'clean':
+        clean()
     elif sys.argv[1] == 'push':
         push()
     else:
