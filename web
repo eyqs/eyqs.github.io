@@ -4,6 +4,7 @@ import os
 import sys
 import shutil
 import functools
+import subprocess
 import http.server
 import urllib.request
 
@@ -20,12 +21,13 @@ BUILD_DIR = '_site'
 BLOG_DIR = 'blog'
 ASSETS_DIR = 'assets'
 INDEX_FILE = 'index.html'
+SCRIPT_FILE = 'web'
 BUILD_PATH = os.path.join(REPO_ROOT, BUILD_DIR)
 
 ARCHIVE_URL = 'http://web.archive.org/save'
 ARCHIVED_PAGES = ['about', 'blog', 'cakes', 'documents', 'sitemap']
 ARCHIVED_POSTS = ['2001-first-post', '2002-ubcs-cpen', '2003-japn-trans']
-IGNORED_NAMES = [BUILD_DIR, ASSETS_DIR, '.git', 'tools']
+IGNORED_NAMES = [BUILD_DIR, ASSETS_DIR, SCRIPT_FILE, '.git', '.gitmodules']
 
 
 
@@ -85,10 +87,24 @@ def copy_directory(src_dir='', dest_dir=None):
                     )))
 
             elif entry.is_dir():
-                copy_directory(
-                        os.path.join(src_dir, entry.name),
-                        os.path.join(dest_dir, entry.name)
-                )
+                if os.path.exists(os.path.join(entry.path, SCRIPT_FILE)):
+                    subprocess.call([
+                        'python3',
+                        os.path.join(entry.path, SCRIPT_FILE)
+                    ])
+                else:
+                    copy_directory(
+                            os.path.join(src_dir, entry.name),
+                            os.path.join(dest_dir, entry.name)
+                    )
+
+            else:
+                print_progress('Copying file', lambda: (
+                        str(os.path.join(src_dir, entry.name)) + ' -> '
+                                + str(os.path.join(dest_dir, entry.name)),
+                        shutil.copy(entry.path, os.path.join(
+                                BUILD_PATH, dest_dir, entry.name))
+                ))
 
 
 
@@ -112,7 +128,8 @@ def build():
 
     clean()
     copy_directory()
-    print_progress('Copying assets directory', lambda: (f'{ASSETS_DIR}/',
+    print_progress('Copying assets directory', lambda: (
+            f'{ASSETS_DIR}/ -> {os.path.join(BUILD_DIR, ASSETS_DIR)}/',
             shutil.copytree(os.path.join(REPO_ROOT, ASSETS_DIR),
                     os.path.join(BUILD_PATH, ASSETS_DIR))))
 
