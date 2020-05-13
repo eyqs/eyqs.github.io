@@ -90,7 +90,11 @@ def copy_directory(src_dir='', dest_dir=None):
                 if os.path.exists(os.path.join(entry.path, SCRIPT_FILE)):
                     subprocess.call([
                         'python3',
-                        os.path.join(entry.path, SCRIPT_FILE)
+                        os.path.join(entry.path, SCRIPT_FILE),
+                        'build',
+                        REPO_ROOT,
+                        entry.path,
+                        os.path.join(BUILD_PATH, dest_dir, entry.name)
                     ])
                 else:
                     copy_directory(
@@ -130,8 +134,11 @@ def build():
     copy_directory()
     print_progress('Copying assets directory', lambda: (
             f'{ASSETS_DIR}/ -> {os.path.join(BUILD_DIR, ASSETS_DIR)}/',
-            shutil.copytree(os.path.join(REPO_ROOT, ASSETS_DIR),
-                    os.path.join(BUILD_PATH, ASSETS_DIR))))
+            shutil.copytree(
+                    os.path.join(REPO_ROOT, ASSETS_DIR),
+                    os.path.join(BUILD_PATH, ASSETS_DIR)
+            )
+    ))
 
 
 def clean():

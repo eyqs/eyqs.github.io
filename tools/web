@@ -1,3 +1,32 @@
 #!/usr/bin/env python3
 
-print('Copying tools folder... TODO')
+import os
+import sys
+import shutil
+
+import git
+
+
+
+def build(repo_root, src_dir, dest_dir):
+
+    print('Copying tools directory...', end='\r', flush=True)
+
+    os.chdir(repo_root)
+    repo = git.Repo(repo_root)
+    repo.submodule_update(init=True, recursive=True, force_reset=True)
+    shutil.copytree(src_dir, dest_dir)
+
+    rel_src_dir = os.path.relpath(src_dir, repo_root)
+    rel_dest_dir = os.path.relpath(dest_dir, repo_root)
+    print(f'Copying tools directory: {rel_src_dir}/ -> {rel_dest_dir}/')
+
+
+
+if __name__ == '__main__':
+
+    if len(sys.argv) != 5 or sys.argv[1] != 'build':
+        print('Usage: ./web build [repo_root] [src_dir] [dest_dir]')
+        exit(1)
+
+    build(*sys.argv[2:])
