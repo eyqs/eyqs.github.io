@@ -18,16 +18,20 @@ SERVER_PORT = 8080
 
 REPO_ROOT = '/home/eugeneyqshen/web'
 BUILD_DIR = '_site'
+LAYOUT_DIR = '_layouts'
 BLOG_DIR = 'blog'
 ASSETS_DIR = 'assets'
 INDEX_FILE = 'index.html'
 SCRIPT_FILE = 'web'
 BUILD_PATH = os.path.join(REPO_ROOT, BUILD_DIR)
 
+PREAMBLE_SEPARATOR = '---\n'
 ARCHIVE_URL = 'http://web.archive.org/save'
 ARCHIVED_PAGES = ['about', 'blog', 'cakes', 'documents', 'sitemap']
 ARCHIVED_POSTS = ['2001-first-post', '2002-ubcs-cpen', '2003-japn-trans']
-IGNORED_NAMES = [BUILD_DIR, ASSETS_DIR, SCRIPT_FILE, '.git', '.gitmodules']
+IGNORED_NAMES = [BUILD_DIR, ASSETS_DIR, LAYOUT_DIR, SCRIPT_FILE,
+        '.git', '.gitmodules']
+CONTENT_EXTENSIONS = ['.html', '.md']
 
 
 
@@ -39,6 +43,23 @@ def get_extension(name):
 
 def strip_repo_root(path):
     return os.path.relpath(path, REPO_ROOT)
+
+def is_content(name):
+    return get_extension(name) in CONTENT_EXTENSIONS
+
+def has_tag(line):
+    return '{{' in line and '}}' in line
+
+def get_tag(line):
+    start = line.index('{{')
+    end = line.index('}}')
+    return line[start+2:end].strip()
+
+def replace_tag(line, value):
+    start = line.index('{{')
+    end = line.index('}}')
+    return line.replace(line[start:end+2], value)
+
 
 def print_progress(message, func):
     print(f'{message}...', end='\r', flush=True)
@@ -56,9 +77,75 @@ def create_directory(*args):
     return directory
 
 
+def process_preamble(src_path):
+
+    content = []
+    preamble = None
+    parameters = {}
+
+    with open(src_path, 'r') as f:
+        for line in f:
+            if line == PREAMBLE_SEPARATOR:
+                if preamble is None:
+                    preamble = True
+                else:
+                    preamble = False
+            elif preamble:
+                key, value = line.split(':', 1)
+                parameters[key] = value.strip()
+            else:
+                content.append(line)
+
+    return content, parameters
+
+
+def process_layout(content, name):
+
+    result = []
+
+    with open(os.path.join(REPO_ROOT, LAYOUT_DIR, f'{name}.html'), 'r') as f:
+        for line in f:
+            result.append(line)
+
+    return result
+
+
+def process_tags(content, parameters):
+
+    result = []
+
+    for line in content:
+        if has_tag(line):
+            key = get_tag(line)
+            if key not in parameters:
+                print(f'Warning: key "{key}" was not found in {src_path}')
+            else:
+                result.append(replace_tag(line, parameters[key]))
+        else:
+            result.append(line)
+
+    return result
+
+
+def write_page(content, dest_path):
+
+    with open(dest_path, 'w') as f:
+        for line in content:
+            f.write(line)
+
+
 def generate_page(src_path, dest_path):
 
-    shutil.copy(src_path, dest_path, follow_symlinks=False)
+    if os.path.islink(src_path):
+        shutil.copy(src_path, dest_path, follow_symlinks=False)
+
+    else:
+        content, parameters = process_preamble(src_path)
+        if 'layout' in parameters:
+            content = process_layout(content, parameters['layout'])
+        content = process_tags(content, parameters)
+        write_page(content, dest_path)
+
     return f'{strip_repo_root(src_path)} -> {strip_repo_root(dest_path)}'
 
 
@@ -73,7 +160,7 @@ def copy_directory(src_dir='', dest_dir=None):
             if entry.name in IGNORED_NAMES:
                 continue
 
-            if get_extension(entry.name) == '.html':
+            if is_content(entry.name):
                 if entry.name == INDEX_FILE:
                     print_progress('Generating page', lambda: (generate_page(
                             entry.path,
