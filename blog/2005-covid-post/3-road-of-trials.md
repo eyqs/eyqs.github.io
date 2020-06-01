@@ -10,6 +10,6 @@ title: Coronavirus Update, May 8th
   <li><a href="/blog/2005-covid-post/5-revelation/">Revelation</a></li>
 </ol>
 
-<h2>3. The Road of Trials</h2>
+## 3. The Road of Trials
 
-<p>To be continued...</p>
+To be continued...

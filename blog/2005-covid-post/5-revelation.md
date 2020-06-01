@@ -10,6 +10,6 @@ title: Coronavirus Update, May 8th
   <li><strong>Revelation</strong></li>
 </ol>
 
-<h2>5. Revelation</h2>
+## 5. Revelation
 
-<p>To be continued...</p>
+To be continued...

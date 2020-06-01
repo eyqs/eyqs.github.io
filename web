@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import re
 import sys
 import shutil
 import datetime
@@ -32,7 +33,8 @@ ARCHIVED_PAGES = ['about', 'blog', 'cakes', 'documents', 'sitemap']
 ARCHIVED_POSTS = ['2001-first-post', '2002-ubcs-cpen', '2003-japn-trans']
 IGNORED_NAMES = [BUILD_DIR, ASSETS_DIR, LAYOUT_DIR, SCRIPT_FILE,
         '.git', '.gitmodules']
-CONTENT_EXTENSIONS = ['.html', '.md']
+MARKDOWN_EXTENSION = '.md'
+CONTENT_EXTENSIONS = ['.html', MARKDOWN_EXTENSION]
 
 CONTENT_TAG = 'content'
 LAYOUT_TAG = 'layout'
@@ -113,6 +115,36 @@ def process_parameters(parameters, src_path):
     return parameters
 
 
+def process_markdown(content):
+
+    result = []
+
+    for line in content:
+        if not line.strip():
+            result.append(line)
+            continue
+
+        text = line.strip()
+        if text.startswith('<') and text.endswith('>'):
+            result.append(line)
+            continue
+
+        if text.startswith('#'):
+            heading, text = text.split(' ', 1)
+            text = f'<h{len(heading)}>{text}</h{len(heading)}>'
+        else:
+            text = f'<p>{text}</p>'
+
+        text = re.sub('\*\*(.*?)\*\*', r'<strong>\1</strong>', text)
+        text = re.sub('\*(.*?)\*', r'<em>\1</em>', text)
+
+        indent = line[:len(line) - len(line.lstrip())]
+        endl = line[len(line.rstrip()):]
+        result.append(indent + text + endl)
+
+    return result
+
+
 def process_layout(content, name):
 
     result = []
@@ -160,6 +192,8 @@ def generate_page(src_path, dest_path):
     else:
         content, parameters = process_preamble(src_path)
         parameters = process_parameters(parameters, src_path)
+        if get_extension(src_path) == MARKDOWN_EXTENSION:
+            content = process_markdown(content)
         if LAYOUT_TAG in parameters:
             content = process_layout(content, parameters[LAYOUT_TAG])
         content = process_tags(content, parameters)
