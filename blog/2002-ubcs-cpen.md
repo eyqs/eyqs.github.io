@@ -1,8 +1,7 @@
-<div style="margin: 0 auto; max-width: 36em;">
-<h1>UBC Course Reviews: Computer Science and Computer Engineering</h1>
-
-<h3>2020 February</h3>
-
+---
+layout: post
+title: UBC Course Reviews: Computer Science and Computer Engineering
+---
 <p>Engineering undergrads at the University of British Columbia don't get many electives. They only get to choose three of their <a href="http://www.calendar.ubc.ca/vancouver/index.cfm?tree=12,195,272,30">complementary studies courses</a>, one for impact of technology on society and two for humanities and social sciences. Different engineering programs differ on their number of technical electives, from ten in computer engineering to only two in chemical/biological engineering and mechatronics.</p>
 
 <p>As an engineering physics student, I get five technical electives, but I've already used them all up. As I'll never get to actually take any more computer engineering/science courses for the last three years of my degree, now's the time to review all such courses I've actually taken. Also, I finally get to brag about my grades.</p>
@@ -96,4 +95,3 @@
 <hr />
 
 <p>tl;dr: ubcs cpen isnt great</p>
-</div>

@@ -3,6 +3,7 @@
 import os
 import sys
 import shutil
+import datetime
 import functools
 import subprocess
 import http.server
@@ -32,6 +33,9 @@ ARCHIVED_POSTS = ['2001-first-post', '2002-ubcs-cpen', '2003-japn-trans']
 IGNORED_NAMES = [BUILD_DIR, ASSETS_DIR, LAYOUT_DIR, SCRIPT_FILE,
         '.git', '.gitmodules']
 CONTENT_EXTENSIONS = ['.html', '.md']
+
+CONTENT_TAG = 'content'
+LAYOUT_TAG = 'layout'
 
 
 
@@ -99,13 +103,27 @@ def process_preamble(src_path):
     return content, parameters
 
 
+def process_parameters(parameters, src_path):
+
+    if LAYOUT_TAG in parameters and parameters[LAYOUT_TAG] == 'post':
+        rel_dir = os.path.relpath(src_path, os.path.join(REPO_ROOT, BLOG_DIR))
+        post_date = datetime.datetime.strptime(rel_dir[:4], '%y%m')
+        parameters['post_date'] = post_date.strftime('%Y %B')
+
+    return parameters
+
+
 def process_layout(content, name):
 
     result = []
 
     with open(os.path.join(REPO_ROOT, LAYOUT_DIR, f'{name}.html'), 'r') as f:
         for line in f:
-            result.append(line)
+            if has_tag(line) and get_tag(line) == CONTENT_TAG:
+                for contentline in content:
+                    result.append(contentline)
+            else:
+                result.append(line)
 
     return result
 
@@ -118,7 +136,7 @@ def process_tags(content, parameters):
         if has_tag(line):
             key = get_tag(line)
             if key not in parameters:
-                print(f'Warning: key "{key}" was not found in {src_path}')
+                print(f'    Warning: key "{key}" was not found in params')
             else:
                 result.append(replace_tag(line, parameters[key]))
         else:
@@ -141,8 +159,9 @@ def generate_page(src_path, dest_path):
 
     else:
         content, parameters = process_preamble(src_path)
-        if 'layout' in parameters:
-            content = process_layout(content, parameters['layout'])
+        parameters = process_parameters(parameters, src_path)
+        if LAYOUT_TAG in parameters:
+            content = process_layout(content, parameters[LAYOUT_TAG])
         content = process_tags(content, parameters)
         write_page(content, dest_path)
 

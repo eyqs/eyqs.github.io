@@ -1,8 +1,7 @@
-<div style="margin: 0 auto; max-width: 36em;">
-<h1>Translation Party: JAPN 100 Edition</h1>
-
-<h3>2020 March</h3>
-
+---
+layout: post
+title: Translation Party: JAPN 100 Edition
+---
 <p>Junior high is a formative time, a transitory stage in one's social development when, despite what pubertal tendencies to reject and repudiate all authority and advice from one's elders, enough of that childlike reverence for the hallowed institutions of learning and their earthly representatives remains to sincerely take one or two lessons to heart. From social studies, "Wikipedia is not a reliable source." From English, MLA style. From science, the uselessness of flashcards―until a week ago, when I discovered the free-ish spaced-repetition flashcard app <a href="https://apps.ankiweb.net/">Anki</a>. And from French, the incommensurability and eighth-grade traduction and machine translation.</p>
 
 <p>"Don't use Google Translate, because I can immediately tell if you did!" The year was 2010, and I had no reason to doubt it, as I meticulously combed through misgendered nouns and misconjugated verbs, for writing a French assignment was but Google Translate with extra steps: run it through, and clean up the mess using that shaky half-comprehending grasp of direct objects introduced the week before. A favourite pastime was plugging random phrases into <a href="https://www.translationparty.com/">TranslationParty</a>, which would translate them into Japanese, then the Japanese back into English, and so on, back and forth, iteratively searching in its astronomical transition diagram for the longest path to a stationary state. It was easy enough to discover a periodic cycle―no equilibrium―but I never could find a phrase that reached the limit without revisiting a previous node, and despite there being "hot parties" recent enough to mention coronavirus, I never could get the site to respond.</p>
@@ -335,4 +334,3 @@ Only at the end of this post did I realize that babelfish.com has no relation to
 <blockquote>
 <p>We are experiencing high volumes- please retry your translation in a few seconds! (see below)</p>
 </blockquote>
-</div>

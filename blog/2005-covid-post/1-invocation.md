@@ -1,6 +1,7 @@
-<div style="margin: 0 auto; max-width: 36em;">
-<h1>Coronavirus Update, May 8th</h1>
-
+---
+layout: post
+title: Coronavirus Update, May 8th
+---
 <ol>
   <li><strong>Invocation</strong></li>
   <li><a href="/blog/2005-covid-post/2-call-to-adventure/">The Call to Adventure</a></li>
@@ -26,4 +27,3 @@
 <p><em>Wee-woo-wee-woo-wee-woo-wee-woo. Wee-woo-wee-woo-wee-woo-wee-woo.</em></p>
 
 <p><em>Beep beep beep.</em></p>
-</div>

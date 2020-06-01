@@ -1,8 +1,7 @@
-<div style="margin: 0 auto; max-width: 36em;">
-<h1>First Post</h1>
-
-<h3>2020 January</h3>
-
+---
+layout: post
+title: First Post
+---
 <p>Once upon a time, I had a blog.</p>
 
 <p>It was in the opening days of my final year of elementary school, on a date very much like "2020/02/02", when for reasons lost to the winds of time I registered that WordPress.com subdomain, for I immediately began to write, spread uniformly over the next six months, approximately zero posts whatsoever. It was only in the opening days of the new decade, on a date very much like "2020/01/31", when I published its first post, with an apt and witty title very much like "First Post", expressing exactly the same sentiment, with roughly the same substance, but in 2% the word count. It took until mid-February, in the opening days of the Vancouver Winter Olympics, for the appearance of the second post, deceptively titled "Real First Post"; however, thenceforth, I published a post a day, every single day, for the next three years.</p>
@@ -32,4 +31,3 @@
 <p>The core problem was the insidious transition from producing to consuming, when content creation suddenly became a full-time job, one for which the general public lacks certification, especially given the baffling trend to videotize everything. We're back to the television era, as if the communal Internet had been a figment of the imagination, a hoax invented by disgruntled millennials; Somehow, we've shifted from a web where anyone could write anything, to one where only creators considered writing anything at all, to the point where a friend recently removed all traces of her incredibly wholesome blog because there was no reason to share her thoughts with strangers, and for fear that in future she'd ever regret something she posted. It was that exact conversation that planted the seeds of revival in my head, a sustainable and permanent revival, one without the unrealistic requirements of post a day or an artifical 2500 words per post.</p>
 
 <p>It's been seven years. Welcome back to my blog.</p>
-</div>

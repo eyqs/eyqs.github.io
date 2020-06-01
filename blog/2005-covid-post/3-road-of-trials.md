@@ -1,6 +1,7 @@
-<div style="margin: 0 auto; max-width: 36em;">
-<h1>Coronavirus Update, May 8th</h1>
-
+---
+layout: post
+title: Coronavirus Update, May 8th
+---
 <ol>
   <li><a href="/blog/2005-covid-post/1-invocation/">Invocation</a></li>
   <li><a href="/blog/2005-covid-post/2-call-to-adventure/">The Call to Adventure</a></li>
@@ -12,4 +13,3 @@
 <h2>3. The Road of Trials</h2>
 
 <p>To be continued...</p>
-</div>

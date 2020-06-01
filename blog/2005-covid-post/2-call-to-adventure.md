@@ -1,6 +1,7 @@
-<div style="margin: 0 auto; max-width: 36em;">
-<h1>Coronavirus Update, May 8th</h1>
-
+---
+layout: post
+title: Coronavirus Update, May 8th
+---
 <ol>
   <li><a href="/blog/2005-covid-post/1-invocation/">Invocation</a></li>
   <li><strong>The Call to Adventure</strong></li>
@@ -60,4 +61,3 @@
 <p><em>Bang. Bang. Bang.</em></p>
 
 <p>For those of you still out there. Here's my coronavirus update for Saturday, May 8th, 2021. It's been half a year since the beginning of the zombie apocalypse.</p>
-</div>

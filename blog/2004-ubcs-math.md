@@ -1,8 +1,7 @@
-<div style="margin: 0 auto; max-width: 36em;">
-<h1>UBC Course Reviews: Math</h1>
-
-<h3>2020 April</h3>
-
+---
+layout: post
+title: UBC Course Reviews: Math
+---
 <p>I didn't realize I would write a five-part post for May, so this April blog post will just be a skeleton for now. I'll add the meat and flesh after I'm done my epic.</p>
 
 
@@ -79,4 +78,3 @@
 
 
 <p>tl;dr: uh ill fix this up later</p>
-</div>
