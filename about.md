@@ -1,7 +1,12 @@
 ---
 layout: page
-title: Sitemap
+title: Eugene Y. Q. Shen
 ---
+Welcome to my home on the World Wide Web.
+
+
+## Sitemap
+
 <ul>
   <li><a href="%/about/">About</a></li>
   <li><a href="%/blog/">Blog</a></li>

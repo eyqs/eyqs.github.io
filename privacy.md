@@ -1,7 +1,7 @@
-<div style="margin: 0 auto; max-width: 36em;">
-<h1>Privacy Policy</h1>
+---
+layout: page
+title: Privacy Policy
+---
+We don't store any data. We don't collect any data. We can't. This site is literally just a collection of static HTML pages. There's no CSS files! There's zero lines of Javascript!
 
-<p>We don't store any data. We don't collect any data. We can't. This site is literally just a collection of static HTML pages. There's no CSS files! There's zero lines of Javascript!</p>
-
-<p>We is just me, Eugene Y. Q. Shen. I don't care who you are.</p>
-</div>
+We is just me, Eugene Y. Q. Shen. I don't care who you are.

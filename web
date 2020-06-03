@@ -14,6 +14,7 @@ import git
 
 
 SITE_URL = 'https://eyqs.ca'
+SITE_TITLE = 'Eugene Y. Q. Shen'
 REPO_REMOTE = 'origin'
 BUILD_BRANCH = 'gh-pages'
 SERVER_PORT = 8080
@@ -21,6 +22,7 @@ SERVER_PORT = 8080
 REPO_ROOT = '/home/eugeneyqshen/web'
 BUILD_DIR = '_site'
 LAYOUT_DIR = '_layouts'
+INCLUDE_DIR = '_includes'
 BLOG_DIR = 'blog'
 ASSETS_DIR = 'assets'
 INDEX_FILE = 'index.html'
@@ -31,13 +33,16 @@ PREAMBLE_SEPARATOR = '---\n'
 ARCHIVE_URL = 'http://web.archive.org/save'
 ARCHIVED_PAGES = ['about', 'blog', 'cakes', 'documents', 'sitemap']
 ARCHIVED_POSTS = ['2001-first-post', '2002-ubcs-cpen', '2003-japn-trans']
-IGNORED_NAMES = [BUILD_DIR, ASSETS_DIR, LAYOUT_DIR, SCRIPT_FILE,
+IGNORED_NAMES = [BUILD_DIR, ASSETS_DIR, LAYOUT_DIR, INCLUDE_DIR, SCRIPT_FILE,
         '.git', '.gitmodules']
 MARKDOWN_EXTENSION = '.md'
 CONTENT_EXTENSIONS = ['.html', MARKDOWN_EXTENSION]
 
+LAYOUT_KEY = 'layout'
 CONTENT_TAG = 'content'
-LAYOUT_TAG = 'layout'
+INCLUDE_TAG = 'include'
+SPECIAL_KEYS = [CONTENT_TAG, INCLUDE_TAG,
+        'url', 'site_title', 'head_title', 'post_date']
 
 
 
@@ -98,16 +103,30 @@ def process_preamble(src_path):
                     preamble = False
             elif preamble:
                 key, value = line.split(':', 1)
+                if key in SPECIAL_KEYS:
+                    raise ValueError(f'cannot have key "{key}" in {src_path}')
                 parameters[key] = value.strip()
             else:
                 content.append(line)
+
+    if LAYOUT_KEY not in parameters:
+        raise ValueError(f'must have key "{LAYOUT_KEY}" in {src_path}')
 
     return content, parameters
 
 
 def process_parameters(parameters, src_path):
 
-    if LAYOUT_TAG in parameters and parameters[LAYOUT_TAG] == 'post':
+    parameters['url'] = f'{SITE_URL}/{get_name(strip_repo_root(src_path))}/'
+    if strip_repo_root(src_path) == 'about.md':
+        parameters['url'] = f'{SITE_URL}/'
+
+    parameters['site_title'] = SITE_TITLE
+    parameters['head_title'] = SITE_TITLE
+    if 'title' in parameters and parameters['title'] != SITE_TITLE:
+        parameters['head_title'] = f'{parameters["title"]} - {SITE_TITLE}'
+
+    if parameters[LAYOUT_KEY] == 'post':
         rel_dir = os.path.relpath(src_path, os.path.join(REPO_ROOT, BLOG_DIR))
         post_date = datetime.datetime.strptime(rel_dir[:4], '%y%m')
         parameters['post_date'] = post_date.strftime('%Y %B')
@@ -155,9 +174,27 @@ def process_layout(content, name):
         for line in f:
             if has_tag(line) and get_tag(line) == CONTENT_TAG:
                 for contentline in content:
-                    result.append(contentline)
+                    indent = line[:len(line) - len(line.lstrip())]
+                    result.append(indent + contentline)
             else:
                 result.append(line)
+
+    return result
+
+
+def process_includes(content):
+
+    result = []
+
+    for line in content:
+        if has_tag(line) and get_tag(line).startswith(INCLUDE_TAG):
+            src_file = get_tag(line).split(' ', 1)[1]
+            with open(os.path.join(REPO_ROOT, INCLUDE_DIR, src_file)) as f:
+                for includeline in f:
+                    indent = line[:len(line) - len(line.lstrip())]
+                    result.append(indent + includeline)
+        else:
+            result.append(line)
 
     return result
 
@@ -183,7 +220,7 @@ def write_page(content, dest_path):
 
     with open(dest_path, 'w') as f:
         for line in content:
-            f.write(line)
+            f.write(line.replace('"%/', f'"{SITE_URL}/'))
 
 
 def generate_page(src_path, dest_path):
@@ -196,8 +233,8 @@ def generate_page(src_path, dest_path):
         parameters = process_parameters(parameters, src_path)
         if get_extension(src_path) == MARKDOWN_EXTENSION:
             content = process_markdown(content)
-        if LAYOUT_TAG in parameters:
-            content = process_layout(content, parameters[LAYOUT_TAG])
+        content = process_layout(content, parameters[LAYOUT_KEY])
+        content = process_includes(content)
         content = process_tags(content, parameters)
         write_page(content, dest_path)
 
