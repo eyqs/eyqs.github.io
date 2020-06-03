@@ -31,8 +31,6 @@ BUILD_PATH = os.path.join(REPO_ROOT, BUILD_DIR)
 
 PREAMBLE_SEPARATOR = '---\n'
 ARCHIVE_URL = 'http://web.archive.org/save'
-ARCHIVED_PAGES = ['about', 'blog', 'cakes', 'documents', 'sitemap']
-ARCHIVED_POSTS = ['2001-first-post', '2002-ubcs-cpen', '2003-japn-trans']
 IGNORED_NAMES = [BUILD_DIR, ASSETS_DIR, LAYOUT_DIR, INCLUDE_DIR, SCRIPT_FILE,
         '.git', '.gitmodules']
 MARKDOWN_EXTENSION = '.md'
@@ -70,6 +68,13 @@ def replace_tag(line, value):
     start = line.index('{{')
     end = line.index('}}')
     return line.replace(line[start:end+2], value)
+
+
+def archive_url(rel_url):
+    if rel_url and not rel_url.endswith('/'):
+        rel_url += '/'
+    urllib.request.urlopen(f'{ARCHIVE_URL}/{SITE_URL}/{rel_url}')
+    return f'{SITE_URL}/{rel_url}'
 
 
 def print_progress(message, func):
@@ -290,21 +295,30 @@ def copy_directory(src_dir='', dest_dir=None):
                 ))
 
 
+def archive(src_dir=''):
 
-def archive():
+    with os.scandir(os.path.join(REPO_ROOT, src_dir)) as it:
+        for entry in it:
+            if entry.name in IGNORED_NAMES:
+                continue
 
-    print_progress('Archiving index', lambda: ('/',
-            urllib.request.urlopen(f'{ARCHIVE_URL}/{SITE_URL}/')))
+            if is_content(entry.name):
+                rel_url = get_name(strip_repo_root(entry.path))
+                if entry.name == INDEX_FILE:
+                    rel_url = os.path.split(rel_url)[0]
+                print_progress('Archiving page', lambda: archive_url(rel_url))
 
-    for page in ARCHIVED_PAGES:
-        page_url = f'{SITE_URL}/{page}'
-        print_progress('Archiving page', lambda: (page,
-                urllib.request.urlopen(f'{ARCHIVE_URL}/{page_url}/')))
-
-    for post in ARCHIVED_POSTS:
-        post_url = f'{SITE_URL}/{BLOG_DIR}/{post}'
-        print_progress('Archiving post', lambda: (post,
-                urllib.request.urlopen(f'{ARCHIVE_URL}/{post_url}/')))
+            elif entry.is_dir():
+                if os.path.exists(os.path.join(entry.path, SCRIPT_FILE)):
+                    subprocess.call([
+                        'python3',
+                        os.path.join(entry.path, SCRIPT_FILE),
+                        'archive',
+                        REPO_ROOT,
+                        entry.path
+                    ])
+                else:
+                    archive(entry.path)
 
 
 def build():

@@ -3,9 +3,44 @@
 import os
 import sys
 import shutil
+import urllib.request
 
 import git
 
+
+SITE_URL = 'https://eyqs.ca'
+ARCHIVE_URL = 'http://web.archive.org/save'
+
+
+
+def get_name(name):
+    return os.path.splitext(name)[0]
+
+
+def archive_url(rel_url):
+    if rel_url and not rel_url.endswith('/'):
+        rel_url += '/'
+    urllib.request.urlopen(f'{ARCHIVE_URL}/{SITE_URL}/{rel_url}')
+    return f'{SITE_URL}/{rel_url}'
+
+
+def print_progress(message, func):
+    print(f'{message}...', end='\r', flush=True)
+    output = func()
+    if type(output) == tuple:
+        output = output[0]
+    print(f'{message}: {output.strip()}', flush=True)
+
+
+def archive(repo_root, src_dir):
+
+    with os.scandir(src_dir) as it:
+        for entry in it:
+            if entry.is_dir():
+                if os.path.exists(os.path.join(entry.path, 'index.html')):
+                    rel_url = get_name(os.path.relpath(entry.path, repo_root))
+                    print_progress('Archiving page',
+                            lambda: archive_url(rel_url))
 
 
 def build(repo_root, src_dir, dest_dir):
@@ -25,8 +60,22 @@ def build(repo_root, src_dir, dest_dir):
 
 if __name__ == '__main__':
 
-    if len(sys.argv) != 5 or sys.argv[1] != 'build':
-        print('Usage: ./web build [repo_root] [src_dir] [dest_dir]')
+    if len(sys.argv) < 2:
+        print('Usage: ./web [archive|build]')
         exit(1)
 
-    build(*sys.argv[2:])
+    if sys.argv[1] == 'archive':
+        if len(sys.argv) != 4:
+            print('Usage: ./web archive [repo_root] [src_dir]')
+            exit(1)
+        archive(*sys.argv[2:])
+
+    elif sys.argv[1] == 'build':
+        if len(sys.argv) != 5:
+            print('Usage: ./web build [repo_root] [src_dir] [dest_dir]')
+            exit(1)
+        build(*sys.argv[2:])
+
+    else:
+        print('Usage: ./web [archive|build]')
+        exit(1)
