@@ -132,6 +132,8 @@ def process_markdown(content):
         if text.startswith('#'):
             heading, text = text.split(' ', 1)
             text = f'<h{len(heading)}>{text}</h{len(heading)}>'
+        elif text.startswith('> '):
+            text = f'<q>{text[2:]}</q>'
         else:
             text = f'<p>{text}</p>'
 

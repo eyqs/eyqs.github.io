@@ -10,7 +10,7 @@ As an engineering physics student, I get five technical electives, but I've alre
 ### APSC 160: Introduction to Computation in Engineering Design
 #### Hassan Khosravi, 2016W1, 98% (highest in section)
 
-"Analysis and simulation, laboratory data acquisition and processing, measurement interfaces, engineering tools, computer systems organization, programming languages."
+> Analysis and simulation, laboratory data acquisition and processing, measurement interfaces, engineering tools, computer systems organization, programming languages.
 
 APSC 160 is the mandatory programming intro for all first-year engineering students, and by far the most useless course I've ever taken. Analysis and simulation means tracing through five lines of if statements to find the value of a variable at the end. Laboratory data acquisition means plugging sketchy boards made by second-years ten years ago into the lab computers and calling `analogRead()`. The measurement interface is a protractor, and the engineering tool is Microsoft Excel 2003. The hardest concepts were character strings and iterating through arrays.
 
@@ -22,7 +22,7 @@ If you don't have to take the course, don't take it. If you have to take it and 
 ### CPSC 320: Intermediate Algorithm Design and Analysis
 #### Geoffrey Tien, 2016S2, 95% (highest in section)
 
-"Systematic study of basic concepts and techniques in the design and analysis of algorithms, illustrated from various problem areas. Topics include: models of computation; choice of data structures; graph-theoretic, algebraic, and text processing algorithms."
+> Systematic study of basic concepts and techniques in the design and analysis of algorithms, illustrated from various problem areas. Topics include: models of computation; choice of data structures; graph-theoretic, algebraic, and text processing algorithms.
 
 CPSC 320 is the mandatory intermediate algorithm design and analysis course (yep) for CS students. You'll be writing a lot of pseudocode and proofs, with no actual coding at all. Math students with no programming experience may fare better than CS students who forgot how to do proofs.
 
@@ -36,9 +36,9 @@ Was it worth it? Not really. I took it to help me find a job, but every job I ap
 
 
 ### CPEN 221: Principles of Software Construction
-#### Sathish Gopalakrishnan, 2016W1, 98% (highest in section)
+#### Sathish Gopalakrishnan, 2016W1, 98% (highest in year)
 
-"Design, implementation, reasoning about software systems: abstraction and specification of software, testing, verification, abstract data types, object-oriented design, type hierarchies, concurrent software design."
+> Design, implementation, reasoning about software systems: abstraction and specification of software, testing, verification, abstract data types, object-oriented design, type hierarchies, concurrent software design.
 
 CPEN 221 is the mandatory second-year programming course for computer engineering, engineering physics, and (soon) biomedical engineering students, about equivalent to CPSC 210, with dabs of CPSC 110 (recursive data types) and CPSC 213 (concurrency and parallelism).
 
@@ -56,7 +56,7 @@ Ultimately, my advice is the same as that which you've heard hundreds of times a
 ### CPEN 331: Operating Systems
 #### Alexandra Fedorova, 2017W1, 90%
 
-"Operating systems, their design and their implementation. Process concurrency, synchronization, communication and scheduling. Device drivers, memory management, virtual memory, file systems, networking and security."
+> Operating systems, their design and their implementation. Process concurrency, synchronization, communication and scheduling. Device drivers, memory management, virtual memory, file systems, networking and security.
 
 CPEN 331 is only mandatory for computer engineering students, but many others take it because we can't take CPSC 313. Unlike advertised, it did *not* cover anything about inter-process communication, scheduling, device drivers, file systems, networking, and security. Instead, it covers concurrency on the level of "use locks" (much more basic than CPEN 221), memory management on the level of "use `malloc` and `free`", and pretty much nobody did the virtual memory assignment.
 
@@ -70,9 +70,9 @@ P.S. The official solutions to the last assignment don't even pass the tests, so
 
 
 ### CPEN 312: Digital Systems and Microcomputers
-#### Jesus Calviño-Fraga, 2017W2, 100% (highest in section)
+#### Jesus Calviño-Fraga, 2017W2, 100% (highest in year)
 
-"Data representation in digital computers; boolean algebra; the design and optimization and implementation of combinatorial and sequential circuits; modern digital circuit technologies; memory and programmable logic devices; organization and operation of microcomputers; data/address bus organization; input-output interfacing."
+> Data representation in digital computers; boolean algebra; the design and optimization and implementation of combinatorial and sequential circuits; modern digital circuit technologies; memory and programmable logic devices; organization and operation of microcomputers; data/address bus organization; input-output interfacing.
 
 CPEN 312 is a mandatory third-year course for engineering physics and mechatronics students, and a mandatory second-year course for integrated engineering students, about equivalent to CPSC 121 and CPEN 211, but without the grueling weekly 20-hour labs. Nobody else has any reason to take it. The grade distributions are forbiddenly bimodal, with peaks at 45% and 75%, for the same reasons as APSC 160: half the class (especially those not in mechatronics) have absolutely no interest in the course, and there's some convoluted policy where if you fail (&lt;40%) the final or the midterm or the labs, then you fail the course.
 
@@ -82,9 +82,9 @@ For the second section, you can either take careful notes in class, or skip clas
 
 
 ### CPEN 432: Real-time System Design
-#### Bader Alahmad, 2017W2, 100% (highest in section)
+#### Bader Alahmad, 2017W2, 100% (highest in year)
 
-"Multi-tasking; interrupt-driven systems; task scheduling; schedulability analysis; inter-process communication and synchronization; resource management; performance measurement; hardware/software integration; hardware/software tradeoffs; system reliability."
+> Multi-tasking; interrupt-driven systems; task scheduling; schedulability analysis; inter-process communication and synchronization; resource management; performance measurement; hardware/software integration; hardware/software tradeoffs; system reliability.
 
 CPEN 432 is a senior elective course and there's nothing else like it. But you have to know what you're getting into. Most of the lecture content is about scheduling theory, verbatim from Buttazzo's "Predictable Scheduling Algorithms and Applications", so skim through chapters 1--4, and if you don't like the material, don't take the course. The final exam and all the written assignments are only about scheduling, and these require about as much rigour as CPSC 320, so brush up on your proofs and be ready to search up what Hoeffding's inequality is.
 
