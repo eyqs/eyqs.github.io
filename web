@@ -77,12 +77,14 @@ def archive_url(rel_url):
     return f'{SITE_URL}/{rel_url}'
 
 
-def print_progress(message, func):
-    print(f'{message}...', end='\r', flush=True)
+def print_progress(message, func, quiet=False):
+    if not quiet:
+        print(f'{message}...', end='\r', flush=True)
     output = func()
     if type(output) == tuple:
         output = output[0]
-    print(f'{message}: {output.strip()}', flush=True)
+    if not quiet:
+        print(f'{message}: {output.strip()}', flush=True)
 
 
 def create_directory(*args):
@@ -122,7 +124,10 @@ def process_preamble(src_path):
 
 def process_parameters(parameters, src_path):
 
-    parameters['url'] = f'{SITE_URL}/{get_name(strip_repo_root(src_path))}/'
+    url_path = strip_repo_root(src_path)
+    if os.path.split(url_path)[1] == INDEX_FILE:
+        url_path = os.path.split(url_path)[0]
+    parameters['url'] = f'{SITE_URL}/{get_name(url_path)}/'
     if strip_repo_root(src_path) == 'about.md':
         parameters['url'] = f'{SITE_URL}/'
 
@@ -209,14 +214,14 @@ def process_tags(content, parameters):
     result = []
 
     for line in content:
-        if has_tag(line):
+        while has_tag(line):
             key = get_tag(line)
             if key not in parameters:
                 print(f'    Warning: key "{key}" was not found in params')
+                line = ''
             else:
-                result.append(replace_tag(line, parameters[key]))
-        else:
-            result.append(line)
+                line = replace_tag(line, parameters[key])
+        result.append(line)
 
     return result
 
@@ -246,7 +251,7 @@ def generate_page(src_path, dest_path):
     return f'{strip_repo_root(src_path)} -> {strip_repo_root(dest_path)}'
 
 
-def copy_directory(src_dir='', dest_dir=None):
+def copy_directory(src_dir='', dest_dir=None, quiet=False):
 
     if dest_dir is None:
         dest_dir = src_dir
@@ -262,13 +267,13 @@ def copy_directory(src_dir='', dest_dir=None):
                     print_progress('Generating page', lambda: (generate_page(
                             entry.path,
                             os.path.join(BUILD_PATH, dest_dir, entry.name)
-                    )))
+                    )), quiet)
                 else:
                     new_dir = create_directory(dest_dir, get_name(entry.name))
                     print_progress('Generating page', lambda: (generate_page(
                             entry.path,
                             os.path.join(new_dir, INDEX_FILE)
-                    )))
+                    )), quiet)
 
             elif entry.is_dir():
                 if os.path.exists(os.path.join(entry.path, SCRIPT_FILE)):
@@ -283,8 +288,10 @@ def copy_directory(src_dir='', dest_dir=None):
                 else:
                     copy_directory(
                             os.path.join(src_dir, entry.name),
-                            os.path.join(dest_dir, entry.name)
+                            os.path.join(dest_dir, entry.name),
+                            quiet
                     )
+
 
             else:
                 print_progress('Copying file', lambda: (
@@ -292,7 +299,7 @@ def copy_directory(src_dir='', dest_dir=None):
                                 + str(os.path.join(dest_dir, entry.name)),
                         shutil.copy(entry.path, os.path.join(
                                 BUILD_PATH, dest_dir, entry.name))
-                ))
+                ), quiet)
 
 
 def archive(src_dir=''):
@@ -341,6 +348,18 @@ def clean():
                 lambda: (f'{BUILD_DIR}/', shutil.rmtree(BUILD_PATH)))
     else:
         print(f'Build directory does not exist: {BUILD_DIR}/')
+
+    with os.scandir(REPO_ROOT) as it:
+        for entry in it:
+            if entry.is_dir():
+                if os.path.exists(os.path.join(entry.path, SCRIPT_FILE)):
+                    subprocess.call([
+                        'python3',
+                        os.path.join(entry.path, SCRIPT_FILE),
+                        'clean',
+                        REPO_ROOT,
+                        entry.path
+                    ])
 
 
 def push():
