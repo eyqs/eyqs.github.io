@@ -15,4 +15,5 @@ Welcome to my home on the World Wide Web.
   <li><a href="%/privacy/">Privacy Policy</a></li>
   <li><a href="%/resume/">Resume</a></li>
   <li><a href="%/sitemap/">Sitemap</a></li>
+  <li><a href="%/terms/">Terms of Use</a></li>
 </ul>
