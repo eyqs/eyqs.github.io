@@ -2,7 +2,6 @@
 
 import os
 import sys
-import shutil
 import urllib.request
 
 import git
@@ -12,6 +11,16 @@ repo_root = None
 src_dir = None
 SITE_URL = 'https://eyqs.ca'
 ARCHIVE_URL = 'http://web.archive.org/save'
+PREAMBLE_SEPARATOR = '---\n'
+INDEX_FILE = 'index.html'
+TOOLS_LAYOUT = 'layout: tool\n'
+PREAMBLES = {
+        'avalon': {'title': 'Tiny Avalon'},
+        'chess': {'title': 'Tiny Chess', 'json': './manifest.json'},
+        'cit': {'title': 'The Cartographically Imbricating Transformer'},
+        'req': {'title': 'The UBC Prereq Tree'},
+        'track': {'title': 'Tiny Tracker'},
+}
 
 
 
@@ -56,11 +65,38 @@ def archive():
                             lambda: archive_url(rel_url))
 
 
-def build(dest_dir):
+def build():
 
-    print_progress('Copying tools directory...', lambda: (
-        f'{strip_repo_root(src_dir)}/ -> {strip_repo_root(dest_dir)}/',
-        shutil.copytree(src_dir, dest_dir)))
+    with os.scandir(src_dir) as it:
+        for entry in it:
+            if entry.is_dir():
+                content = []
+
+                content.append(PREAMBLE_SEPARATOR)
+                content.append(TOOLS_LAYOUT)
+                for key, value in PREAMBLES[entry.name].items():
+                    content.append(f'{key}: {value}\n')
+                content.append(f'css: ./{entry.name}.css\n')
+                content.append(PREAMBLE_SEPARATOR)
+
+                file_path = os.path.join(entry.path, INDEX_FILE)
+                print('Overwriting tools page...', end='\r', flush=True)
+
+                with open(file_path, 'r') as f:
+                    in_body = False
+                    for line in f:
+                        if line.strip() == '</body>':
+                            break
+                        if in_body:
+                            content.append(line)
+                        if line.strip() == '<body>':
+                            in_body = True
+
+                with open(file_path, 'w') as f:
+                    for line in content:
+                        f.write(line.replace('./', '{{ url }}'))
+                print('Overwriting tools page: '
+                        + os.path.relpath(file_path, repo_root))
 
 
 def clean():
@@ -75,7 +111,7 @@ def bad_input():
 
 if __name__ == '__main__':
 
-    if len(sys.argv) < 4:
+    if len(sys.argv) != 4:
         bad_input()
 
     repo_root = sys.argv[2]
@@ -83,7 +119,7 @@ if __name__ == '__main__':
     if sys.argv[1] == 'archive':
         archive()
     elif sys.argv[1] == 'build':
-        build(sys.argv[4])
+        build()
     elif sys.argv[1] == 'clean':
         clean()
     else:

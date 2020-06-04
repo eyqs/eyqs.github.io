@@ -27,12 +27,14 @@ BLOG_DIR = 'blog'
 ASSETS_DIR = 'assets'
 INDEX_FILE = 'index.html'
 SCRIPT_FILE = 'web'
+QUIET_FILE = '.quiet'
 BUILD_PATH = os.path.join(REPO_ROOT, BUILD_DIR)
 
 PREAMBLE_SEPARATOR = '---\n'
 ARCHIVE_URL = 'http://web.archive.org/save'
-IGNORED_NAMES = [BUILD_DIR, ASSETS_DIR, LAYOUT_DIR, INCLUDE_DIR, SCRIPT_FILE,
-        '.git', '.gitmodules']
+IGNORED_NAMES = [BUILD_DIR, ASSETS_DIR, LAYOUT_DIR, INCLUDE_DIR,
+        SCRIPT_FILE, QUIET_FILE,
+        '.git', '.gitignore', '.gitmodules', 'LICENSE.md', 'README.md']
 MARKDOWN_EXTENSION = '.md'
 CONTENT_EXTENSIONS = ['.html', MARKDOWN_EXTENSION]
 
@@ -283,14 +285,15 @@ def copy_directory(src_dir='', dest_dir=None, quiet=False):
                         'build',
                         REPO_ROOT,
                         entry.path,
-                        os.path.join(BUILD_PATH, dest_dir, entry.name)
                     ])
-                else:
-                    copy_directory(
-                            os.path.join(src_dir, entry.name),
-                            os.path.join(dest_dir, entry.name),
-                            quiet
-                    )
+                if os.path.exists(os.path.join(entry.path, QUIET_FILE)):
+                    quiet = True
+
+                copy_directory(
+                        os.path.join(src_dir, entry.name),
+                        os.path.join(dest_dir, entry.name),
+                        quiet
+                )
 
 
             else:
