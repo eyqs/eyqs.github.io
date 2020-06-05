@@ -2,6 +2,15 @@
 layout: page
 title: Blog
 ---
+<h2>UBC Course Reviews: Math</h2>
+
+<h4>2020 April</h4>
+
+<p>I'm in the middle of moving out for my first full-time job on June 9th, so this June blog post will just be a skeleton for now. I'll add the meat and flesh after I'm done my job.</p>
+
+<p><a href="%/blog/2006-ubcs-mech/">Continue reading »</a></p>
+
+
 <h2>Coronavirus Update, May 8th</h2>
 
 <h4>2020 May</h4>
