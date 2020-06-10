@@ -4,6 +4,8 @@ title: UBC Course Reviews: Mechanical and Electrical Engineering
 ---
 I'm in the middle of moving out for my first full-time job on June 9th, so this June blog post will just be a skeleton for now. I'll add the meat and flesh after I'm done my job.
 
+<!--more-->
+
 
 ### MECH 260: Introduction to Mechanics of Materials
 #### Clarence de Silva, 2016W1, 73%

@@ -16,6 +16,8 @@ title: Coronavirus Update, May 8th
 
 Yet another generic fantasyscape filled with oversaturated blues and greens. On a grassy knoll dotted with perfect cherry blossoms, now in the middle of a bustling temple amidst crowds of onlookers, now in a rocky outcrop overlooking the windy desert, the scenery morphed and flashed around my eyes.
 
+<!--more-->
+
 I was stuck in that dreamy, inbetween-state of confused protagonist, omnipresent narrator, and passive viewer all at the same time. In front of me, or my eyes, was your typical shrine maiden extolling the gods. Black hair, red ribbon. I don't remember much, and it's slipping away as I type, but I remember the invocation, or at least I remember that it went on, and on, and on:
 
 > Sing, O goddess, of those sunless days and sleepless nights, of the cruelties of gods and men, of the slade and brimstone burning eternally that line the path to Hades. Sing of the white knight who made it back―

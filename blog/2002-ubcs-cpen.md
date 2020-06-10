@@ -6,6 +6,8 @@ Engineering undergrads at the University of British Columbia don't get many elec
 
 As an engineering physics student, I get five technical electives, but I've already used them all up. As I'll never get to actually take any more computer engineering/science courses for the last three years of my degree, now's the time to review all such courses I've actually taken. Also, I finally get to brag about my grades.
 
+<!--more-->
+
 
 ### APSC 160: Introduction to Computation in Engineering Design
 #### Hassan Khosravi, 2016W1, 98% (highest in section)
