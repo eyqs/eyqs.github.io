@@ -36,15 +36,6 @@ def print_progress(message, func):
     print(f'{message}: {output.strip()}', flush=True)
 
 
-def reset_submodules():
-    os.chdir(repo_root)
-    repo = git.Repo(repo_root)
-    for submodule in repo.submodules:
-        submodule.update(init=True)
-        submodule.module().head.reset(index=True, working_tree=True)
-    return f'{strip_repo_root(src_dir)}/'
-
-
 def archive():
 
     with os.scandir(src_dir) as it:
@@ -90,7 +81,13 @@ def build():
 
 def clean():
 
-    print_progress('Resetting submodules', reset_submodules)
+    os.chdir(repo_root)
+    repo = git.Repo(repo_root)
+    for submodule in repo.submodules:
+        submodule.update(init=True)
+        submodule.module().head.reset(index=True, working_tree=True)
+
+    return f'{strip_repo_root(src_dir)}/'
 
 
 
@@ -110,6 +107,6 @@ if __name__ == '__main__':
     elif sys.argv[1] == 'build':
         build()
     elif sys.argv[1] == 'clean':
-        clean()
+        print_progress('Resetting submodules', clean)
     else:
         bad_input()

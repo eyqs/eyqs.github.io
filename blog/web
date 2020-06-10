@@ -1,0 +1,64 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+
+
+repo_root = None
+src_dir = None
+PREAMBLE_SEPARATOR = '---\n'
+INDEX_FILE = 'index.html'
+
+
+
+def strip_repo_root(path):
+    return os.path.relpath(path, repo_root)
+
+
+def print_progress(message, func):
+    print(f'{message}...', end='\r', flush=True)
+    output = func()
+    if type(output) == tuple:
+        output = output[0]
+    print(f'{message}: {output.strip()}', flush=True)
+
+
+def build():
+
+    blog_path = os.path.join(src_dir, INDEX_FILE)
+    with open(blog_path, 'w') as f:
+        f.write(PREAMBLE_SEPARATOR)
+        f.write('layout: page\n')
+        f.write('title: Blog\n')
+        f.write(PREAMBLE_SEPARATOR)
+    return strip_repo_root(blog_path)
+
+
+def clean():
+
+    blog_path = os.path.join(src_dir, INDEX_FILE)
+    try:
+        os.remove(blog_path)
+    except FileNotFoundError:
+        pass
+    return strip_repo_root(blog_path)
+
+
+
+def bad_input():
+    print('Usage: ./web [build|clean] [repo_root] [src_dir]')
+    exit(1)
+
+if __name__ == '__main__':
+
+    if len(sys.argv) != 4:
+        bad_input()
+
+    repo_root = sys.argv[2]
+    src_dir = sys.argv[3]
+    if sys.argv[1] == 'build':
+        print_progress('Collating blog excerpts', build)
+    elif sys.argv[1] == 'clean':
+        print_progress('Deleting blog excerpts', clean)
+    else:
+        bad_input()

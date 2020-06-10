@@ -29,16 +29,14 @@ BLOG_DIR = 'blog'
 ASSETS_DIR = 'assets'
 INDEX_FILE = 'index.html'
 SCRIPT_FILE = 'web'
-QUIET_FILE = '.quiet'
 BUILD_PATH = os.path.join(REPO_ROOT, BUILD_DIR)
 
 PREAMBLE_SEPARATOR = '---\n'
 ARCHIVE_URL = 'http://web.archive.org/save'
+COPIED_NAMES = ['.nojekyll']
 IGNORED_NAMES = [BUILD_DIR, ASSETS_DIR, LAYOUT_DIR, INCLUDE_DIR,
-        SCRIPT_FILE, QUIET_FILE,
-        '.git', '.gitignore', '.gitmodules', 'LICENSE.md', 'README.md']
-MARKDOWN_EXTENSION = '.md'
-CONTENT_EXTENSIONS = ['.html', MARKDOWN_EXTENSION]
+        SCRIPT_FILE, 'LICENSE.md', 'README.md']
+CONTENT_EXTENSIONS = ['.html', '.md']
 
 LAYOUT_KEY = 'layout'
 CONTENT_TAG = 'content'
@@ -56,6 +54,10 @@ def get_extension(name):
 
 def strip_repo_root(path):
     return os.path.relpath(path, REPO_ROOT)
+
+def is_ignored(name):
+    return ((name in IGNORED_NAMES or name.startswith('.'))
+            and name not in COPIED_NAMES)
 
 def is_content(name):
     return get_extension(name) in CONTENT_EXTENSIONS
@@ -96,11 +98,25 @@ def print_progress(message, func, quiet=False):
         print(f'{message}: {output.strip()}', flush=True)
 
 
+def remove_build_tree():
+    try:
+        shutil.rmtree(BUILD_PATH)
+    except FileNotFoundError:
+        pass
+    return f'{BUILD_DIR}/'
+
+
+def mkdirp(directory):
+    try:
+        os.mkdir(directory)
+    except OSError:
+        pass
+    return f'{strip_repo_root(directory)}/'
+
+
 def create_directory(*args):
     directory = os.path.join(BUILD_PATH, *args)
-    if not os.path.exists(directory):
-        print_progress('Creating directory', lambda: (
-                f'{strip_repo_root(directory)}/', os.mkdir(directory)))
+    print_progress('Creating directory', lambda: mkdirp(directory))
     return directory
 
 
@@ -244,18 +260,13 @@ def write_page(content, dest_path):
 
 def generate_page(src_path, dest_path):
 
-    if os.path.islink(src_path):
-        shutil.copy(src_path, dest_path, follow_symlinks=False)
-
-    else:
-        content, parameters = process_preamble(src_path)
-        parameters = process_parameters(parameters, src_path)
-        if get_extension(src_path) == MARKDOWN_EXTENSION:
-            content = process_markdown(content)
-        content = process_layout(content, parameters[LAYOUT_KEY])
-        content = process_includes(content)
-        content = process_tags(content, parameters)
-        write_page(content, dest_path)
+    content, parameters = process_preamble(src_path)
+    parameters = process_parameters(parameters, src_path)
+    content = process_markdown(content)
+    content = process_layout(content, parameters[LAYOUT_KEY])
+    content = process_includes(content)
+    content = process_tags(content, parameters)
+    write_page(content, dest_path)
 
     return f'{strip_repo_root(src_path)} -> {strip_repo_root(dest_path)}'
 
@@ -268,24 +279,30 @@ def copy_directory(src_dir='', dest_dir=None, quiet=False):
 
     with os.scandir(os.path.join(REPO_ROOT, src_dir)) as it:
         for entry in it:
-            if entry.name in IGNORED_NAMES:
+            if is_ignored(entry.name):
                 continue
 
             if is_content(entry.name):
                 if entry.name == INDEX_FILE:
-                    print_progress('Generating page', lambda: (generate_page(
-                            entry.path,
-                            os.path.join(BUILD_PATH, dest_dir, entry.name)
-                    )), quiet)
+                    dest_path = os.path.join(BUILD_PATH, dest_dir, INDEX_FILE)
                 else:
                     new_dir = create_directory(dest_dir, get_name(entry.name))
-                    print_progress('Generating page', lambda: (generate_page(
-                            entry.path,
-                            os.path.join(new_dir, INDEX_FILE)
-                    )), quiet)
+                    dest_path = os.path.join(new_dir, INDEX_FILE)
+
+                if entry.is_symlink():
+                    real_path = os.path.abspath(os.path.realpath(entry.path))
+                    src_path = os.path.join(get_name(real_path), INDEX_FILE)
+                    target = os.path.relpath(src_path, src_dir)
+                    print_progress('Creating symlink', lambda: (
+                            f'{strip_repo_root(dest_path)} -> ' +
+                            strip_repo_root(os.path.join(dest_path, target)),
+                            os.symlink(target, dest_path)))
+                else:
+                    print_progress('Generating page', lambda:
+                            generate_page(entry.path, dest_path), quiet)
 
             elif entry.is_dir():
-                if os.path.exists(os.path.join(entry.path, SCRIPT_FILE)):
+                if os.path.exists(os.path.join(entry.path, '.build')):
                     subprocess.call([
                         'python3',
                         os.path.join(entry.path, SCRIPT_FILE),
@@ -293,7 +310,7 @@ def copy_directory(src_dir='', dest_dir=None, quiet=False):
                         REPO_ROOT,
                         entry.path,
                     ])
-                if os.path.exists(os.path.join(entry.path, QUIET_FILE)):
+                if os.path.exists(os.path.join(entry.path, '.quiet')):
                     quiet = True
 
                 copy_directory(
@@ -317,7 +334,7 @@ def crawl(src_dir=''):
 
     with os.scandir(os.path.join(REPO_ROOT, src_dir)) as it:
         for entry in it:
-            if entry.name in IGNORED_NAMES:
+            if is_ignored(entry.name):
                 continue
 
             if is_content(entry.name):
@@ -327,7 +344,7 @@ def crawl(src_dir=''):
                 rel_urls.append(rel_url)
 
             elif entry.is_dir():
-                if os.path.exists(os.path.join(entry.path, SCRIPT_FILE)):
+                if os.path.exists(os.path.join(entry.path, '.archive')):
                     result = subprocess.check_output([
                         'python3',
                         os.path.join(entry.path, SCRIPT_FILE),
@@ -368,16 +385,12 @@ def build():
 
 def clean():
 
-    if os.path.exists(BUILD_PATH):
-        print_progress('Removing build directory',
-                lambda: (f'{BUILD_DIR}/', shutil.rmtree(BUILD_PATH)))
-    else:
-        print(f'Build directory does not exist: {BUILD_DIR}/')
+    print_progress('Removing build directory', remove_build_tree)
 
     with os.scandir(REPO_ROOT) as it:
         for entry in it:
             if entry.is_dir():
-                if os.path.exists(os.path.join(entry.path, SCRIPT_FILE)):
+                if os.path.exists(os.path.join(entry.path, '.clean')):
                     subprocess.call([
                         'python3',
                         os.path.join(entry.path, SCRIPT_FILE),
