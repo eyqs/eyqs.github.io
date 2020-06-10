@@ -2,15 +2,12 @@
 
 import os
 import sys
-import urllib.request
 
 import git
 
 
 repo_root = None
 src_dir = None
-SITE_URL = 'https://eyqs.ca'
-ARCHIVE_URL = 'http://web.archive.org/save'
 PREAMBLE_SEPARATOR = '---\n'
 INDEX_FILE = 'index.html'
 TOOLS_LAYOUT = 'layout: tool\n'
@@ -29,12 +26,6 @@ def get_name(name):
 
 def strip_repo_root(path):
     return os.path.relpath(path, repo_root)
-
-def archive_url(rel_url):
-    if rel_url and not rel_url.endswith('/'):
-        rel_url += '/'
-    urllib.request.urlopen(f'{ARCHIVE_URL}/{SITE_URL}/{rel_url}')
-    return f'{SITE_URL}/{rel_url}'
 
 
 def print_progress(message, func):
@@ -60,9 +51,7 @@ def archive():
         for entry in it:
             if entry.is_dir():
                 if os.path.exists(os.path.join(entry.path, 'index.html')):
-                    rel_url = get_name(strip_repo_root(entry.path))
-                    print_progress('Archiving page',
-                            lambda: archive_url(rel_url))
+                    print(get_name(strip_repo_root(entry.path)))
 
 
 def build():
