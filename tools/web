@@ -15,6 +15,7 @@ PREAMBLES = {
         'avalon': {'title': 'Tiny Avalon'},
         'chess': {'title': 'Tiny Chess', 'json': './manifest.json'},
         'cit': {'title': 'The Cartographically Imbricating Transformer'},
+        'rename': {'title': 'Rename GitHub Default Branches'},
         'req': {'title': 'The UBC Prereq Tree'},
         'track': {'title': 'Tiny Tracker'},
 }

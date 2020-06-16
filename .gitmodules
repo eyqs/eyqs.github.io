@@ -18,3 +18,7 @@
 	path = tools/track
 	url = https://eyqs@github.com/eyqs/webapps.git
 	branch = track
+[submodule "tools/rename"]
+	path = tools/rename
+	url = https://eyqs@github.com/eyqs/rename-github-default-branches.git
+	branch = salad
