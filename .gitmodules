@@ -22,3 +22,7 @@
 	path = tools/rename
 	url = https://eyqs@github.com/eyqs/rename-github-default-branches.git
 	branch = salad
+[submodule "tools/res"]
+	path = tools/res
+	url = https://eyqs@github.com/eyqs/res.git
+	branch = salad

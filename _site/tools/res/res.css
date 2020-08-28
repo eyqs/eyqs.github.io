@@ -1,0 +1,84 @@
+body {
+  font-family: sans-serif;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+#wrapper {
+  margin: 0 auto;
+  max-width: 48em;
+}
+
+#github {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+input[type="file"] {
+  display: flex;
+  margin: 0 0 1em 0;
+}
+
+pre {
+  width: 100%;
+  background-color: whitesmoke;
+  padding: 1em;
+  border: 1px solid;
+  min-height: 1em;
+}
+
+input[type="submit"], button {
+  color: white;
+  background-color: dimgray;
+  font-size: 1em;
+  padding: 0.5em 1em;
+  border-radius: 1em;
+}
+
+input[type="submit"]:hover, input[type="submit"]:focus,
+input[type="submit"]:active, button:hover, button:focus, button:active {
+  background-color: gray;
+}
+
+div.rule {
+  display: flex;
+  margin: 0 -2em;
+}
+
+div.rule > label {
+  flex-grow: 1;
+  padding: 0 2em;
+}
+
+div.pass {
+  background-color: palegreen;
+  width: 100%;
+  padding: 2em;
+}
+
+div.pass::before {
+  content: "This is a valid application of the rule."
+}
+
+div.fail {
+  background-color: lightsalmon;
+  width: 100%;
+  padding: 2em;
+}
+
+div.fail::before {
+  content: "This is NOT a valid application of the rule!"
+}
+
+div.conclusion {
+  background-color: lemonchiffon;
+  width: 100%;
+  padding: 2em;
+}
+
+div.conclusion::before {
+  content: "Validating that the conclusions are properly translated is a work in progress."
+}
