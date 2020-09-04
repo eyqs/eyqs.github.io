@@ -72,13 +72,3 @@ div.fail {
 div.fail::before {
   content: "This is NOT a valid application of the rule!"
 }
-
-div.conclusion {
-  background-color: lemonchiffon;
-  width: 100%;
-  padding: 2em;
-}
-
-div.conclusion::before {
-  content: "Validating that the conclusions are properly translated is a work in progress."
-}

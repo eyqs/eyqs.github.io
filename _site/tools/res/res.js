@@ -34,6 +34,59 @@ const SUPPORT_TO_PREMISES = {
   P11: ["~WeakPref(x,y) | StrongPref(x,y) | Indiff(x,y)",
         "~StrongPref(x,y) | WeakPref(x,y)",
         "~Indiff(x,y) | WeakPref(x,y)"],
+  C1:  ["~WeakPref(a,a)"],
+  C2:  ["~Indiff(a,a)"],
+  C3:  ["Indiff(a,b) | Indiff(b,a)",
+        "Indiff(a,b) | ~Indiff(a,b)",
+        "~Indiff(b,a) | Indiff(b,a)",
+        "~Indiff(b,a) | ~Indiff(a,b)"],
+  C4:  ["Indiff(a,b)",
+        "Indiff(b,c)",
+        "~Indiff(a,c)"],
+  C5:  ["StrongPref(a,b)",
+        "~WeakPref(a,b)"],
+  C6:  ["StrongPref(a,b)",
+        "StrongPref(b,a)"],
+  C7:  ["StrongPref(a,b)",
+        "StrongPref(b,c)",
+        "~StrongPref(a,c)"],
+  C8:  ["Indiff(a,b)",
+        "StrongPref(b,a) | StrongPref(a,b)"],
+  C9:  ["Indiff(a,b)",
+        "StrongPref(b,c)",
+        "~StrongPref(a,c)"],
+  C10: ["Indiff(a,b)",
+        "StrongPref(c,a)",
+        "~StrongPref(c,b)"],
+  C11: ["StrongPref(a,b)",
+        "WeakPref(b,c)",
+        "~StrongPref(a,c)"],
+  C12: ["~WeakPref(a,b)",
+        "~StrongPref(b,a)"],
+  C13: ["StrongPref(a,b)",
+        "Indiff(a,b)"],
+  C14: ["StrongPref(a,b) | Indiff(a,b)",
+        "~WeakPref(a,b)"],
+  C15: ["WeakPref(a,b)",
+        "~StrongPref(a,b)",
+        "~Indiff(a,b)"],
+}
+
+
+function translateLine(line) {
+  return line
+      .replace(/&/g, '∧')
+      .replace(/\|/g, '∨')
+      .replace(/~/g, '¬')
+      .replace(/\$/g, '→')
+      .replace(/%/g, '↔')
+      .replace(/\^/g, '⊥')
+      .replace(/@/g, '∀')
+      .replace(/\//g, '∃')
+      .replace(/#/g, '≠')
+      .replace(/\\\\/g, '∈')
+      .replace(/_/g, '⊆')
+      .replace(/\*/g, '×');
 }
 
 
@@ -200,10 +253,8 @@ function verifyPremise(support, res) {
         return "pass";
       }
     }
-    return "fail";
-  } else {
-    return "conclusion";
   }
+  return "fail";
 }
 
 
@@ -310,13 +361,19 @@ function renderStep(step_info) {
   const step_div = document.createElement("div");
   step_div.appendChild(heading);
   step_div.appendChild(createLabel("Original line:", step_info.full));
-  step_div.appendChild(createLabel("Sentence:", step_info.sentence));
+  step_div.appendChild(
+      createLabel("Sentence:", translateLine(step_info.sentence)));
   step_div.appendChild(rule_div);
   document.getElementById("main").appendChild(step_div);
 }
 
 
 function startApp(raw_proof) {
+  const main_div = document.getElementById("main");
+  while (main_div.firstChild) {
+    main_div.firstChild.remove();
+  }
+
   const proof = parseProof(raw_proof[5]);
   const steps = proof[0].c[0].c[0].c[5].c;
   const info = steps.map(parseStep);
@@ -349,7 +406,9 @@ function startApp(raw_proof) {
     const s = proof[0].c[0].c[1].c[0].c[0].c[0].c[0].c[0].t;
     const goal = s.slice(0, s.lastIndexOf(';', s.lastIndexOf(';') - 1));
     const heading = document.createElement("h3");
-    heading.appendChild(document.createTextNode(`Goal: ${goal.slice(3, -1)}`));
+    heading.appendChild(
+        document.createTextNode(`Goal: ${translateLine(goal.slice(3, -1))}`)
+    );
 
     const goal_div = document.createElement("div");
     goal_div.appendChild(heading);

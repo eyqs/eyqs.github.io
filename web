@@ -3,6 +3,7 @@
 import os
 import re
 import sys
+import time
 import shutil
 import datetime
 import functools
@@ -82,6 +83,7 @@ def archive_url(rel_url):
     try:
         response = urllib.request.urlopen(f'{ARCHIVE_URL}/{SITE_URL}/{rel_url}')
         print(response.status, response.reason, rel_url)
+        time.sleep(1)
     except urllib.error.HTTPError as e:
         print(f'HTTP Error: {e.code} {e.reason} for page {rel_url}')
     except urllib.error.URLError as e:
