@@ -3,6 +3,7 @@
 import os
 import re
 import sys
+import math
 import time
 import shutil
 import datetime
@@ -83,7 +84,6 @@ def archive_url(rel_url):
     try:
         response = urllib.request.urlopen(f'{ARCHIVE_URL}/{SITE_URL}/{rel_url}')
         print(response.status, response.reason, rel_url)
-        time.sleep(1)
     except urllib.error.HTTPError as e:
         print(f'HTTP Error: {e.code} {e.reason} for page {rel_url}')
     except urllib.error.URLError as e:
@@ -367,7 +367,10 @@ def archive():
     rel_urls = crawl()
     print(f'Crawling for URLs: {len(rel_urls)} found')
     pool = multiprocessing.dummy.Pool(4)
-    pool.map(archive_url, rel_urls)
+    for i in range(0, math.ceil(len(rel_urls) / 24)):
+        pool.map(archive_url, rel_urls[i*24:i*24+24])
+        print_progress('Waiting for 30 seconds to avoid HTTP 429 Error',
+            lambda: ('done', time.sleep(30)))
     pool.close()
     pool.join()
 
