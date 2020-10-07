@@ -369,8 +369,9 @@ def archive():
     pool = multiprocessing.dummy.Pool(4)
     for i in range(0, math.ceil(len(rel_urls) / 24)):
         pool.map(archive_url, rel_urls[i*24:i*24+24])
-        print_progress('Waiting for 30 seconds to avoid HTTP 429 Error',
-            lambda: ('done', time.sleep(30)))
+        if i*24 + 24 < len(rel_urls):
+            print_progress('Waiting for a minute to avoid HTTP 429 Error',
+                lambda: ('done', time.sleep(60)))
     pool.close()
     pool.join()
 
