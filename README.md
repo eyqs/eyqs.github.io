@@ -1,3 +1,3 @@
 # web
 
-Copyright &copy; 2020&ndash;2023 Eugene Y. Q. Shen.
+Copyright &copy; 2020&ndash;2024 Eugene Y. Q. Shen.
